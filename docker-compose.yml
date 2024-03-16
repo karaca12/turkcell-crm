@@ -1,1 +1,36 @@
+services:
+  customerservice:
+    build: ./customerservice
+    ports:
+      - "8083:8080"
+    environment:
+      -SPRING_DATASOURCE_URL=jdbc:postgresql://postgre-customer:5432/customerService
 
+  invoiceservice:
+    build: ./invoiceservice
+    ports:
+      - "8082:8080"
+
+  productservice:
+    build: ./productservice
+    ports:
+      - "8080:8080"
+
+  orderservice:
+    build: ./orderservice
+    ports:
+      - "8081:8080"
+
+  postgre-customer:
+    image: postgres:16.2-alpine
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=postgres
+    volumes:
+      - turkcell-pair1-crm-postgresql:/var/lib/postgresql/data
+
+volumes:
+  turkcell-pair1-crm-postgresql:
+    name: turkcell-pair1-crm-postgresql
