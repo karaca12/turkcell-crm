@@ -1,4 +1,14 @@
 package com.turkcell.pair1.customerservice.service.implementation;
 
-public class CityServiceImpl {
+import com.turkcell.pair1.customerservice.repository.CityRepository;
+import com.turkcell.pair1.customerservice.service.abstraction.CityService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CityServiceImpl implements CityService {
+    private final CityRepository cityRepository;
+    public CityServiceImpl(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
+
 }
