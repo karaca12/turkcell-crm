@@ -20,6 +20,10 @@ public class Customer {
     private Integer id;
 
     @NotNull
+    @Column(name = "customer_id",nullable = false, length = Integer.MAX_VALUE)
+    private String customerId;
+
+    @NotNull
     @Column(name = "first_name", nullable = false, length = Integer.MAX_VALUE)
     private String firstName;
 
@@ -44,15 +48,29 @@ public class Customer {
     @Column(name = "mother_name", length = Integer.MAX_VALUE)
     private String motherName;
 
-    @Size(max = 11)
     @NotNull
-    @Column(name = "nationality_id", nullable = false, length = 11)
-    private String nationalityId;
+    @Column(name = "nationality_id", nullable = false)
+    private Integer nationalityId;
+
+    @NotNull
+    @Column(name = "account_number", nullable = false, length = Integer.MAX_VALUE)
+    private String accountNumber;
+
+    @NotNull
+    @Column(name = "email", nullable = false, length = Integer.MAX_VALUE)
+    private String email;
+
+    @Column(name = "home_phone", length = Integer.MAX_VALUE)
+    private String homePhone;
+
+    @NotNull
+    @Column(name = "mobile_phone", nullable = false, length = Integer.MAX_VALUE)
+    private String mobilePhone;
+
+    @Column(name = "fax", length = Integer.MAX_VALUE)
+    private String fax;
 
     @OneToMany(mappedBy = "customer")
     private List<Address> addresses;
-
-    @OneToOne(mappedBy = "customer")
-    private Contact contact;
 
 }
