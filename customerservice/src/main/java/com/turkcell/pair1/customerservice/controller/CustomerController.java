@@ -1,9 +1,12 @@
 package com.turkcell.pair1.customerservice.controller;
 
+import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.abstraction.CustomerService;
+import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,5 +27,10 @@ public class CustomerController {
     @GetMapping("/{customerId}")
     public GetCustomerInfoResponse getByCustomerId(@PathVariable Integer customerId){
         return customerService.getByCustomerId(customerId);
+    }
+
+    @PostMapping
+    public Customer create(@RequestBody @Valid CreateCustomerRequest request){
+        return customerService.create(request);
     }
 }

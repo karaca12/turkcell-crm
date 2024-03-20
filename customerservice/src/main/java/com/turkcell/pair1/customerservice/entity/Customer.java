@@ -1,5 +1,6 @@
 package com.turkcell.pair1.customerservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,8 +20,7 @@ public class Customer {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @NotNull
-    @Column(name = "customer_id",nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "customer_id", length = Integer.MAX_VALUE)
     private String customerId;
 
     @NotNull
@@ -52,8 +52,7 @@ public class Customer {
     @Column(name = "nationality_id", nullable = false)
     private Integer nationalityId;
 
-    @NotNull
-    @Column(name = "account_number", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "account_number", length = Integer.MAX_VALUE)
     private String accountNumber;
 
     @NotNull
@@ -71,6 +70,7 @@ public class Customer {
     private String fax;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<Address> addresses;
 
 }
