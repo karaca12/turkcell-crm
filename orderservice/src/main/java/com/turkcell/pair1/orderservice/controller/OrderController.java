@@ -17,7 +17,6 @@ public class OrderController {
 
     @GetMapping
     public int getCustomerIdByOrderId(@RequestParam String orderId) {
-        //TODO
-        return 10;
+        return orderService.getCustomerIdByOrderId(orderId);
     }
 }

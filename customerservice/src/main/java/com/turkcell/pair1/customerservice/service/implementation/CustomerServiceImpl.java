@@ -1,5 +1,6 @@
 package com.turkcell.pair1.customerservice.service.implementation;
 
+import com.turkcell.pair1.customerservice.client.OrderServiceClient;
 import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
 import com.turkcell.pair1.customerservice.core.service.abstraction.MessageService;
 import com.turkcell.pair1.customerservice.core.service.constants.Messages;
@@ -13,6 +14,7 @@ import com.turkcell.pair1.customerservice.service.mapper.CustomerMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,15 +22,20 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final MessageService messageService;
     private final WebClient.Builder webClient;
+    private final OrderServiceClient orderServiceClient;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, MessageService messageService, WebClient.Builder webClient) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, MessageService messageService, WebClient.Builder webClient, OrderServiceClient orderServiceClient) {
         this.customerRepository = customerRepository;
         this.messageService = messageService;
         this.webClient = webClient;
+        this.orderServiceClient = orderServiceClient;
     }
 
     @Override
     public List<SearchCustomerResponse> search(SearchCustomerRequest request) {
+
+        /*
+        //webflux
         var result = webClient.build()
                 .get()
                 .uri("http://localhost:8081/api/orders?orderId=" + request.getOrderNumber())
@@ -36,11 +43,26 @@ public class CustomerServiceImpl implements CustomerService {
                 .bodyToMono(Integer.class)
                 .block();
         System.out.println("Deneme: " + result);
-        List<SearchCustomerResponse> response = customerRepository.search(request);
-        if (response.isEmpty()) {
-            throw new BusinessException("No customer found!");
+        */
+
+        //openfeign
+
+
+        if (!request.getOrderNumber().isEmpty()) {
+            int customerId = orderServiceClient.getCustomerIdByOrderId(request.getOrderNumber());
+            List<SearchCustomerResponse> response = new ArrayList<>();
+            Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
+                    new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND_ERROR)));
+            SearchCustomerResponse searchCustomerResponse = CustomerMapper.INSTANCE.getSearchCustomerResponseFromCustomer(customer);
+            response.add(searchCustomerResponse);
+            return response;
+        } else {
+            List<SearchCustomerResponse> response = customerRepository.search(request);
+            if (response.isEmpty()) {
+                throw new BusinessException("No customer found!");
+            }
+            return response;
         }
-        return response;
     }
 
     @Override
