@@ -4,7 +4,7 @@ services:
     ports:
       - "8083:8080"
     environment:
-      -SPRING_DATASOURCE_URL=jdbc:postgresql://postgre-customer:5432/customerService
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgre_customer:5432/customer_service
 
   invoiceservice:
     build: ./invoiceservice
@@ -21,7 +21,7 @@ services:
     ports:
       - "8081:8080"
 
-  postgre-customer:
+  postgre_customer:
     image: postgres:16.2-alpine
     ports:
       - 5433:5432

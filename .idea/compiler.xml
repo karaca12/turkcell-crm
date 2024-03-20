@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="invoiceservice" />
-        <module name="orderservice" />
         <module name="productservice" />
       </profile>
       <profile name="Annotation profile for customerservice" enabled="true">
@@ -22,6 +21,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="customerservice" />
+        <module name="orderservice" />
       </profile>
     </annotationProcessing>
   </component>
