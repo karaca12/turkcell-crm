@@ -27,4 +27,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     List<SearchCustomerResponse> search(@Param("request") SearchCustomerRequest request);
 
     Optional<Customer> findByCustomerId(String customerId);
+
+    boolean existsByNationalityId(Integer nationalityId);
 }

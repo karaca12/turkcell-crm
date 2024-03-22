@@ -2,6 +2,7 @@ package com.turkcell.pair1.customerservice.service.implementation;
 
 import com.turkcell.pair1.customerservice.client.OrderServiceClient;
 import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
+import com.turkcell.pair1.customerservice.core.exception.types.DuplicateEntityException;
 import com.turkcell.pair1.customerservice.core.service.abstraction.MessageService;
 import com.turkcell.pair1.customerservice.core.service.constants.Messages;
 import com.turkcell.pair1.customerservice.entity.Customer;
@@ -75,6 +76,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer create(CreateCustomerRequest request) {
+        if (customerRepository.existsByNationalityId(request.getNationalityId())) {
+            throw new DuplicateEntityException("nationalityId", messageService.getMessage(Messages.BusinessErrors.DUPLICATE_NATIONALITY_ID_ERROR));
+        }
+
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateCustomerRequest(request);
         customerRepository.save(customer);
         return customer;
