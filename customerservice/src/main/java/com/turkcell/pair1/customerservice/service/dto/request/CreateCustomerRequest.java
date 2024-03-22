@@ -30,5 +30,5 @@ public class CreateCustomerRequest{
     @NotNull
     String mobilePhone;
     String fax;
-    List<AddAddressToCustomerRequest> addresses;
+    List<AddAddressToCustomerRequest> addressList;
 }
