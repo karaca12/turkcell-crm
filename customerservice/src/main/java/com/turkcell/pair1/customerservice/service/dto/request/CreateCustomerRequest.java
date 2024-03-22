@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,4 +30,5 @@ public class CreateCustomerRequest{
     @NotNull
     String mobilePhone;
     String fax;
+    List<AddAddressToCustomerRequest> addresses;
 }

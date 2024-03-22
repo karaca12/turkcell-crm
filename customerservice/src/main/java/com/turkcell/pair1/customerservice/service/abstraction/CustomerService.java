@@ -14,4 +14,6 @@ public interface CustomerService {
     GetCustomerInfoResponse getByCustomerId(Integer customerId);
 
     Customer create(CreateCustomerRequest request);
+
+    void checkNationalityId(Integer nationalityId);
 }

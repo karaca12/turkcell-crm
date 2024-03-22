@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SearchCustomerRequest {
-
     private Integer nationalityId;
     private String customerId;
     private String accountNumber;

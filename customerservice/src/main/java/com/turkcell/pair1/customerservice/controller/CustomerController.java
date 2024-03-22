@@ -33,4 +33,9 @@ public class CustomerController {
     public Customer create(@RequestBody @Valid CreateCustomerRequest request){
         return customerService.create(request);
     }
+
+    @PostMapping("/nationalityId")
+    public void checkNationalityId(@RequestParam Integer nationalityId){
+        customerService.checkNationalityId(nationalityId);
+    }
 }

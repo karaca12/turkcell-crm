@@ -76,12 +76,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer create(CreateCustomerRequest request) {
-        if (customerRepository.existsByNationalityId(request.getNationalityId())) {
-            throw new DuplicateEntityException("nationalityId", messageService.getMessage(Messages.BusinessErrors.DUPLICATE_NATIONALITY_ID_ERROR));
-        }
+
 
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateCustomerRequest(request);
         customerRepository.save(customer);
         return customer;
+    }
+
+    @Override
+    public void checkNationalityId(Integer nationalityId) {
+        if (customerRepository.existsByNationalityId(nationalityId)) {
+            throw new DuplicateEntityException("nationalityId", messageService.getMessage(Messages.BusinessErrors.DUPLICATE_NATIONALITY_ID_ERROR));
+        }
     }
 }
