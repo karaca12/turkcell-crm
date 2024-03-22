@@ -1,27 +1,51 @@
 services:
-  customerservice:
+  discovery-server:
+    build: ./discoveryserver
+    ports:
+      - "8888:8888"
+  customer-service:
     build: ./customerservice
     ports:
-      - "8083:8080"
+      - "8083:8083"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgre_customer:5432/customer_service
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/customer_service
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+    depends_on:
+      - postgres
+      - discovery-server
 
-  invoiceservice:
+  invoice-service:
     build: ./invoiceservice
     ports:
-      - "8082:8080"
+      - "8082:8082"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+    depends_on:
+      - postgres
+      - discovery-server
 
-  productservice:
+  order-service:
+    build: ./orderservice
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://root:root@mongodb:27017/order_service?authSource=admin
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+    depends_on:
+      - mongodb
+      - discovery-server
+
+  product-service:
     build: ./productservice
     ports:
       - "8080:8080"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+    depends_on:
+      - postgres
+      - discovery-server
 
-  orderservice:
-    build: ./orderservice
-    ports:
-      - "8081:8080"
-
-  postgre_customer:
+  postgres:
     image: postgres:16.2-alpine
     ports:
       - 5433:5432
@@ -29,8 +53,20 @@ services:
       - POSTGRES_PASSWORD=test
       - POSTGRES_USER=postgres
     volumes:
-      - turkcell-pair1-crm-postgresql:/var/lib/postgresql/data
+      - turkcell-pair1-crm-postgresql-volume:/var/lib/postgresql/data
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27018:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - turkcell-pair1-crm-mongodb-volume:/data/db
 
 volumes:
-  turkcell-pair1-crm-postgresql:
+  turkcell-pair1-crm-postgresql-volume:
     name: turkcell-pair1-crm-postgresql
+  turkcell-pair1-crm-mongodb-volume:
+    name: turkcell-pair1-crm-mongodb

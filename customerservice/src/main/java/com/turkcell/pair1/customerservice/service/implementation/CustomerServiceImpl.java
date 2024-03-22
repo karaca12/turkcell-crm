@@ -61,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             List<SearchCustomerResponse> response = customerRepository.search(request);
             if (response.isEmpty()) {
-                throw new BusinessException("No customer found!");
+                throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND_ERROR));
             }
             return response;
         }
