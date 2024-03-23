@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="gatewayserver" />
         <module name="discoveryserver" />
       </profile>
       <profile name="Annotation profile for productservice" enabled="true">
@@ -30,6 +31,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="customerservice" options="-parameters" />
       <module name="discoveryserver" options="-parameters" />
+      <module name="gatewayserver" options="-parameters" />
       <module name="invoiceservice" options="-parameters" />
       <module name="orderservice" options="-parameters" />
       <module name="productservice" options="-parameters" />

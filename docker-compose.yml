@@ -3,6 +3,21 @@ services:
     build: ./discoveryserver
     ports:
       - "8888:8888"
+    networks:
+      - common
+
+  gateway-server:
+    build: ./gatewayserver
+    ports:
+      - "8001:8001"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+      - EUREKA_URL=http://discovery-server:8888
+    depends_on:
+      - discovery-server
+    networks:
+      - common
+
   customer-service:
     build: ./customerservice
     ports:
@@ -13,6 +28,8 @@ services:
     depends_on:
       - postgres
       - discovery-server
+    networks:
+      - common
 
   invoice-service:
     build: ./invoiceservice
@@ -23,6 +40,8 @@ services:
     depends_on:
       - postgres
       - discovery-server
+    networks:
+      - common
 
   order-service:
     build: ./orderservice
@@ -34,6 +53,8 @@ services:
     depends_on:
       - mongodb
       - discovery-server
+    networks:
+      - common
 
   product-service:
     build: ./productservice
@@ -44,6 +65,8 @@ services:
     depends_on:
       - postgres
       - discovery-server
+    networks:
+      - common
 
   postgres:
     image: postgres:16.2-alpine
@@ -54,6 +77,8 @@ services:
       - POSTGRES_USER=postgres
     volumes:
       - turkcell-pair1-crm-postgresql-volume:/var/lib/postgresql/data
+    networks:
+      - common
 
   mongodb:
     image: mongo
@@ -64,9 +89,15 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=root
     volumes:
       - turkcell-pair1-crm-mongodb-volume:/data/db
+    networks:
+      - common
 
 volumes:
   turkcell-pair1-crm-postgresql-volume:
     name: turkcell-pair1-crm-postgresql
   turkcell-pair1-crm-mongodb-volume:
     name: turkcell-pair1-crm-mongodb
+
+networks:
+  common:
+    driver: bridge

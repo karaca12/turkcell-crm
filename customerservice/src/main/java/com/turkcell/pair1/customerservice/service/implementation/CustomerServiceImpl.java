@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<SearchCustomerResponse> search(SearchCustomerRequest request) {
 
-        if (!request.getOrderNumber().isEmpty()) {
+        if (request.getOrderNumber()!=null) {
             int customerId = orderServiceClient.getCustomerIdByOrderId(request.getOrderNumber());
             List<SearchCustomerResponse> response = new ArrayList<>();
             Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
