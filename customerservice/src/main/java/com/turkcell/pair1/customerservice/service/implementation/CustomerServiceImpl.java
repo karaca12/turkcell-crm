@@ -7,21 +7,15 @@ import com.turkcell.pair1.customerservice.core.service.abstraction.MessageServic
 import com.turkcell.pair1.customerservice.core.service.constants.Messages;
 import com.turkcell.pair1.customerservice.entity.Address;
 import com.turkcell.pair1.customerservice.entity.Customer;
-import com.turkcell.pair1.customerservice.entity.Street;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
-import com.turkcell.pair1.customerservice.service.abstraction.CityService;
 import com.turkcell.pair1.customerservice.service.abstraction.CustomerService;
-import com.turkcell.pair1.customerservice.service.abstraction.StreetService;
-import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import com.turkcell.pair1.customerservice.service.mapper.CustomerMapper;
-import jakarta.persistence.GenerationType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,38 +24,18 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final MessageService messageService;
-    private final WebClient.Builder webClient;
     private final OrderServiceClient orderServiceClient;
-    private final StreetService streetService;
-    private final CityService cityService;
     private final AddressService addressService;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, MessageService messageService, WebClient.Builder webClient, OrderServiceClient orderServiceClient, StreetService streetService, CityService cityService, AddressService addressService) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, MessageService messageService, OrderServiceClient orderServiceClient, AddressService addressService) {
         this.customerRepository = customerRepository;
         this.messageService = messageService;
-        this.webClient = webClient;
         this.orderServiceClient = orderServiceClient;
-        this.streetService = streetService;
-        this.cityService = cityService;
         this.addressService = addressService;
     }
 
     @Override
     public List<SearchCustomerResponse> search(SearchCustomerRequest request) {
-
-        /*
-        //webflux
-        var result = webClient.build()
-                .get()
-                .uri("http://localhost:8081/api/orders?orderId=" + request.getOrderNumber())
-                .retrieve()
-                .bodyToMono(Integer.class)
-                .block();
-        System.out.println("Deneme: " + result);
-        */
-
-        //openfeign
-
 
         if (!request.getOrderNumber().isEmpty()) {
             int customerId = orderServiceClient.getCustomerIdByOrderId(request.getOrderNumber());
@@ -89,8 +63,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer create(CreateCustomerRequest request) {
+        checkNationalityId(request.getNationalityId());
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateCustomerRequest(request);
-        List<Address> addresses=addressService.createAddressesForCustomer(request,customer);
+        List<Address> addresses = addressService.createAddressesForCustomer(request, customer);
         customerRepository.save(customer);
         addressService.saveList(addresses);
         return customer;
