@@ -2,6 +2,7 @@ package com.turkcell.pair1.customerservice.core.exception;
 
 import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
 import com.turkcell.pair1.customerservice.core.exception.types.DuplicateEntityException;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,5 +29,11 @@ public class GlobalExceptionHandler {
             response.put("error", exception.getMessage());
         }
         return response;
+    }
+
+    @ExceptionHandler({FeignException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleFeignException(FeignException exception){
+        return exception.getMessage();
     }
 }
