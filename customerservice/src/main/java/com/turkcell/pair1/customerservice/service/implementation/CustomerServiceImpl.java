@@ -5,14 +5,21 @@ import com.turkcell.pair1.customerservice.core.exception.types.BusinessException
 import com.turkcell.pair1.customerservice.core.exception.types.DuplicateEntityException;
 import com.turkcell.pair1.customerservice.core.service.abstraction.MessageService;
 import com.turkcell.pair1.customerservice.core.service.constants.Messages;
+import com.turkcell.pair1.customerservice.entity.Address;
 import com.turkcell.pair1.customerservice.entity.Customer;
+import com.turkcell.pair1.customerservice.entity.Street;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
+import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
+import com.turkcell.pair1.customerservice.service.abstraction.CityService;
 import com.turkcell.pair1.customerservice.service.abstraction.CustomerService;
+import com.turkcell.pair1.customerservice.service.abstraction.StreetService;
+import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import com.turkcell.pair1.customerservice.service.mapper.CustomerMapper;
+import jakarta.persistence.GenerationType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -25,12 +32,18 @@ public class CustomerServiceImpl implements CustomerService {
     private final MessageService messageService;
     private final WebClient.Builder webClient;
     private final OrderServiceClient orderServiceClient;
+    private final StreetService streetService;
+    private final CityService cityService;
+    private final AddressService addressService;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, MessageService messageService, WebClient.Builder webClient, OrderServiceClient orderServiceClient) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, MessageService messageService, WebClient.Builder webClient, OrderServiceClient orderServiceClient, StreetService streetService, CityService cityService, AddressService addressService) {
         this.customerRepository = customerRepository;
         this.messageService = messageService;
         this.webClient = webClient;
         this.orderServiceClient = orderServiceClient;
+        this.streetService = streetService;
+        this.cityService = cityService;
+        this.addressService = addressService;
     }
 
     @Override
@@ -76,10 +89,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer create(CreateCustomerRequest request) {
-
-
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateCustomerRequest(request);
+        List<Address> addresses=addressService.createAddressesForCustomer(request,customer);
         customerRepository.save(customer);
+        addressService.saveList(addresses);
         return customer;
     }
 
