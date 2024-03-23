@@ -40,7 +40,6 @@ public class AddressServiceImpl implements AddressService {
             address.setCustomer(customer);
             addresses.add(address);
         }
-        customer.setAddresses(addresses);
         return addresses;
     }
 }
