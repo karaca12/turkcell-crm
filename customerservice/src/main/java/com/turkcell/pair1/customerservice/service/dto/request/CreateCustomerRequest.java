@@ -1,5 +1,9 @@
 package com.turkcell.pair1.customerservice.service.dto.request;
 
+import com.turkcell.pair1.customerservice.core.service.constants.Messages;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -10,25 +14,26 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateCustomerRequest{
-    @NotNull
+public class CreateCustomerRequest {
+    @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     String firstName;
     String middleName;
-    @NotNull
+    @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     String lastName;
-    @NotNull
+    @NotNull(message = Messages.ValidationErrors.NOT_NULL)
     LocalDate birthDate;
-    @NotNull
+    @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     String gender;
     String fatherName;
     String motherName;
-    @NotNull
+    @NotNull(message = Messages.ValidationErrors.NOT_NULL)
     Integer nationalityId;
-    @NotNull
+    @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     String email;
     String homePhone;
-    @NotNull
+    @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     String mobilePhone;
     String fax;
-    List<AddAddressToCustomerRequest> addressList;
+    @NotEmpty(message = Messages.ValidationErrors.NOT_EMPTY)
+    List<@Valid AddAddressToCustomerRequest> addressList;
 }
