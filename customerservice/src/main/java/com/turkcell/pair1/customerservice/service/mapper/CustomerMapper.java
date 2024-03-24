@@ -2,9 +2,11 @@ package com.turkcell.pair1.customerservice.service.mapper;
 
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
+import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 
@@ -18,4 +20,5 @@ public interface CustomerMapper {
     SearchCustomerResponse getSearchCustomerResponseFromCustomer(Customer customer);
 
     Customer getCustomerFromCreateCustomerRequest(CreateCustomerRequest request);
+
 }

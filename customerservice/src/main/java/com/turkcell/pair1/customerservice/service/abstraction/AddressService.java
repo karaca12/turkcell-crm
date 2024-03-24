@@ -1,14 +1,11 @@
 package com.turkcell.pair1.customerservice.service.abstraction;
 
-import com.turkcell.pair1.customerservice.entity.Address;
 import com.turkcell.pair1.customerservice.entity.Customer;
-import com.turkcell.pair1.customerservice.entity.Street;
-import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
+import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 
 import java.util.List;
 
 public interface AddressService {
-    void saveList(List<Address> addresses);
 
-    void createAddressesForCustomer(CreateCustomerRequest request, Customer customer);
+    void addAddressesForCustomer(List<AddAddressToCustomerRequest> request, Customer customer);
 }

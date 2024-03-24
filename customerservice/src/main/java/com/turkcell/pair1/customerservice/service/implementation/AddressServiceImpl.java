@@ -6,7 +6,6 @@ import com.turkcell.pair1.customerservice.repository.AddressRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
 import com.turkcell.pair1.customerservice.service.abstraction.StreetService;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
-import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
 import com.turkcell.pair1.customerservice.service.mapper.AddressMapper;
 import org.springframework.stereotype.Service;
 
@@ -22,20 +21,16 @@ public class AddressServiceImpl implements AddressService {
         this.streetService = streetService;
     }
 
-    @Override
-    public void saveList(List<Address> addresses) {
-        addressRepository.saveAll(addresses);
-    }
 
     @Override
-    public void createAddressesForCustomer(CreateCustomerRequest request, Customer customer) {
+    public void addAddressesForCustomer(List<AddAddressToCustomerRequest> addressRequests, Customer customer) {
         for (AddAddressToCustomerRequest addressRequest :
-                request.getAddressList()) {
+                addressRequests) {
             Address address = AddressMapper.INSTANCE.addAddressToCustomerRequesttoAddress(addressRequest);
-            address.setStreet(streetService.findStreetByNameAndCity(addressRequest.getStreetName(),addressRequest.getCity()));
+            address.setStreet(streetService.findStreetByNameAndCity(addressRequest.getStreetName(), addressRequest.getCity()));
             address.setCustomer(customer);
             addressRepository.save(address);
         }
-
     }
+
 }

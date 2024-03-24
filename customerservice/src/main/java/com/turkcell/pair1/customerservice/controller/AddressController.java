@@ -1,11 +1,11 @@
 package com.turkcell.pair1.customerservice.controller;
 
 import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
-@RequestMapping("/api/customer/address")
+@RequestMapping("/api/customers/address")
 public class AddressController {
     private final AddressService addressService;
 

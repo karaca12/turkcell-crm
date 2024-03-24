@@ -5,13 +5,14 @@ import com.turkcell.pair1.customerservice.core.exception.types.BusinessException
 import com.turkcell.pair1.customerservice.core.exception.types.DuplicateEntityException;
 import com.turkcell.pair1.customerservice.core.service.abstraction.MessageService;
 import com.turkcell.pair1.customerservice.core.service.constants.Messages;
-import com.turkcell.pair1.customerservice.entity.Address;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
 import com.turkcell.pair1.customerservice.service.abstraction.CustomerService;
+import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
+import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import com.turkcell.pair1.customerservice.service.mapper.CustomerMapper;
@@ -37,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<SearchCustomerResponse> search(SearchCustomerRequest request) {
 
-        if (request.getOrderNumber()!=null) {
+        if (request.getOrderNumber() != null) {
             int customerId = orderServiceClient.getCustomerIdByOrderId(request.getOrderNumber());
             List<SearchCustomerResponse> response = new ArrayList<>();
             Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
@@ -66,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
         checkNationalityId(request.getNationalityId());
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateCustomerRequest(request);
         customerRepository.save(customer);
-        addressService.createAddressesForCustomer(request, customer);
+        addressService.addAddressesForCustomer(request.getAddressList(), customer);
         return customer;
     }
 
@@ -76,4 +77,15 @@ public class CustomerServiceImpl implements CustomerService {
             throw new DuplicateEntityException("nationalityId", messageService.getMessage(Messages.BusinessErrors.DUPLICATE_NATIONALITY_ID_ERROR));
         }
     }
+
+    @Override
+    public void updateInfo(UpdateCustomerInfoRequest request) {
+        customerRepository.updateCustomerInfoById(request.getFirstName(), request.getMiddleName(), request.getLastName(), request.getBirthDate(), request.getGender(), request.getFatherName(), request.getMotherName(), request.getNationalityId(), request.getUpdatedId());
+    }
+
+    @Override
+    public void createAddress(Integer id, List<AddAddressToCustomerRequest> request) {
+        addressService.addAddressesForCustomer(request,customerRepository.findById(id).orElseThrow());
+    }
+
 }

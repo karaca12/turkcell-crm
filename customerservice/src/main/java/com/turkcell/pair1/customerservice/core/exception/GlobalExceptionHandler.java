@@ -2,7 +2,6 @@ package com.turkcell.pair1.customerservice.core.exception;
 
 import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
 import com.turkcell.pair1.customerservice.core.exception.types.DuplicateEntityException;
-import com.turkcell.pair1.customerservice.core.service.constants.Messages;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -54,9 +53,9 @@ public class GlobalExceptionHandler {
         return exception.getMessage();
     }
 
-    @ExceptionHandler({Exception.class})
+    /*@ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException() {
         return Messages.UNKNOWN_ERROR;
-    }
+    }*/
 }
