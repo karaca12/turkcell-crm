@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddAddressToCustomerRequest {
     private String city;
-    private String  street;
+    private String  streetName;
     private Integer flatNumber;
     private String description;
 }

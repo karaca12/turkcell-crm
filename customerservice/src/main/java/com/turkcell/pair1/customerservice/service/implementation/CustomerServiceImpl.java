@@ -65,9 +65,8 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer create(CreateCustomerRequest request) {
         checkNationalityId(request.getNationalityId());
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateCustomerRequest(request);
-        List<Address> addresses = addressService.createAddressesForCustomer(request, customer);
         customerRepository.save(customer);
-        addressService.saveList(addresses);
+        addressService.createAddressesForCustomer(request, customer);
         return customer;
     }
 

@@ -10,5 +10,5 @@ import java.util.List;
 public interface AddressService {
     void saveList(List<Address> addresses);
 
-    List<Address> createAddressesForCustomer(CreateCustomerRequest request, Customer customer);
+    void createAddressesForCustomer(CreateCustomerRequest request, Customer customer);
 }
