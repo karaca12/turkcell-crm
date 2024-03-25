@@ -47,6 +47,7 @@ services:
     environment:
       - SPRING_CLOUD_CONFIG_PROFILE=prod
       - CONFIG_URL=http://config-server:8079
+    restart: on-failure
     depends_on:
       - postgres
       - discovery-server
@@ -60,7 +61,7 @@ services:
       - "8081:8081"
     environment:
       - SPRING_CLOUD_CONFIG_PROFILE=prod
-      - CONFIG_URL=http:config-server:8079
+      - CONFIG_URL=http://config-server:8079
     restart: on-failure
     depends_on:
       - mongodb
@@ -76,6 +77,7 @@ services:
     environment:
       - SPRING_CLOUD_CONFIG_PROFILE=prod
       - CONFIG_URL=http://config-server:8079
+    restart: on-failure
     depends_on:
       - postgres
       - discovery-server
