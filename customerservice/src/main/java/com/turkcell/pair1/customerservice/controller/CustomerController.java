@@ -51,6 +51,9 @@ public class CustomerController {
         customerService.createAddress(id,request);
     }
 
-
+    @GetMapping("/lbTest")
+    public String lbTest(){
+        return customerService.lbTest();
+    }
 
 }

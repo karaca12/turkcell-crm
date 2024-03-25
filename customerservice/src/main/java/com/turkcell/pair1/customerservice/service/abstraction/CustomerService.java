@@ -22,4 +22,6 @@ public interface CustomerService {
     void updateInfo(UpdateCustomerInfoRequest request);
 
     void createAddress(Integer id, List<AddAddressToCustomerRequest> request);
+
+    String  lbTest();
 }

@@ -88,4 +88,9 @@ public class CustomerServiceImpl implements CustomerService {
         addressService.addAddressesForCustomer(request,customerRepository.findById(id).orElseThrow());
     }
 
+    @Override
+    public String lbTest() {
+        return orderServiceClient.lbTest();
+    }
+
 }
