@@ -2,6 +2,7 @@ package com.turkcell.pair1.customerservice.service.dto.request;
 
 import com.turkcell.pair1.customerservice.core.service.constants.Messages;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +30,7 @@ public class CreateCustomerRequest {
     @NotNull(message = Messages.ValidationErrors.NOT_NULL)
     Integer nationalityId;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
+    @Email
     String email;
     String homePhone;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
