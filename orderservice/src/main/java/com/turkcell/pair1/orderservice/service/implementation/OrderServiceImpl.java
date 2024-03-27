@@ -6,17 +6,15 @@ import com.turkcell.pair1.orderservice.core.service.constants.Messages;
 import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MessageService messageService;
 
-    public OrderServiceImpl(OrderRepository orderRepository, MessageService messageService) {
-        this.orderRepository = orderRepository;
-        this.messageService = messageService;
-    }
 
     @Override
     public int getCustomerIdByOrderId(String orderId) {

@@ -1,26 +1,24 @@
 package com.turkcell.pair1.customerservice.controller;
 
-import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.abstraction.CustomerService;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
+import com.turkcell.pair1.customerservice.service.dto.response.CreateCustomerResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
+@RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
-
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
 
     @PostMapping("search")
     public List<SearchCustomerResponse> search(@RequestBody SearchCustomerRequest request){
@@ -32,7 +30,7 @@ public class CustomerController {
     }
 
     @PostMapping("create")
-    public Customer create(@RequestBody @Valid CreateCustomerRequest request){
+    public CreateCustomerResponse create(@RequestBody @Valid CreateCustomerRequest request){
         return customerService.create(request);
     }
 

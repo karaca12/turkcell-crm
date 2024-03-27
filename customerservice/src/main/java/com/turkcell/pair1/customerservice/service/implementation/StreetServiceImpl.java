@@ -6,18 +6,16 @@ import com.turkcell.pair1.customerservice.core.service.constants.Messages;
 import com.turkcell.pair1.customerservice.entity.Street;
 import com.turkcell.pair1.customerservice.repository.StreetRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.StreetService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class StreetServiceImpl implements StreetService {
     private final StreetRepository streetRepository;
     private final MessageService messageService;
 
-    public StreetServiceImpl(StreetRepository streetRepository, MessageService messageService) {
-        this.streetRepository = streetRepository;
-        this.messageService = messageService;
-    }
 
     @Override
     public Street findStreetByNameAndCity(String street, String city) {

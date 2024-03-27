@@ -1,13 +1,11 @@
 package com.turkcell.pair1.customerservice.service.mapper;
 
 import com.turkcell.pair1.customerservice.entity.Address;
-import com.turkcell.pair1.customerservice.entity.Customer;
-import com.turkcell.pair1.customerservice.entity.Street;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
-import org.mapstruct.AfterMapping;
+import com.turkcell.pair1.customerservice.service.dto.response.GetAddressResponse;
 import org.mapstruct.Mapper;
 
-import org.mapstruct.MappingTarget;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -15,6 +13,9 @@ public interface AddressMapper {
     AddressMapper INSTANCE= Mappers.getMapper(AddressMapper.class);
 
 
-    Address addAddressToCustomerRequesttoAddress(AddAddressToCustomerRequest dto);
+    Address addAddressToCustomerRequestToAddress(AddAddressToCustomerRequest request);
 
+    @Mapping(source = "street.name",target = "street")
+    @Mapping(source = "street.city.name",target = "city")
+    GetAddressResponse getAddressResponseFromAddress(Address address);
 }

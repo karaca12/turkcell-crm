@@ -1,10 +1,10 @@
 package com.turkcell.pair1.customerservice.service.abstraction;
 
-import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
+import com.turkcell.pair1.customerservice.service.dto.response.CreateCustomerResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 
@@ -15,7 +15,7 @@ public interface CustomerService {
 
     GetCustomerInfoResponse getByCustomerId(Integer customerId);
 
-    Customer create(CreateCustomerRequest request);
+    CreateCustomerResponse create(CreateCustomerRequest request);
 
     void checkNationalityId(Integer nationalityId);
 

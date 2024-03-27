@@ -6,17 +6,15 @@ import com.turkcell.pair1.customerservice.core.service.constants.Messages;
 import com.turkcell.pair1.customerservice.entity.City;
 import com.turkcell.pair1.customerservice.repository.CityRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.CityService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
     private final MessageService messageService;
 
-    public CityServiceImpl(CityRepository cityRepository, MessageService messageService) {
-        this.cityRepository = cityRepository;
-        this.messageService = messageService;
-    }
 
     @Override
     public City findCityByName(String city) {

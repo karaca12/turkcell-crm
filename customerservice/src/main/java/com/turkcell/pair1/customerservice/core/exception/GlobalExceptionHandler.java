@@ -1,7 +1,8 @@
 package com.turkcell.pair1.customerservice.core.exception;
 
+import com.turkcell.pair1.customerservice.core.exception.details.BusinessProblemDetails;
+import com.turkcell.pair1.customerservice.core.exception.details.FeignProblemDetails;
 import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
-import com.turkcell.pair1.customerservice.core.exception.types.DuplicateEntityException;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -18,20 +19,10 @@ import java.util.Map;
 public class GlobalExceptionHandler {
     @ExceptionHandler({BusinessException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleBusinessException(BusinessException exception) {
-        return exception.getMessage();
-    }
-
-    @ExceptionHandler({DuplicateEntityException.class})
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public Map<String, Object> handleBusinessException(DuplicateEntityException exception) {
-        Map<String, Object> response = new HashMap<>();
-        if (!exception.getErrors().isEmpty()) {
-            response.putAll(exception.getErrors());
-        } else {
-            response.put("error", exception.getMessage());
-        }
-        return response;
+    public BusinessProblemDetails handleBusinessException(BusinessException exception) {
+        BusinessProblemDetails problemDetails=new BusinessProblemDetails();
+        problemDetails.setDetail(exception.getMessage());
+        return problemDetails;
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
@@ -40,7 +31,6 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = new HashMap<>();
 
         List<FieldError> validationErrors = exception.getBindingResult().getFieldErrors();
-
         for (FieldError error : validationErrors) {
             errors.put(error.getField(), error.getDefaultMessage());
         }
@@ -49,13 +39,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({FeignException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String handleFeignException(FeignException exception) {
-        return exception.getMessage();
+    public FeignProblemDetails handleFeignException(FeignException exception) {
+        FeignProblemDetails problemDetails=new FeignProblemDetails();
+        problemDetails.setDetail(exception.getMessage());
+        return problemDetails;
     }
 
     /*@ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String handleException() {
-        return Messages.UNKNOWN_ERROR;
+    public ProblemDetails handleException() {
+        return new ProblemDetails("Unknown Error","Some error occurred.","https://turkcell.com/exceptions/unknown");
     }*/
 }
