@@ -2,6 +2,7 @@ package com.turkcell.pair1.customerservice.core.exception;
 
 import com.turkcell.pair1.customerservice.core.exception.details.BusinessProblemDetails;
 import com.turkcell.pair1.customerservice.core.exception.details.FeignProblemDetails;
+import com.turkcell.pair1.customerservice.core.exception.details.ValidationProblemDetails;
 import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
@@ -20,27 +21,32 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({BusinessException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public BusinessProblemDetails handleBusinessException(BusinessException exception) {
-        BusinessProblemDetails problemDetails=new BusinessProblemDetails();
+        BusinessProblemDetails problemDetails = new BusinessProblemDetails();
         problemDetails.setDetail(exception.getMessage());
         return problemDetails;
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleValidationException(MethodArgumentNotValidException exception) {
-        Map<String, String> errors = new HashMap<>();
+    public ValidationProblemDetails handleValidationException(MethodArgumentNotValidException exception) {
+        List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 
-        List<FieldError> validationErrors = exception.getBindingResult().getFieldErrors();
-        for (FieldError error : validationErrors) {
-            errors.put(error.getField(), error.getDefaultMessage());
+        Map<String, String> errorDetails = new HashMap<>();
+        for (FieldError error : fieldErrors) {
+            errorDetails.put(error.getField(), error.getDefaultMessage());
         }
-        return errors;
+
+        ValidationProblemDetails problemDetails = new ValidationProblemDetails();
+        problemDetails.setDetail(errorDetails);
+
+        return problemDetails;
+
     }
 
     @ExceptionHandler({FeignException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public FeignProblemDetails handleFeignException(FeignException exception) {
-        FeignProblemDetails problemDetails=new FeignProblemDetails();
+        FeignProblemDetails problemDetails = new FeignProblemDetails();
         problemDetails.setDetail(exception.getMessage());
         return problemDetails;
     }

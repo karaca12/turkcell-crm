@@ -28,7 +28,7 @@ public class CreateCustomerRequest {
     //TODO: Custom validation rule
     Integer nationalityId;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
-    @Email
+    @Email(message = Messages.ValidationErrors.EMAIL)
     String email;
     String homePhone;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)

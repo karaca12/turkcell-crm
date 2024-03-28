@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class FeignProblemDetails extends ProblemDetails{
     public FeignProblemDetails() {
-        setTitle("Feign Rule Violation");
+        setTitle("Feign Exception");
         setType("https://turkcell.com/exceptions/feign");
     }
 }

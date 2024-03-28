@@ -13,8 +13,6 @@ public class Messages {
         public static final String NOT_NULL="{validation.notNull}";
         public static final String NOT_EMPTY = "{validation.notEmpty}";
         public static final String MIN = "{validation.minValue}";
-        public static final String SIZE = "{validation.size}";
+        public static final String EMAIL = "{validation.email}";
     }
-
-    public static final String UNKNOWN_ERROR="Unknown error.";
 }
