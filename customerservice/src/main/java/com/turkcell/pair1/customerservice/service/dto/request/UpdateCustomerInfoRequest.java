@@ -1,6 +1,7 @@
 package com.turkcell.pair1.customerservice.service.dto.request;
 
 import com.turkcell.pair1.customerservice.core.service.constants.Messages;
+import com.turkcell.pair1.customerservice.service.validation.annotation.NationalityId;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -29,5 +30,6 @@ public class UpdateCustomerInfoRequest {
     String fatherName;
     String motherName;
     @NotNull(message = Messages.ValidationErrors.NOT_NULL)
+    @NationalityId(message = Messages.ValidationErrors.NATIONALITY_ID)
     Integer nationalityId;
 }
