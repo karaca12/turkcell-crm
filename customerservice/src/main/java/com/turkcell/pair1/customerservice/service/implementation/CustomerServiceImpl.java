@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -37,8 +38,8 @@ public class CustomerServiceImpl implements CustomerService {
     public List<SearchCustomerResponse> search(SearchCustomerRequest request) {
         List<SearchCustomerResponse> response = new ArrayList<>();
         if (request.getOrderNumber() != null) {
-            int customerId = orderServiceClient.getCustomerIdByOrderId(request.getOrderNumber());
-            Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
+            String customerId = orderServiceClient.getCustomerIdByOrderId(request.getOrderNumber());
+            Customer customer = customerRepository.findByCustomerId(customerId).orElseThrow(() ->
                     new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND_ERROR)));
 
             response.add(CustomerMapper.INSTANCE.getSearchCustomerResponseFromCustomer(customer));
@@ -52,21 +53,12 @@ public class CustomerServiceImpl implements CustomerService {
         return response;
     }
 
-
-    @Override
-    public GetCustomerInfoResponse getByCustomerId(String customerId) {
-        Customer customer = customerRepository.findByCustomerId(String.valueOf(customerId))
-                .orElseThrow(() ->
-                        new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND_ERROR)));
-        return CustomerMapper.INSTANCE.getCustomerInfoResponseFromCustomer(customer);
-    }
-
     @Override
     public CreateCustomerResponse create(CreateCustomerRequest request) {
         businessRules.customerWithSameNationalityIdCannotExist(request.getNationalityId());
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateCustomerRequest(request);
+        customer.setCustomerId(UUID.randomUUID().toString());
         Customer savedCustomer = customerRepository.save(customer);
-
         CreateCustomerResponse response=CustomerMapper.INSTANCE.getCreateCustomerResponseFromCustomer(savedCustomer);
         response.setAddressList(addressService.addAddressesForCustomer(request.getAddressList(), savedCustomer));
         return response;

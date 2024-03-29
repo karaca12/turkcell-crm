@@ -16,7 +16,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public int getCustomerIdByOrderId(@RequestParam String orderId) {
+    public String getCustomerIdByOrderId(@RequestParam String orderId) {
         return orderService.getCustomerIdByOrderId(orderId);
     }
 

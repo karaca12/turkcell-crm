@@ -24,10 +24,6 @@ public class CustomerController {
     public List<SearchCustomerResponse> search(@RequestBody SearchCustomerRequest request){
         return customerService.search(request);
     }
-    @GetMapping("{customerId}")
-    public GetCustomerInfoResponse getByCustomerId(@PathVariable String customerId){
-        return customerService.getByCustomerId(customerId);
-    }
 
     @PostMapping("create")
     public CreateCustomerResponse create(@RequestBody @Valid CreateCustomerRequest request){

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name="orderservice")
 public interface OrderServiceClient {
     @GetMapping("/api/orders")
-    int getCustomerIdByOrderId(@RequestParam("orderId") String orderId);
+    String getCustomerIdByOrderId(@RequestParam("orderId") String orderId);
     @GetMapping("/api/orders/lbTest")
     String lbTest();
 }
