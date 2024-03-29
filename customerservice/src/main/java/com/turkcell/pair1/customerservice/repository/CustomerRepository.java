@@ -2,6 +2,7 @@ package com.turkcell.pair1.customerservice.repository;
 
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
+import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,6 +36,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     @Transactional
     @Modifying
-    @Query("update Customer c set c.firstName = ?1, c.middleName = ?2, c.lastName = ?3, c.birthDate = ?4, c.gender = ?5, c.fatherName = ?6, c.motherName = ?7, c.nationalityId = ?8")
-    void updateCustomerInfoById(String firstName, String middleName, String lastName, LocalDate birthDate, String gender, String fatherName, String motherName, Integer nationalityId, Integer id);
+    @Query("update Customer c set c.firstName = :#{#updateRequest.firstName}, c.middleName = :#{#updateRequest.middleName}, c.lastName = :#{#updateRequest.lastName}, c.birthDate = :#{#updateRequest.birthDate}, c.gender = :#{#updateRequest.gender}, c.fatherName = :#{#updateRequest.fatherName}, c.motherName = :#{#updateRequest.motherName}, c.nationalityId = :#{#updateRequest.nationalityId} " +
+            "where c.id=:#{#updateRequest.updatedId}")
+    void updateCustomerInfoById(@Param("updateReq")UpdateCustomerInfoRequest updateRequest);
+
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public interface CustomerService {
     List<SearchCustomerResponse> search(SearchCustomerRequest request);
 
-    GetCustomerInfoResponse getByCustomerId(Integer customerId);
+    GetCustomerInfoResponse getByCustomerId(String customerId);
 
     CreateCustomerResponse create(CreateCustomerRequest request);
 

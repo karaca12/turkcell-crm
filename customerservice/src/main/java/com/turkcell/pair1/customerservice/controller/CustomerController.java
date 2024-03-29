@@ -25,7 +25,7 @@ public class CustomerController {
         return customerService.search(request);
     }
     @GetMapping("{customerId}")
-    public GetCustomerInfoResponse getByCustomerId(@PathVariable Integer customerId){
+    public GetCustomerInfoResponse getByCustomerId(@PathVariable String customerId){
         return customerService.getByCustomerId(customerId);
     }
 

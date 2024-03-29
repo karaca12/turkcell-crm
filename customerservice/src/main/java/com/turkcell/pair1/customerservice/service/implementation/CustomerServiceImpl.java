@@ -35,27 +35,26 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<SearchCustomerResponse> search(SearchCustomerRequest request) {
-
+        List<SearchCustomerResponse> response = new ArrayList<>();
         if (request.getOrderNumber() != null) {
             int customerId = orderServiceClient.getCustomerIdByOrderId(request.getOrderNumber());
-            List<SearchCustomerResponse> response = new ArrayList<>();
             Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
                     new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND_ERROR)));
-            SearchCustomerResponse searchCustomerResponse =
-                    CustomerMapper.INSTANCE.getSearchCustomerResponseFromCustomer(customer);
-            response.add(searchCustomerResponse);
-            return response;
+
+            response.add(CustomerMapper.INSTANCE.getSearchCustomerResponseFromCustomer(customer));
+
         } else {
-            List<SearchCustomerResponse> response = customerRepository.search(request);
+            response = customerRepository.search(request);
             if (response.isEmpty()) {
                 throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND_ERROR));
             }
-            return response;
         }
+        return response;
     }
 
+
     @Override
-    public GetCustomerInfoResponse getByCustomerId(Integer customerId) {
+    public GetCustomerInfoResponse getByCustomerId(String customerId) {
         Customer customer = customerRepository.findByCustomerId(String.valueOf(customerId))
                 .orElseThrow(() ->
                         new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND_ERROR)));
@@ -80,15 +79,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void updateInfo(UpdateCustomerInfoRequest request) {
-        customerRepository.updateCustomerInfoById(request.getFirstName(),
-                request.getMiddleName(),
-                request.getLastName(),
-                request.getBirthDate(),
-                request.getGender(),
-                request.getFatherName(),
-                request.getMotherName(),
-                request.getNationalityId(),
-                request.getUpdatedId());
+        customerRepository.updateCustomerInfoById(request);
     }
 
     @Override
