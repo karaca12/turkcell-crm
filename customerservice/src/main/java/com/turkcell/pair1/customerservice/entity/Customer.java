@@ -18,18 +18,17 @@ public class Customer {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "customer_id", length = Integer.MAX_VALUE)
+    @Column(name = "customer_id")
     private String customerId;
 
     @NotNull
-    @Column(name = "first_name", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @Column(name = "middle_name", length = Integer.MAX_VALUE)
     private String middleName;
 
-    @NotNull
-    @Column(name = "last_name", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @NotNull
@@ -37,34 +36,34 @@ public class Customer {
     private LocalDate birthDate;
 
     @NotNull
-    @Column(name = "gender", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "gender", nullable = false)
     private String gender;
 
-    @Column(name = "father_name", length = Integer.MAX_VALUE)
+    @Column(name = "father_name")
     private String fatherName;
 
-    @Column(name = "mother_name", length = Integer.MAX_VALUE)
+    @Column(name = "mother_name")
     private String motherName;
 
     @NotNull
     @Column(name = "nationality_id", nullable = false)
     private Integer nationalityId;
 
-    @Column(name = "account_number", length = Integer.MAX_VALUE)
+    @Column(name = "account_number")
     private String accountNumber;
 
     @NotNull
-    @Column(name = "email", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "home_phone", length = Integer.MAX_VALUE)
+    @Column(name = "home_phone")
     private String homePhone;
 
     @NotNull
-    @Column(name = "mobile_phone", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "mobile_phone", nullable = false)
     private String mobilePhone;
 
-    @Column(name = "fax", length = Integer.MAX_VALUE)
+    @Column(name = "fax")
     private String fax;
 
     @OneToMany(mappedBy = "customer")

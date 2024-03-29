@@ -8,14 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
 
@@ -38,6 +35,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Modifying
     @Query("update Customer c set c.firstName = :#{#updateRequest.firstName}, c.middleName = :#{#updateRequest.middleName}, c.lastName = :#{#updateRequest.lastName}, c.birthDate = :#{#updateRequest.birthDate}, c.gender = :#{#updateRequest.gender}, c.fatherName = :#{#updateRequest.fatherName}, c.motherName = :#{#updateRequest.motherName}, c.nationalityId = :#{#updateRequest.nationalityId} " +
             "where c.id=:#{#updateRequest.updatedId}")
-    void updateCustomerInfoById(@Param("updateReq")UpdateCustomerInfoRequest updateRequest);
+    void updateCustomerInfoById(@Param("updateRequest")UpdateCustomerInfoRequest updateRequest);
 
 }

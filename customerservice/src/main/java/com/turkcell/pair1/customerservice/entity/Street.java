@@ -23,7 +23,7 @@ public class Street {
     private City city;
 
     @NotNull
-    @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "street")

@@ -30,7 +30,7 @@ public class Address {
     private Integer flatNumber;
 
     @NotNull
-    @Column(name = "description", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name = "description", nullable = false)
     private String description;
 
 }

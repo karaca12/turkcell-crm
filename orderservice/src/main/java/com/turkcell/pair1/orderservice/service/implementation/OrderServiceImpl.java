@@ -18,7 +18,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public String getCustomerIdByOrderId(String orderId) {
-        Order order=orderRepository.findById(orderId).orElseThrow(()-> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ORDER_FOUND_ERROR)));
+        Order order=orderRepository.findById(orderId).orElseThrow(()->
+                new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ORDER_FOUND_ERROR)));
 
         return order.getCustomerId();
     }
