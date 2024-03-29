@@ -12,8 +12,6 @@ public class NationalityIdValidator implements ConstraintValidator<NationalityId
 
     @Override
     public boolean isValid(Integer nationalityId, ConstraintValidatorContext constraintValidatorContext) {
-
-        String nationalIdStr = String.valueOf(nationalityId);
-        return nationalIdStr.length() == 11 && nationalityId % 2 == 0;
+        return nationalityId % 2 == 0;
     }
 }
