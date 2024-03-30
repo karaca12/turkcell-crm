@@ -31,7 +31,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     boolean existsByNationalityId(Integer nationalityId);
 
-    @Transactional
     @Modifying
     @Query("update Customer c set c.firstName = :#{#updateRequest.firstName}, c.middleName = :#{#updateRequest.middleName}, c.lastName = :#{#updateRequest.lastName}, c.birthDate = :#{#updateRequest.birthDate}, c.gender = :#{#updateRequest.gender}, c.fatherName = :#{#updateRequest.fatherName}, c.motherName = :#{#updateRequest.motherName}, c.nationalityId = :#{#updateRequest.nationalityId} " +
             "where c.id=:#{#updateRequest.updatedId}")
