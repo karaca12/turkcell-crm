@@ -36,30 +36,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<SearchCustomerResponse> search(SearchCustomerRequest request) {
-        List<SearchCustomerResponse> response = new ArrayList<>();
-        if (request.getOrderNumber() != null) {
-            String customerId = orderServiceClient.getCustomerIdByOrderId(request.getOrderNumber());
-            Customer customer = customerRepository.findByCustomerId(customerId).orElseThrow(() ->
-                    new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND_ERROR)));
-
-            response.add(CustomerMapper.INSTANCE.getSearchCustomerResponseFromCustomer(customer));
-
-        } else {
-            response = customerRepository.search(request);
-            if (response.isEmpty()) {
-                throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND_ERROR));
-            }
-        }
-        return response;
+        return customerRepository.search(request, businessRules.getCustomerIdFromOrderNumber(request.getOrderNumber()));
     }
 
     @Override
+    @Transactional
     public CreateCustomerResponse create(CreateCustomerRequest request) {
         businessRules.customerWithSameNationalityIdCannotExist(request.getNationalityId());
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateRequest(request);
         customer.setCustomerId(UUID.randomUUID().toString());
         Customer savedCustomer = customerRepository.save(customer);
-        CreateCustomerResponse response=CustomerMapper.INSTANCE.getCreateCustomerResponseFromCustomer(savedCustomer);
+        CreateCustomerResponse response = CustomerMapper.INSTANCE.getCreateCustomerResponseFromCustomer(savedCustomer);
         response.setAddressList(addressService.addAddressesForCustomer(request.getAddressList(), savedCustomer));
         return response;
     }

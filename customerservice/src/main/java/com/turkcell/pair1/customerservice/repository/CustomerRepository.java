@@ -23,8 +23,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             "and (:#{#request.accountNumber} is null or c.accountNumber=:#{#request.accountNumber})" +
             "and (:#{#request.mobilePhone} is null or c.mobilePhone=:#{#request.mobilePhone})" +
             "and (:#{#request.firstName} is null or c.firstName=:#{#request.firstName})" +
-            "and (:#{#request.lastName} is null or c.lastName=:#{#request.lastName})")
-    List<SearchCustomerResponse> search(@Param("request") SearchCustomerRequest request);
+            "and (:#{#request.lastName} is null or c.lastName=:#{#request.lastName}) " +
+            "and (:#{#customerId} is null or c.customerId=:#{#customerId})")
+    List<SearchCustomerResponse> search(@Param("request") SearchCustomerRequest request,String customerId);
 
     Optional<Customer> findByCustomerId(String customerId);
 
