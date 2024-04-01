@@ -15,7 +15,7 @@ public interface CustomerMapper {
 
     SearchCustomerResponse getSearchCustomerResponseFromCustomer(Customer customer);
 
-    Customer getCustomerFromCreateCustomerRequest(CreateCustomerRequest request);
+    Customer getCustomerFromCreateRequest(CreateCustomerRequest request);
 
     CreateCustomerResponse getCreateCustomerResponseFromCustomer(Customer savedCustomer);
 }

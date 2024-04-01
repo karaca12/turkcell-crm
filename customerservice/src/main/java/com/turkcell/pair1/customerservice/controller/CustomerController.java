@@ -6,7 +6,6 @@ import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequ
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.CreateCustomerResponse;
-import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class CustomerController {
     }
 
     @PostMapping("nationalityId")
-    public void checkNationalityId(@RequestParam Integer nationalityId){
+    public void checkNationalityId(@RequestParam String nationalityId){
         customerService.checkNationalityId(nationalityId);
     }
 

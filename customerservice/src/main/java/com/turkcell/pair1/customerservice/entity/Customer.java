@@ -1,5 +1,6 @@
 package com.turkcell.pair1.customerservice.entity;
 
+import com.turkcell.pair1.customerservice.core.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,7 +26,7 @@ public class Customer {
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "middle_name", length = Integer.MAX_VALUE)
+    @Column(name = "middle_name")
     private String middleName;
 
     @Column(name = "last_name", nullable = false)
@@ -46,8 +47,8 @@ public class Customer {
     private String motherName;
 
     @NotNull
-    @Column(name = "nationality_id", nullable = false)
-    private Integer nationalityId;
+    @Column(name = "nationality_id", nullable = false,length = 11)
+    private String  nationalityId;
 
     @Column(name = "account_number")
     private String accountNumber;

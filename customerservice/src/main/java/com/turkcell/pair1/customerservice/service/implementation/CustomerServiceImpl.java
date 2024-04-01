@@ -13,12 +13,12 @@ import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequ
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.CreateCustomerResponse;
-import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import com.turkcell.pair1.customerservice.service.mapper.CustomerMapper;
 import com.turkcell.pair1.customerservice.service.rules.CustomerBusinessRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CreateCustomerResponse create(CreateCustomerRequest request) {
         businessRules.customerWithSameNationalityIdCannotExist(request.getNationalityId());
-        Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateCustomerRequest(request);
+        Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateRequest(request);
         customer.setCustomerId(UUID.randomUUID().toString());
         Customer savedCustomer = customerRepository.save(customer);
         CreateCustomerResponse response=CustomerMapper.INSTANCE.getCreateCustomerResponseFromCustomer(savedCustomer);
@@ -65,11 +65,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void checkNationalityId(Integer nationalityId) {
+    public void checkNationalityId(String nationalityId) {
         businessRules.customerWithSameNationalityIdCannotExist(nationalityId);
     }
 
     @Override
+    @Transactional
     public void updateInfo(UpdateCustomerInfoRequest request) {
         customerRepository.updateCustomerInfoById(request);
     }

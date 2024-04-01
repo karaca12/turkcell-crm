@@ -31,5 +31,5 @@ public class UpdateCustomerInfoRequest {
     String motherName;
     @NotNull(message = Messages.ValidationErrors.NOT_NULL)
     @NationalityId(message = Messages.ValidationErrors.NATIONALITY_ID)
-    Integer nationalityId;
+    String nationalityId;
 }

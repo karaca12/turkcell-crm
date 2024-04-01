@@ -21,7 +21,7 @@ public class CreateCustomerResponse {
     String gender;
     String fatherName;
     String motherName;
-    Integer nationalityId;
+    String nationalityId;
     String email;
     String homePhone;
     String mobilePhone;

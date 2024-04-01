@@ -4,14 +4,14 @@ import com.turkcell.pair1.customerservice.service.validation.annotation.National
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class NationalityIdValidator implements ConstraintValidator<NationalityId, Integer> {
+public class NationalityIdValidator implements ConstraintValidator<NationalityId, String> {
     @Override
     public void initialize(NationalityId constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override
-    public boolean isValid(Integer nationalityId, ConstraintValidatorContext constraintValidatorContext) {
-        return nationalityId % 2 == 0;
+    public boolean isValid(String nationalityId, ConstraintValidatorContext constraintValidatorContext) {
+        return nationalityId.length() == 11;
     }
 }

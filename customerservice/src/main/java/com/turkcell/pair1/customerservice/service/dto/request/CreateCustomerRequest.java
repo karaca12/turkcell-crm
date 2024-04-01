@@ -27,7 +27,7 @@ public class CreateCustomerRequest {
     String motherName;
     @NotNull(message = Messages.ValidationErrors.NOT_NULL)
     @NationalityId(message = Messages.ValidationErrors.NATIONALITY_ID)
-    Integer nationalityId;
+    String nationalityId;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     @Email(message = Messages.ValidationErrors.EMAIL)
     String email;

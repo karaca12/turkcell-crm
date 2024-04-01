@@ -1,5 +1,6 @@
 package com.turkcell.pair1.customerservice.entity;
 
+import com.turkcell.pair1.customerservice.core.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "addresses")
-public class Address {
+public class Address extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

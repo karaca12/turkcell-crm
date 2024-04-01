@@ -2,7 +2,6 @@ package com.turkcell.pair1.customerservice.core.exception;
 
 import com.turkcell.pair1.customerservice.core.exception.details.BusinessProblemDetails;
 import com.turkcell.pair1.customerservice.core.exception.details.FeignProblemDetails;
-import com.turkcell.pair1.customerservice.core.exception.details.ProblemDetails;
 import com.turkcell.pair1.customerservice.core.exception.details.ValidationProblemDetails;
 import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
 import feign.FeignException;
@@ -52,9 +51,9 @@ public class GlobalExceptionHandler {
         return problemDetails;
     }
 
-    @ExceptionHandler({Exception.class})
+    /*@ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ProblemDetails handleException() {
         return new ProblemDetails("Unknown Error","Some error occurred.","https://turkcell.com/exceptions/unknown");
-    }
+    }*/
 }

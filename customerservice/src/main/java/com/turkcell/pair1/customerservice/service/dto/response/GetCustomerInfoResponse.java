@@ -19,5 +19,5 @@ public class GetCustomerInfoResponse {
     private String gender;
     private String fatherName;
     private String motherName;
-    private Integer nationalityId;
+    private String nationalityId;
 }

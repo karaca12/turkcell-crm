@@ -13,7 +13,7 @@ public class CustomerBusinessRules {
     private final CustomerRepository customerRepository;
     private final MessageService messageService;
 
-    public void customerWithSameNationalityIdCannotExist(Integer nationalityId) {
+    public void customerWithSameNationalityIdCannotExist(String nationalityId) {
         if (customerRepository.existsByNationalityId(nationalityId)) {
             throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.DUPLICATE_NATIONALITY_ID_ERROR));
         }

@@ -5,7 +5,6 @@ import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequ
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.CreateCustomerResponse;
-import com.turkcell.pair1.customerservice.service.dto.response.GetCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface CustomerService {
 
     CreateCustomerResponse create(CreateCustomerRequest request);
 
-    void checkNationalityId(Integer nationalityId);
+    void checkNationalityId(String nationalityId);
 
     void updateInfo(UpdateCustomerInfoRequest request);
 
