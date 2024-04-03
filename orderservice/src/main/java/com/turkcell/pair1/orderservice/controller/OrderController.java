@@ -19,15 +19,4 @@ public class OrderController {
     public String getCustomerIdByOrderId(@RequestParam String orderId) {
         return orderService.getCustomerIdByOrderId(orderId);
     }
-
-    @GetMapping("/lbTest")
-    public String lbTest(){
-        System.out.println("Load balancing test in process.");
-        try {
-            Thread.sleep(10000);
-        }catch (Exception ignore){
-
-        }
-        return "This is a test for load balancing.";
-    }
 }

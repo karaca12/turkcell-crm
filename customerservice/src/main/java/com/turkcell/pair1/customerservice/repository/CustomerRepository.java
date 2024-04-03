@@ -4,6 +4,7 @@ import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +26,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             "and (:#{#request.firstName} is null or c.firstName=:#{#request.firstName})" +
             "and (:#{#request.lastName} is null or c.lastName=:#{#request.lastName}) " +
             "and (:#{#customerId} is null or c.customerId=:#{#customerId})")
-    List<SearchCustomerResponse> search(@Param("request") SearchCustomerRequest request,String customerId);
+    List<SearchCustomerResponse> search(@Param("request") SearchCustomerRequest request, String customerId, Pageable pageable);
 
     Optional<Customer> findByCustomerId(String customerId);
 
@@ -38,6 +39,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             " c.motherName = :#{#updateRequest.motherName}, c.nationalityId = :#{#updateRequest.nationalityId}," +
             " c.updatedAt=current timestamp " +
             "where c.id=:#{#updateRequest.updatedId}")
-    void updateCustomerInfoById(@Param("updateRequest")UpdateCustomerInfoRequest updateRequest);
+    void updateCustomerInfoById(@Param("updateRequest") UpdateCustomerInfoRequest updateRequest);
 
 }

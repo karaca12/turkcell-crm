@@ -1,5 +1,6 @@
 package com.turkcell.pair1.customerservice.controller;
 
+import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.customerservice.service.abstraction.CustomerService;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
@@ -20,8 +21,10 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping("search")
-    public List<SearchCustomerResponse> search(@RequestBody SearchCustomerRequest request){
-        return customerService.search(request);
+    public List<SearchCustomerResponse> search(@RequestBody SearchCustomerRequest request,
+                                               @RequestParam int page,@RequestParam int size){
+        PageInfo pageInfo=new PageInfo(page,size);
+        return customerService.search(request,pageInfo);
     }
 
     @PostMapping("create")
@@ -44,9 +47,5 @@ public class CustomerController {
         customerService.createAddress(id,request);
     }
 
-    @GetMapping("/lbTest")
-    public String lbTest(){
-        return customerService.lbTest();
-    }
 
 }

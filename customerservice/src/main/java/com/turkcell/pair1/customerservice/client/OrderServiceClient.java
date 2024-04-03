@@ -8,6 +8,4 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface OrderServiceClient {
     @GetMapping("/api/orders")
     String getCustomerIdByOrderId(@RequestParam("orderId") String orderId);
-    @GetMapping("/api/orders/lbTest")
-    String lbTest();
 }
