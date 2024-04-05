@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCustomerResponse {
-    Integer id;
+    String customerId;
     String firstName;
     String middleName;
     String lastName;

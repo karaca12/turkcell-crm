@@ -5,8 +5,7 @@ import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustom
 import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
-import com.turkcell.pair1.customerservice.service.dto.response.CreateCustomerResponse;
-import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
+import com.turkcell.pair1.customerservice.service.dto.response.*;
 
 import java.util.List;
 
@@ -20,4 +19,10 @@ public interface CustomerService {
     void updateInfo(UpdateCustomerInfoRequest request);
 
     void createAddress(Integer id, List<AddAddressToCustomerRequest> request);
+
+    GetCustomerInfoResponse getCustomerInfoByCustomerId(String customerId);
+
+    List<GetAddressResponse> getCustomerAddressesByCustomerId(String customerId);
+
+    GetCustomerContactInfoResponse getCustomerContactInfoByCustomerId(String customerId);
 }

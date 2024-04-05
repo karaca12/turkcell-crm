@@ -38,4 +38,9 @@ public class AddressServiceImpl implements AddressService {
         return response;
     }
 
+    @Override
+    public List<GetAddressResponse> getAddressesFromCustomerByCustomerId(String customerId) {
+        return AddressMapper.INSTANCE.getAddressResponsesFromAddresses(addressRepository.findByCustomer_CustomerId(customerId));
+    }
+
 }

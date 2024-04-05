@@ -9,4 +9,7 @@ import java.util.List;
 public interface AddressService {
 
     List<GetAddressResponse> addAddressesForCustomer(List<AddAddressToCustomerRequest> request, Customer customer);
+
+
+    List<GetAddressResponse> getAddressesFromCustomerByCustomerId(String customerId);
 }

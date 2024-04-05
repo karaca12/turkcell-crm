@@ -1,6 +1,5 @@
 package com.turkcell.pair1.customerservice.service.implementation;
 
-import com.turkcell.pair1.customerservice.client.OrderServiceClient;
 import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
@@ -10,8 +9,7 @@ import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustom
 import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
-import com.turkcell.pair1.customerservice.service.dto.response.CreateCustomerResponse;
-import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
+import com.turkcell.pair1.customerservice.service.dto.response.*;
 import com.turkcell.pair1.customerservice.service.mapper.CustomerMapper;
 import com.turkcell.pair1.customerservice.service.rules.CustomerBusinessRules;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +25,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
-    private final OrderServiceClient orderServiceClient;
     private final AddressService addressService;
     private final CustomerBusinessRules businessRules;
 
@@ -65,7 +62,26 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void createAddress(Integer id, List<AddAddressToCustomerRequest> request) {
-        addressService.addAddressesForCustomer(request, customerRepository.findById(id).orElseThrow());
+        addressService.addAddressesForCustomer(request, businessRules.getCustomerFromOptional(customerRepository.findById(id)));
     }
+
+    @Override
+    public GetCustomerInfoResponse getCustomerInfoByCustomerId(String customerId) {
+        return CustomerMapper.INSTANCE.getCustomerInfoResponseFromCustomer(
+                businessRules.getCustomerFromOptional(customerRepository.findByCustomerId(customerId)));
+    }
+
+    @Override
+    public List<GetAddressResponse> getCustomerAddressesByCustomerId(String customerId) {
+        return addressService.getAddressesFromCustomerByCustomerId(customerId);
+    }
+
+    @Override
+    public GetCustomerContactInfoResponse getCustomerContactInfoByCustomerId(String customerId) {
+        return CustomerMapper.INSTANCE.getCustomerContactInfoResponseFromCustomer(
+                businessRules.getCustomerFromOptional(customerRepository.findByCustomerId(customerId)));
+    }
+
+
 
 }
