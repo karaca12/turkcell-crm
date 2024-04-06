@@ -1,5 +1,6 @@
 package com.turkcell.pair1.authservice.core.config;
 
+import com.turkcell.pair1.authservice.core.filter.JwtAuthFilter;
 import com.turkcell.pair1.authservice.service.abstraction.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,12 +13,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -25,9 +28,9 @@ public class SecurityConfiguration {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        //.requestMatchers("/swagger-ui/**").authenticated()
-                        .anyRequest()
-                        .permitAll());
+                        .requestMatchers("/api/v1/test/**").authenticated()
+                        .anyRequest().permitAll())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 

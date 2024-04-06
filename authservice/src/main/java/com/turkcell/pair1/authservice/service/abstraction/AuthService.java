@@ -5,5 +5,5 @@ import com.turkcell.pair1.authservice.service.dto.request.RegisterRequest;
 
 public interface AuthService {
     void register(RegisterRequest request);
-    void login(LoginRequest request);
+    String login(LoginRequest request);
 }
