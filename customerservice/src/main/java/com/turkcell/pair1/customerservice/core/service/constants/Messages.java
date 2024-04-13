@@ -5,6 +5,8 @@ public class Messages {
         public static final String DUPLICATE_NATIONALITY_ID_ERROR="duplicateNationalityIdError";
         public static final String NO_STREET_AND_CITY_FOUND_ERROR = "noStreetAndCityFoundError";
         public static final String NO_CUSTOMER_FOUND = "noCustomerFound";
+        public static final String NO_ADDRESS_FOUND = "noAddressFound";
+        public static final String CUSTOMER_DOES_NOT_CONTAIN_ADDRESS = "customerDoesNotContainAddress";
     }
 
     public static class ValidationErrors{

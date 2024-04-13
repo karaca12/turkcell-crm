@@ -3,6 +3,7 @@ package com.turkcell.pair1.customerservice.core.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -18,9 +19,9 @@ public abstract class BaseEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-
-    /*private boolean isDeleted;
-    private LocalDateTime deletedAt;*/
+    @ColumnDefault(value = "false")
+    private boolean isDeleted;
+    private LocalDateTime deletedAt;
 
     @PrePersist
     protected void onCreate() {

@@ -1,11 +1,22 @@
 package com.turkcell.pair1.customerservice.repository;
 
 import com.turkcell.pair1.customerservice.entity.Address;
+import com.turkcell.pair1.customerservice.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
-    List<Address> findByCustomer_CustomerId(String customerId);
+    List<Address> findByIsDeletedFalseAndCustomer(Customer customer);
+
+    @Modifying
+    @Query("update Address a set a.street = :#{#address.street}, a.flatNumber = :#{#address.flatNumber}," +
+            " a.description = :#{#address.description}," +
+            " a.updatedAt=current timestamp " +
+            "where a.id = :#{#updatedId}")
+    void updateAddressById(@Param("address") Address address,Integer updatedId);
 }

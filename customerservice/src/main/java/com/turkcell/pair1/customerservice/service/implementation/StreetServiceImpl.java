@@ -13,7 +13,7 @@ public class StreetServiceImpl implements StreetService {
     private final StreetBusinessRules businessRules;
 
     @Override
-    public Street findStreetByNameAndCity(String street, String city) {
+    public Street findStreetByNameAndCityAndIsDeletedFalse(String street, String city) {
         return businessRules.getStreetByNameAndCity(street, city);
     }
 }

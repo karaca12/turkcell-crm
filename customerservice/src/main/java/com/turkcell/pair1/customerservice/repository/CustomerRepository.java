@@ -25,10 +25,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             "and (:#{#request.mobilePhone} is null or c.mobilePhone=:#{#request.mobilePhone})" +
             "and (:#{#request.firstName} is null or c.firstName=:#{#request.firstName})" +
             "and (:#{#request.lastName} is null or c.lastName=:#{#request.lastName}) " +
-            "and (:#{#customerId} is null or c.customerId=:#{#customerId})")
+            "and (:#{#customerId} is null or c.customerId=:#{#customerId}) " +
+            "and c.isDeleted=false ")
     List<SearchCustomerResponse> search(@Param("request") SearchCustomerRequest request, String customerId, Pageable pageable);
 
-    Optional<Customer> findByCustomerId(String customerId);
+    Optional<Customer> findByIsDeletedFalseAndCustomerId(String customerId);
 
     boolean existsByNationalityId(String nationalityId);
 
@@ -38,7 +39,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             " c.gender = :#{#updateRequest.gender}, c.fatherName = :#{#updateRequest.fatherName}," +
             " c.motherName = :#{#updateRequest.motherName}, c.nationalityId = :#{#updateRequest.nationalityId}," +
             " c.updatedAt=current timestamp " +
-            "where c.id=:#{#updateRequest.updatedId}")
+            "where c.id=:#{#updateRequest.updatedId} and c.isDeleted=false ")
     void updateCustomerInfoById(@Param("updateRequest") UpdateCustomerInfoRequest updateRequest);
 
 }

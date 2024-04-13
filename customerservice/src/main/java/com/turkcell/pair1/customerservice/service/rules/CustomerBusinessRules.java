@@ -33,4 +33,8 @@ public class CustomerBusinessRules {
     public Customer getCustomerFromOptional(Optional<Customer> optionalCustomer) {
         return optionalCustomer.orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND)));
     }
+
+    public void customerCannotHaveActiveProducts(Customer customer) {
+        //TODO: implement after product service is implemented
+    }
 }

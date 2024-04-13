@@ -5,10 +5,7 @@ import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
 import com.turkcell.pair1.customerservice.service.abstraction.CustomerService;
-import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
-import com.turkcell.pair1.customerservice.service.dto.request.CreateCustomerRequest;
-import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
-import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
+import com.turkcell.pair1.customerservice.service.dto.request.*;
 import com.turkcell.pair1.customerservice.service.dto.response.*;
 import com.turkcell.pair1.customerservice.service.mapper.CustomerMapper;
 import com.turkcell.pair1.customerservice.service.rules.CustomerBusinessRules;
@@ -18,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,28 +58,41 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.updateCustomerInfoById(request);
     }
 
-    @Override
-    public void createAddress(Integer id, List<AddAddressToCustomerRequest> request) {
-        addressService.addAddressesForCustomer(request, businessRules.getCustomerFromOptional(customerRepository.findById(id)));
-    }
 
     @Override
     public GetCustomerInfoResponse getCustomerInfoByCustomerId(String customerId) {
         return CustomerMapper.INSTANCE.getCustomerInfoResponseFromCustomer(
-                businessRules.getCustomerFromOptional(customerRepository.findByCustomerId(customerId)));
+                businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId)));
     }
 
     @Override
     public List<GetAddressResponse> getCustomerAddressesByCustomerId(String customerId) {
-        return addressService.getAddressesFromCustomerByCustomerId(customerId);
+        return addressService.getAddressesFromCustomerByCustomerId(businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId)));
     }
 
     @Override
     public GetCustomerContactInfoResponse getCustomerContactInfoByCustomerId(String customerId) {
         return CustomerMapper.INSTANCE.getCustomerContactInfoResponseFromCustomer(
-                businessRules.getCustomerFromOptional(customerRepository.findByCustomerId(customerId)));
+                businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId)));
     }
 
+    @Override
+    @Transactional
+    public void updateCustomerAddressesByCustomerId(String customerId, AddUpdateAndDeleteAddressRequest request) {
+        Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
+        addressService.addAddressesForCustomer(request.getNewAddresses(), customer);
+        addressService.deleteAddressesFromIds(request.getDeletedIds(), customer);
+        addressService.updateAddressesForCustomer(request.getUpdatedAddresses(), customer);
+    }
+
+    @Override
+    public void deleteCustomerByCustomerId(String customerId) {
+        Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
+        businessRules.customerCannotHaveActiveProducts(customer);
+        customer.setDeleted(true);
+        customer.setDeletedAt(LocalDateTime.now());
+        customerRepository.save(customer);
+    }
 
 
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetAddressResponse {
+    private Integer id;
     private String city;
     private String street;
     private Integer flatNumber;
