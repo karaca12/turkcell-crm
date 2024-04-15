@@ -86,9 +86,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public void deleteCustomerByCustomerId(String customerId) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        businessRules.customerCannotHaveActiveProducts(customer);
+        businessRules.ensureCustomerHasNoActiveProducts(customer);
         customer.setDeleted(true);
         customer.setDeletedAt(LocalDateTime.now());
         customerRepository.save(customer);

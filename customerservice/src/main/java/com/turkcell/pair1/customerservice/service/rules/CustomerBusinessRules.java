@@ -1,6 +1,7 @@
 package com.turkcell.pair1.customerservice.service.rules;
 
 import com.turkcell.pair1.customerservice.client.OrderServiceClient;
+import com.turkcell.pair1.customerservice.client.ProductServiceClient;
 import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
 import com.turkcell.pair1.customerservice.core.service.abstraction.MessageService;
 import com.turkcell.pair1.customerservice.core.service.constants.Messages;
@@ -17,6 +18,7 @@ public class CustomerBusinessRules {
     private final CustomerRepository customerRepository;
     private final MessageService messageService;
     private final OrderServiceClient orderServiceClient;
+    private final ProductServiceClient productServiceClient;
 
     public void customerWithSameNationalityIdCannotExist(String nationalityId) {
         if (customerRepository.existsByNationalityId(nationalityId)) {
@@ -34,7 +36,7 @@ public class CustomerBusinessRules {
         return optionalCustomer.orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND)));
     }
 
-    public void customerCannotHaveActiveProducts(Customer customer) {
+    public void ensureCustomerHasNoActiveProducts(Customer customer) {
         //TODO: implement after product service is implemented
     }
 }
