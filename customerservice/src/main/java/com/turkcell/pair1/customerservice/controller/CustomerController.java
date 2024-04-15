@@ -71,4 +71,8 @@ public class CustomerController {
         customerService.deleteCustomerByCustomerId(customerId);
     }
 
+    @PostMapping("updateCustomerContactMediumByCustomerId/{customerId}")
+    public void updateCustomerContactMediumByCustomerId(@PathVariable String customerId, @RequestBody UpdateContactMediumRequest request) {
+        customerService.updateCustomerContactMediumByCustomerId(customerId, request);
+    }
 }

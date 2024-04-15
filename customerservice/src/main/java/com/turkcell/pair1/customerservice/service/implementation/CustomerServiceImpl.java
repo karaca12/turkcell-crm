@@ -95,5 +95,15 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.save(customer);
     }
 
+    @Override
+    public void updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request) {
+        Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
+        customer.setEmail(request.getEmail());
+        customer.setMobilePhone(request.getMobilePhone());
+        customer.setHomePhone(request.getHomePhone());
+        customer.setFax(request.getFax());
+        customerRepository.save(customer);
+    }
+
 
 }

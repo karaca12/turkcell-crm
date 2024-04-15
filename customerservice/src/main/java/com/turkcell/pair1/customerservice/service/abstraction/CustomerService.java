@@ -24,4 +24,7 @@ public interface CustomerService {
     void updateCustomerAddressesByCustomerId(String customerId, AddUpdateAndDeleteAddressRequest request);
 
     void deleteCustomerByCustomerId(String customerId);
+
+    void updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request);
 }
+
