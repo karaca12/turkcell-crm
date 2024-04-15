@@ -1,7 +1,7 @@
 package com.turkcell.pair1.authservice.core.filter;
 
-import com.turkcell.pair1.authservice.core.jwt.JwtService;
 import com.turkcell.pair1.authservice.service.abstraction.UserService;
+import com.turkcell.pair1.jwt.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             UserDetails user = userService.loadUserByUsername(username);
 
             if (jwtService.validateToken(jwt, user)) {
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, null, null);
+                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(token);
             }
