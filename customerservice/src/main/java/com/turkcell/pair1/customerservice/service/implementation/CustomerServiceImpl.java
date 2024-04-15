@@ -54,8 +54,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void updateInfo(UpdateCustomerInfoRequest request) {
-        customerRepository.updateCustomerInfoById(request);
+    public void updateCustomerInfoByCustomerId(String customerId,UpdateCustomerInfoRequest request) {
+        Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
+        customerRepository.updateCustomerInfoById(customer.getId(),request);
     }
 
 
@@ -96,13 +97,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public void updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        customer.setEmail(request.getEmail());
-        customer.setMobilePhone(request.getMobilePhone());
-        customer.setHomePhone(request.getHomePhone());
-        customer.setFax(request.getFax());
-        customerRepository.save(customer);
+        customerRepository.updateCustomerContactMediumById(customer.getId(),request);
     }
 
 

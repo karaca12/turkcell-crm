@@ -13,7 +13,7 @@ public interface CustomerService {
 
     void checkNationalityId(String nationalityId);
 
-    void updateInfo(UpdateCustomerInfoRequest request);
+    void updateCustomerInfoByCustomerId(String customerId,UpdateCustomerInfoRequest request);
 
     GetCustomerInfoResponse getCustomerInfoByCustomerId(String customerId);
 

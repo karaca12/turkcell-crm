@@ -37,10 +37,10 @@ public class CustomerController {
         customerService.checkNationalityId(nationalityId);
     }
 
-    @PutMapping("update/info")
+    @PutMapping("updateCustomerInfoByCustomerId/{customerId}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateInfo(@RequestBody @Valid UpdateCustomerInfoRequest request) {
-        customerService.updateInfo(request);
+    public void updateCustomerInfoByCustomerId(@PathVariable String customerId,@RequestBody @Valid UpdateCustomerInfoRequest request) {
+        customerService.updateCustomerInfoByCustomerId(customerId,request);
     }
 
     @GetMapping("getCustomerInfoByCustomerId/{customerId}")
@@ -71,7 +71,7 @@ public class CustomerController {
         customerService.deleteCustomerByCustomerId(customerId);
     }
 
-    @PostMapping("updateCustomerContactMediumByCustomerId/{customerId}")
+    @PutMapping("updateCustomerContactMediumByCustomerId/{customerId}")
     public void updateCustomerContactMediumByCustomerId(@PathVariable String customerId, @RequestBody UpdateContactMediumRequest request) {
         customerService.updateCustomerContactMediumByCustomerId(customerId, request);
     }

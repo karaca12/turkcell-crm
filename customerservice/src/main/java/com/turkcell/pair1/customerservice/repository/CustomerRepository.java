@@ -2,6 +2,7 @@ package com.turkcell.pair1.customerservice.repository;
 
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchCustomerRequest;
+import com.turkcell.pair1.customerservice.service.dto.request.UpdateContactMediumRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,13 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             " c.gender = :#{#updateRequest.gender}, c.fatherName = :#{#updateRequest.fatherName}," +
             " c.motherName = :#{#updateRequest.motherName}, c.nationalityId = :#{#updateRequest.nationalityId}," +
             " c.updatedAt=current timestamp " +
-            "where c.id=:#{#updateRequest.updatedId} and c.isDeleted=false ")
-    void updateCustomerInfoById(@Param("updateRequest") UpdateCustomerInfoRequest updateRequest);
+            "where c.id=:#{#id} and c.isDeleted=false ")
+    void updateCustomerInfoById(Integer id,@Param("updateRequest") UpdateCustomerInfoRequest updateRequest);
 
+    @Modifying
+    @Query("update Customer c set c.email = :#{#updateRequest.email}, c.homePhone = :#{#updateRequest.homePhone}," +
+            " c.mobilePhone = :#{#updateRequest.mobilePhone}, c.fax = :#{#updateRequest.fax}," +
+            " c.updatedAt=current timestamp " +
+            "where c.id=:#{#id} and c.isDeleted=false ")
+    void updateCustomerContactMediumById(Integer id, UpdateContactMediumRequest updateRequest);
 }
