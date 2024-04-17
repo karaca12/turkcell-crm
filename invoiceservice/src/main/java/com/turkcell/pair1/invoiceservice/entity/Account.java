@@ -19,6 +19,9 @@ public class Account extends BaseEntity {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @OneToMany(mappedBy = "accounts")
+    private List<Address> addresses;
+
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
@@ -27,13 +30,12 @@ public class Account extends BaseEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "accounts")
-    private List<Address> addresses;
-
     @ColumnDefault(value = "false")
     @Column(name = "status", nullable = false)
     private boolean status;
 
     @Column(name = "account_number")
     private String accountNumber;
+
+    private String customerId;
 }

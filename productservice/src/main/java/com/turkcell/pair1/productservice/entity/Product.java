@@ -31,13 +31,16 @@ public class Product extends BaseEntity {
 
     @Column(name = "product_offer_name")
     private String productOfferName;
+
     @Column(name = "product_offer_id")
     private Long productOfferId;
+
     @Column(name = "product_spec_id")
     private Long productSpecId;
 
     @Column(name = "service_start_date")
     private LocalDate serviceStartDate;
+
     @Column(name = "prod_chars")
     private String prodChars;
 
