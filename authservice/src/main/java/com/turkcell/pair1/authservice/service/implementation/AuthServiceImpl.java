@@ -1,10 +1,10 @@
 package com.turkcell.pair1.authservice.service.implementation;
 
 import com.turkcell.pair1.authservice.service.abstraction.AuthService;
-import com.turkcell.pair1.authservice.service.abstraction.UserService;
 import com.turkcell.pair1.authservice.service.dto.request.LoginRequest;
-import com.turkcell.pair1.authservice.service.dto.request.RegisterRequest;
 import com.turkcell.pair1.jwt.JwtService;
+import com.turkcell.pair1.service.abstraction.UserService;
+import com.turkcell.pair1.service.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
