@@ -8,13 +8,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="gatewayserver" />
-        <module name="authservice" />
         <module name="productservice" />
+        <module name="invoiceservice" />
         <module name="discoveryserver" />
         <module name="configserver" />
+        <module name="customerservice" />
         <module name="orderservice" />
       </profile>
-      <profile name="Annotation profile for invoiceservice" enabled="true">
+      <profile name="Annotation profile for authservice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -24,8 +25,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
-        <module name="invoiceservice" />
-        <module name="customerservice" />
+        <module name="authservice" />
       </profile>
     </annotationProcessing>
   </component>
