@@ -10,7 +10,7 @@ import java.util.Locale;
 
 @Configuration
 public class ApplicationConfig {
-    @Bean
+    /*@Bean
     public ResourceBundleMessageSource bundleMessageSource() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
         source.setBasename("messages");
@@ -22,5 +22,5 @@ public class ApplicationConfig {
         AcceptHeaderLocaleResolver acceptHeaderLocaleResolver = new AcceptHeaderLocaleResolver();
         acceptHeaderLocaleResolver.setDefaultLocale(new Locale("en"));
         return acceptHeaderLocaleResolver;
-    }
+    }*/
 }
