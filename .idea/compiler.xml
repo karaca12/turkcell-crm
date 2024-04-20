@@ -13,7 +13,7 @@
         <module name="configserver" />
         <module name="customerservice" />
       </profile>
-      <profile name="Annotation profile for orderservice" enabled="true">
+      <profile name="Annotation profile for authservice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
