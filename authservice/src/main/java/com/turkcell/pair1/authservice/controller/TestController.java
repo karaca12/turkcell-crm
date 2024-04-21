@@ -1,7 +1,6 @@
 package com.turkcell.pair1.authservice.controller;
 
 import com.turkcell.pair1.service.abstraction.MessageService;
-import com.turkcell.pair1.service.constants.Messages;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

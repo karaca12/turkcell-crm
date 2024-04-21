@@ -6,15 +6,20 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.turkcell.pair1.customerservice.repository",
-        entityManagerFactoryRef = "customerEntityManagerFactory"
+@EnableJpaRepositories(
+        basePackages = "com.turkcell.pair1.customerservice.repository",
+        entityManagerFactoryRef = "customerEntityManagerFactory",
+        transactionManagerRef = "customerTransactionManager"
 )
 public class CustomerDataSourceConfiguration {
     @Bean(name = "customerDataSource")
@@ -29,7 +34,7 @@ public class CustomerDataSourceConfiguration {
 
     @Bean(name = "customerEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean customerEntityManagerFactory(EntityManagerFactoryBuilder builder,
-                                                                           @Qualifier("customerDataSource") DataSource customerDataSource) {
+                                                                               @Qualifier("customerDataSource") DataSource customerDataSource) {
         Map<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("jakarta.persistence.validation.mode", "auto");
@@ -39,5 +44,11 @@ public class CustomerDataSourceConfiguration {
                 .properties(properties)
                 .persistenceUnit("customer")
                 .build();
+    }
+
+    @Bean(name = "customerTransactionManager")
+    public PlatformTransactionManager customerTransactionManager(
+            @Qualifier("customerEntityManagerFactory") LocalContainerEntityManagerFactoryBean customerEntityManagerFactory) {
+        return new JpaTransactionManager(Objects.requireNonNull(customerEntityManagerFactory.getObject()));
     }
 }

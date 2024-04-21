@@ -16,8 +16,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCustomerInfoRequest {
-    @NotNull
-    Integer updatedId;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     String firstName;
     String middleName;

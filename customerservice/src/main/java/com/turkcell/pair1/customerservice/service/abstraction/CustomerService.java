@@ -21,10 +21,15 @@ public interface CustomerService {
 
     GetCustomerContactInfoResponse getCustomerContactInfoByCustomerId(String customerId);
 
-    void updateCustomerAddressesByCustomerId(String customerId, AddUpdateAndDeleteAddressRequest request);
+    void updateCustomerAddressByCustomerId(String customerId, UpdateAddressRequest request);
 
     void deleteCustomerByCustomerId(String customerId);
 
     void updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request);
+
+    void createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request);
+
+
+    void deleteAddressByCustomerAndAddressId(String customerId, Integer addressId);
 }
 

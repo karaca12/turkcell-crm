@@ -79,12 +79,25 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void updateCustomerAddressesByCustomerId(String customerId, AddUpdateAndDeleteAddressRequest request) {
+    public void updateCustomerAddressByCustomerId(String customerId, UpdateAddressRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        addressService.addAddressesForCustomer(request.getNewAddresses(), customer);
-        addressService.deleteAddressesFromIds(request.getDeletedIds(), customer);
-        addressService.updateAddressesForCustomer(request.getUpdatedAddresses(), customer);
+        addressService.updateAddressForCustomer(request, customer);
     }
+
+    @Override
+    @Transactional
+    public void createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request) {
+        Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
+        addressService.addAddressForCustomer(request,customer);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAddressByCustomerAndAddressId(String customerId, Integer addressId) {
+        Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
+        addressService.deleteAddressById(addressId,customer);
+    }
+
 
     @Override
     @Transactional
@@ -102,6 +115,5 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
         customerRepository.updateCustomerContactMediumById(customer.getId(),request);
     }
-
 
 }

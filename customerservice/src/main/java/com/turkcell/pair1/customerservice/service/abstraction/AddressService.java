@@ -13,7 +13,10 @@ public interface AddressService {
 
     List<GetAddressResponse> getAddressesFromCustomerByCustomerId(Customer customer);
 
-    void deleteAddressesFromIds(List<Integer> deletedIds,Customer customer);
 
-    void updateAddressesForCustomer(List<UpdateAddressRequest> updatedAddresses, Customer customer);
+    void updateAddressForCustomer(UpdateAddressRequest updatedAddresses, Customer customer);
+
+    void addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer);
+
+    void deleteAddressById(Integer addressId, Customer customer);
 }

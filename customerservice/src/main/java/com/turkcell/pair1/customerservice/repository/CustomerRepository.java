@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +35,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     boolean existsByNationalityId(String nationalityId);
 
+    @Transactional
     @Modifying
     @Query("update Customer c set c.firstName = :#{#updateRequest.firstName}, c.middleName = :#{#updateRequest.middleName}," +
             " c.lastName = :#{#updateRequest.lastName}, c.birthDate = :#{#updateRequest.birthDate}," +
@@ -43,6 +45,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             "where c.id=:#{#id} and c.isDeleted=false ")
     void updateCustomerInfoById(Integer id,@Param("updateRequest") UpdateCustomerInfoRequest updateRequest);
 
+    @Transactional
     @Modifying
     @Query("update Customer c set c.email = :#{#updateRequest.email}, c.homePhone = :#{#updateRequest.homePhone}," +
             " c.mobilePhone = :#{#updateRequest.mobilePhone}, c.fax = :#{#updateRequest.fax}," +

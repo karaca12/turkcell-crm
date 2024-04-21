@@ -10,9 +10,9 @@ import com.turkcell.pair1.customerservice.service.dto.request.UpdateAddressReque
 import com.turkcell.pair1.customerservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.customerservice.service.mapper.AddressMapper;
 import com.turkcell.pair1.customerservice.service.rules.AddressBusinessRules;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -48,27 +48,32 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void deleteAddressesFromIds(List<Integer> deletedIds,Customer customer) {
-        for (Integer id :
-                deletedIds) {
-            businessRules.customerMustContainAddress(customer,id);
-            Address address = businessRules.getAddressFromOptional(addressRepository.findById(id));
-            address.setDeleted(true);
-            address.setDeletedAt(LocalDateTime.now());
-        }
-    }
-
-    @Override
     @Transactional
-    public void updateAddressesForCustomer(List<UpdateAddressRequest> updatedAddresses, Customer customer) {
-        for (UpdateAddressRequest updatedAddress :
-                updatedAddresses) {
+    public void updateAddressForCustomer(UpdateAddressRequest updatedAddress, Customer customer) {
             businessRules.customerMustContainAddress(customer,updatedAddress.getUpdatedId());
             Address address = AddressMapper.INSTANCE.updateAddressRequestToAddress(updatedAddress);
             address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(updatedAddress.getStreetName(), updatedAddress.getCity()));
             address.setCustomer(customer);
             addressRepository.updateAddressById(address,updatedAddress.getUpdatedId());
-        }
     }
+
+    @Override
+    @Transactional
+    public void addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer) {
+        Address address = AddressMapper.INSTANCE.addAddressToCustomerRequestToAddress(request);
+        address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(request.getStreetName(), request.getCity()));
+        address.setCustomer(customer);
+        addressRepository.save(address);
+    }
+
+    @Override
+    public void deleteAddressById(Integer addressId, Customer customer) {
+        businessRules.customerMustContainAddress(customer,addressId);
+        Address address = businessRules.getAddressFromOptional(addressRepository.findById(addressId));
+        address.setDeleted(true);
+        address.setDeletedAt(LocalDateTime.now());
+        addressRepository.save(address);
+    }
+
 
 }

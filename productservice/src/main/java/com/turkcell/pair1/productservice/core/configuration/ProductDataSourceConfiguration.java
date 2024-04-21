@@ -6,15 +6,20 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.turkcell.pair1.productservice.repository",
-        entityManagerFactoryRef = "productEntityManagerFactory"
+@EnableJpaRepositories(
+        basePackages = "com.turkcell.pair1.productservice.repository",
+        entityManagerFactoryRef = "productEntityManagerFactory",
+        transactionManagerRef = "productTransactionManager"
 )
 public class ProductDataSourceConfiguration {
     @Bean(name = "productDataSource")
@@ -39,5 +44,10 @@ public class ProductDataSourceConfiguration {
                 .properties(properties)
                 .persistenceUnit("product")
                 .build();
+    }
+    @Bean(name = "productTransactionManager")
+    public PlatformTransactionManager productTransactionManager(
+            @Qualifier("productEntityManagerFactory") LocalContainerEntityManagerFactoryBean productEntityManagerFactory) {
+        return new JpaTransactionManager(Objects.requireNonNull(productEntityManagerFactory.getObject()));
     }
 }
