@@ -1,10 +1,10 @@
 package com.turkcell.pair1.customerservice.service.rules;
 
 import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
-import com.turkcell.pair1.customerservice.core.service.abstraction.MessageService;
-import com.turkcell.pair1.customerservice.core.service.constants.Messages;
 import com.turkcell.pair1.customerservice.entity.Street;
 import com.turkcell.pair1.customerservice.repository.StreetRepository;
+import com.turkcell.pair1.service.abstraction.MessageService;
+import com.turkcell.pair1.service.constants.Messages;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

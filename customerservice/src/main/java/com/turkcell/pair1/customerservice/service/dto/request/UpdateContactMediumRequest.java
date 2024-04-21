@@ -1,9 +1,8 @@
 package com.turkcell.pair1.customerservice.service.dto.request;
 
-import com.turkcell.pair1.customerservice.core.service.constants.Messages;
+import com.turkcell.pair1.service.constants.Messages;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

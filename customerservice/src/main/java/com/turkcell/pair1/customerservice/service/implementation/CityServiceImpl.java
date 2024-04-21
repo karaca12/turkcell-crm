@@ -1,7 +1,5 @@
 package com.turkcell.pair1.customerservice.service.implementation;
 
-import com.turkcell.pair1.customerservice.core.service.abstraction.MessageService;
-import com.turkcell.pair1.customerservice.repository.CityRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.CityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,8 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CityServiceImpl implements CityService {
-    private final CityRepository cityRepository;
-    private final MessageService messageService;
 
 
 }

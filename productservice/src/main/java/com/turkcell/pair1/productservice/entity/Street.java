@@ -1,6 +1,6 @@
 package com.turkcell.pair1.productservice.entity;
 
-import com.turkcell.pair1.productservice.core.BaseEntity;
+import com.turkcell.pair1.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

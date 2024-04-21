@@ -1,6 +1,6 @@
 package com.turkcell.pair1.productservice.entity;
 
-import com.turkcell.pair1.productservice.core.BaseEntity;
+import com.turkcell.pair1.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,7 +17,7 @@ public class Product extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @NotNull
     @Column(name = "product_name")

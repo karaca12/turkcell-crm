@@ -1,5 +1,6 @@
 package com.turkcell.pair1.orderservice.entity;
 
+import com.turkcell.pair1.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

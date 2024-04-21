@@ -1,7 +1,6 @@
 package com.turkcell.pair1.orderservice.core.exception;
 
 import com.turkcell.pair1.orderservice.core.exception.type.BusinessException;
-import com.turkcell.pair1.orderservice.core.service.constants.Messages;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -38,10 +37,10 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler({Exception.class})
+    /*@ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException() {
-        return Messages.UNKNOWN_ERROR;
-    }
+        return "Unknown error.";
+    }*/
 
 }

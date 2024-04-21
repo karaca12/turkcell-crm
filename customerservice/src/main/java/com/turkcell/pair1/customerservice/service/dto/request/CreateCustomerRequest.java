@@ -1,7 +1,7 @@
 package com.turkcell.pair1.customerservice.service.dto.request;
 
-import com.turkcell.pair1.customerservice.core.service.constants.Messages;
 import com.turkcell.pair1.customerservice.service.validation.annotation.NationalityId;
+import com.turkcell.pair1.service.constants.Messages;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
