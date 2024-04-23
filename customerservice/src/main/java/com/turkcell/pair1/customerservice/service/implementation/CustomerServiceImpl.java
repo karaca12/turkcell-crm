@@ -31,8 +31,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<SearchCustomerResponse> search(SearchCustomerRequest request, PageInfo pageInfo) {
         Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
 
-        return customerRepository.search(request, businessRules.getCustomerIdFromOrderNumber(request.getOrderNumber()), pageable);
-
+        List<SearchCustomerResponse> response = customerRepository.search(request, businessRules.getCustomerIdFromOrderNumber(request.getOrderNumber()), pageable);
+        businessRules.checkIfSearchIsEmpty(response);
+        return response;
     }
 
     @Override
@@ -54,9 +55,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void updateCustomerInfoByCustomerId(String customerId,UpdateCustomerInfoRequest request) {
+    public GetCustomerInfoResponse updateCustomerInfoByCustomerId(String customerId, UpdateCustomerInfoRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        customerRepository.updateCustomerInfoById(customer.getId(),request);
+        return CustomerMapper.INSTANCE.getCustomerInfoResponseFromCustomer(customerRepository.updateCustomerInfoById(customer.getId(), request));
     }
 
 
@@ -79,29 +80,30 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void updateCustomerAddressByCustomerId(String customerId, UpdateAddressRequest request) {
+    public GetAddressResponse updateCustomerAddressByCustomerId(String customerId, UpdateAddressRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        addressService.updateAddressForCustomer(request, customer);
+        return addressService.updateAddressForCustomer(request, customer);
     }
 
     @Override
     @Transactional
-    public void createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request) {
+    public GetAddressResponse createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        addressService.addAddressForCustomer(request,customer);
+        return addressService.addAddressForCustomer(request, customer);
     }
 
     @Override
     @Transactional
     public void deleteAddressByCustomerIdAndAddressId(String customerId, Integer addressId) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        addressService.deleteAddressById(addressId,customer);
+        addressService.deleteAddressById(addressId, customer);
     }
 
     @Override
-    public void setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId) {
+    @Transactional
+    public GetAddressResponse setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        addressService.setPrimaryAddressById(addressId,customer);
+        return addressService.setPrimaryAddressById(addressId, customer);
     }
 
 
@@ -117,9 +119,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request) {
+    public GetCustomerContactInfoResponse updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        customerRepository.updateCustomerContactMediumById(customer.getId(),request);
+        return CustomerMapper.INSTANCE.getCustomerContactInfoResponseFromCustomer(customerRepository.updateCustomerContactMediumById(customer.getId(), request));
     }
 
 }

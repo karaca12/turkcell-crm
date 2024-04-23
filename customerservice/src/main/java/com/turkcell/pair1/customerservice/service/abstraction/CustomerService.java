@@ -13,7 +13,7 @@ public interface CustomerService {
 
     void checkNationalityId(String nationalityId);
 
-    void updateCustomerInfoByCustomerId(String customerId,UpdateCustomerInfoRequest request);
+    GetCustomerInfoResponse updateCustomerInfoByCustomerId(String customerId,UpdateCustomerInfoRequest request);
 
     GetCustomerInfoResponse getCustomerInfoByCustomerId(String customerId);
 
@@ -21,17 +21,16 @@ public interface CustomerService {
 
     GetCustomerContactInfoResponse getCustomerContactInfoByCustomerId(String customerId);
 
-    void updateCustomerAddressByCustomerId(String customerId, UpdateAddressRequest request);
+    GetAddressResponse updateCustomerAddressByCustomerId(String customerId, UpdateAddressRequest request);
 
     void deleteCustomerByCustomerId(String customerId);
 
-    void updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request);
+    GetCustomerContactInfoResponse updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request);
 
-    void createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request);
-
+    GetAddressResponse createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request);
 
     void deleteAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
 
-    void setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
+    GetAddressResponse setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
 }
 

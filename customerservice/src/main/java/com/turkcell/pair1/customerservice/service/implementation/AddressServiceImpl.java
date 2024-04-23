@@ -27,6 +27,7 @@ public class AddressServiceImpl implements AddressService {
 
 
     @Override
+    @Transactional
     public List<GetAddressResponse> addAddressesForCustomer(List<AddAddressToCustomerRequest> addressRequests, Customer customer) {
 
         List<GetAddressResponse> response = new ArrayList<>();
@@ -51,23 +52,24 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional
-    public void updateAddressForCustomer(UpdateAddressRequest updatedAddress, Customer customer) {
+    public GetAddressResponse updateAddressForCustomer(UpdateAddressRequest updatedAddress, Customer customer) {
         businessRules.customerMustContainAddress(customer, updatedAddress.getUpdatedId());
         Address address = AddressMapper.INSTANCE.updateAddressRequestToAddress(updatedAddress);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(updatedAddress.getStreetName(), updatedAddress.getCity()));
         address.setCustomer(customer);
-        addressRepository.updateAddressById(address, updatedAddress.getUpdatedId());
+        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.updateAddressById(address, updatedAddress.getUpdatedId()));
     }
 
     @Override
     @Transactional
-    public void addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer) {
+    public GetAddressResponse addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer) {
         Address address = AddressMapper.INSTANCE.addAddressToCustomerRequestToAddress(request);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(request.getStreetName(), request.getCity()));
         address.setCustomer(customer);
-        addressRepository.save(address);
+        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
     }
 
+    @Transactional
     @Override
     public void deleteAddressById(Integer addressId, Customer customer) {
         businessRules.customerMustContainAddress(customer, addressId);
@@ -80,19 +82,20 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void setPrimaryAddressById(Integer addressId, Customer customer) {
+    @Transactional
+    public GetAddressResponse setPrimaryAddressById(Integer addressId, Customer customer) {
         businessRules.customerMustContainAddress(customer, addressId);
         Address address = businessRules.getAddressFromOptional(addressRepository.findById(addressId));
         businessRules.checkIfAddressIsAlreadyAPrimaryAddress(address);
 
-        for (Address searchedAddress: customer.getAddresses()){
-            if (searchedAddress.getIsPrimary()){
+        for (Address searchedAddress : customer.getAddresses()) {
+            if (searchedAddress.getIsPrimary()) {
                 searchedAddress.setIsPrimary(false);
                 addressRepository.save(searchedAddress);
             }
         }
         address.setIsPrimary(true);
-        addressRepository.save(address);
+        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
     }
 
 
