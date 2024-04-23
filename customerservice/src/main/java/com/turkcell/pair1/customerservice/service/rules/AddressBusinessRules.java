@@ -16,19 +16,37 @@ public class AddressBusinessRules {
     private final MessageService messageService;
 
     public void customerMustContainAddress(Customer customer, Integer id) {
-        boolean contains=false;
+        boolean contains = false;
         for (Address address : customer.getAddresses()) {
             if (address.getId().equals(id)) {
                 contains = true;
                 break;
             }
         }
-        if (!contains){
+        if (!contains) {
             throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.CUSTOMER_DOES_NOT_CONTAIN_ADDRESS));
         }
     }
 
     public Address getAddressFromOptional(Optional<Address> optionalAddress) {
-        return optionalAddress.orElseThrow(()-> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ADDRESS_FOUND)));
+        return optionalAddress.orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ADDRESS_FOUND)));
+    }
+
+    public void customerShouldNotHaveOneAddressForDelete(Customer customer) {
+        if (customer.getAddresses().size() == 1) {
+            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.CUSTOMER_HAS_ONLY_ONE_ADDRESS));
+        }
+    }
+
+    public void deletedAddressCannotBePrimary(Address address) {
+        if (address.getIsPrimary()) {
+            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.CANNOT_DELETE_PRIMARY_ADDRESS));
+        }
+    }
+
+    public void checkIfAddressIsAlreadyAPrimaryAddress(Address address) {
+        if (address.getIsPrimary()) {
+            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.ADDRESS_ALREADY_IS_PRIMARY));
+        }
     }
 }

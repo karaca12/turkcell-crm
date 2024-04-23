@@ -19,4 +19,6 @@ public interface AddressService {
     void addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer);
 
     void deleteAddressById(Integer addressId, Customer customer);
+
+    void setPrimaryAddressById(Integer addressId, Customer customer);
 }

@@ -93,9 +93,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public void deleteAddressByCustomerAndAddressId(String customerId, Integer addressId) {
+    public void deleteAddressByCustomerIdAndAddressId(String customerId, Integer addressId) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
         addressService.deleteAddressById(addressId,customer);
+    }
+
+    @Override
+    public void setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId) {
+        Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
+        addressService.setPrimaryAddressById(addressId,customer);
     }
 
 

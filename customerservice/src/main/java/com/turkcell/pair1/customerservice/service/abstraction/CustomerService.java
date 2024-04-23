@@ -30,6 +30,8 @@ public interface CustomerService {
     void createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request);
 
 
-    void deleteAddressByCustomerAndAddressId(String customerId, Integer addressId);
+    void deleteAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
+
+    void setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
 }
 
