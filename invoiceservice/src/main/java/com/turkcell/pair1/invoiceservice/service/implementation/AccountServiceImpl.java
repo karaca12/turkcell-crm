@@ -7,6 +7,7 @@ import com.turkcell.pair1.invoiceservice.repository.AccountRepository;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
+import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,21 +39,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public BasketItem addItemToBasket(Integer accountId, Integer productId, int quantity) {
-        Account account = getAccountById(accountId).orElseThrow(() -> new IllegalStateException("Account not found."));
-
+    public BasketItem addItemToBasket(AddItemToBasketRequest request) {
+        Account account = getAccountById(request.getAccountId()).orElseThrow(() -> new IllegalStateException("Account not found."));
         Basket basket = account.getBasket();
-        if (basket == null) {
-            basket = new Basket();
-            basket.setAccount(account);  // Set both sides of the relationship
-            account.setBasket(basket);   // Only need to save the account once
-            accountRepository.save(account); // Save changes once, cascading should handle the rest
-        } else {
-            // This part is only needed if there's something specific to update on existing baskets
-            //basketRepository.save(basket);
-        }
 
-        return basketService.addBasketItem(basket, productId, quantity);
+        return basketService.addBasketItem(basket, request.getProductId(), request.getQuantity());
     }
 
     @Override

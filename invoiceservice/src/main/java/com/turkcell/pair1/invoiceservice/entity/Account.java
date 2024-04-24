@@ -39,7 +39,7 @@ public class Account extends BaseEntity {
 
     private String customerId;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "basket_id")
     private Basket basket;
 }

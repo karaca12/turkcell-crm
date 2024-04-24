@@ -26,7 +26,7 @@ private final AccountService accountService;
 
     @PostMapping("/addBasketItem")
     @ResponseStatus(HttpStatus.OK) // TODO: GLOBAL EXCEPTION HANDLER NEEDED.
-    public BasketItem addItemToBasket(@RequestBody AddItemToBasketRequest request) {
-        return accountService.addItemToBasket(request.getAccountId(), request.getProductId(), request.getQuantity());
+    public void addItemToBasket(@RequestBody AddItemToBasketRequest request) {
+        accountService.addItemToBasket(request);
     }
 }
