@@ -27,7 +27,7 @@ public class Account extends BaseEntity {
     private String name;
 
     @NotNull
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false) /*TODO: nullable olabilir*/
     private String description;
 
     @ColumnDefault(value = "false")
@@ -38,4 +38,8 @@ public class Account extends BaseEntity {
     private String accountNumber;
 
     private String customerId;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "basket_id")
+    private Basket basket;
 }
