@@ -46,6 +46,7 @@ public class BillingAccountServiceImpl implements BillingAccountService {
     public void updateBillingAccountByBillingAccountId(Integer billingAccountId, UpdateBillingAccountRequest request) {
         BillingAccount billingAccount = billingAccountBusinessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndId(billingAccountId));
         billingAccountRepository.updateBillingAccountById(billingAccount.getId(), request);
+        accountRepository.updateAccountById(billingAccount.getAccount().getId());
         addressService.updateAddressForBillingAccount(billingAccount, request.getAddressList());
     }
 }

@@ -12,12 +12,14 @@ import java.util.Optional;
 
 
 public interface BillingAccountRepository extends JpaRepository<BillingAccount, Integer> {
+
     Optional<BillingAccount> findByAccount_IsDeletedFalseAndId(Integer id);
+
     @Modifying
     @Query("update BillingAccount ba set ba.name= :#{#request.name}," +
-            " ba.description= :#{#request.description}, " +
-            "ba.account.updatedAt= current timestamp where ba.id= :#{#id} and " +
-            "ba.account.isDeleted= false ")
-    void updateBillingAccountById(Integer id, UpdateBillingAccountRequest request);
+            " ba.description= :#{#request.description} WHERE ba.id=:id ")
+    void updateBillingAccountById(Integer id, @Param("request") UpdateBillingAccountRequest request);
+
+
 }
 
