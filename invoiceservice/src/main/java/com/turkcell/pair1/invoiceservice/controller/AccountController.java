@@ -1,9 +1,7 @@
 package com.turkcell.pair1.invoiceservice.controller;
 
-import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
-import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import lombok.RequiredArgsConstructor;
