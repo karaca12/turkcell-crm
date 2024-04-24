@@ -19,25 +19,11 @@ public class Account extends BaseEntity {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @OneToOne(mappedBy = "account")
+    private BillingAccount billingAccount;
+
     @OneToMany(mappedBy = "accounts")
     private List<Address> addresses;
-
-    @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @NotNull
-    @Column(name = "description", nullable = false) /*TODO: nullable olabilir*/
-    private String description;
-
-    @ColumnDefault(value = "false")
-    @Column(name = "status", nullable = false)
-    private boolean status;
-
-    @Column(name = "account_number")
-    private String accountNumber;
-
-    private String customerId;
 
     @OneToOne
     @JoinColumn(name = "basket_id")
