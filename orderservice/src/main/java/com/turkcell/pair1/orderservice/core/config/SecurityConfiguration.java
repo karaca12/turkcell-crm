@@ -1,3 +1,4 @@
+/*
 package com.turkcell.pair1.orderservice.core.config;
 
 import com.turkcell.pair1.configuration.BaseSecurityService;
@@ -26,3 +27,4 @@ public class SecurityConfiguration {
         return http.build();
     }
 }
+*/

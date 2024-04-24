@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableSecurity
+//@EnableSecurity
 @EnableFeignClients
 public class ProductserviceApplication {
 

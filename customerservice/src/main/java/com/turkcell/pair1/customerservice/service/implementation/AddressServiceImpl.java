@@ -97,6 +97,4 @@ public class AddressServiceImpl implements AddressService {
         address.setIsPrimary(true);
         return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
     }
-
-
 }
