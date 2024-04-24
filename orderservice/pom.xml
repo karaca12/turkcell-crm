@@ -72,7 +72,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.turkcell.pair1</groupId>
+			<artifactId>core</artifactId>
+			<version>1.2.6</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

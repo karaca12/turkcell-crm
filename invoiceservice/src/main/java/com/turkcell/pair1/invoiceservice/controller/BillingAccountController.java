@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/invoice/billingAccounts")
 @RequiredArgsConstructor
 public class BillingAccountController {
     private final BillingAccountService billingAccountService;

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/basket")
+@RequestMapping("/api/invoice/baskets")
 @RequiredArgsConstructor
 public class BasketController {
     private final BasketService basketService;
