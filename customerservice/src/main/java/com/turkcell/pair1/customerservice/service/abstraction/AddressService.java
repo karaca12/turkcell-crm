@@ -1,5 +1,6 @@
 package com.turkcell.pair1.customerservice.service.abstraction;
 
+import com.turkcell.pair1.customerservice.entity.Address;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateAddressRequest;
@@ -14,9 +15,11 @@ public interface AddressService {
     List<GetAddressResponse> getAddressesFromCustomerByCustomerId(Customer customer);
 
 
-    void updateAddressForCustomer(UpdateAddressRequest updatedAddresses, Customer customer);
+    GetAddressResponse updateAddressForCustomer(UpdateAddressRequest updatedAddresses, Customer customer);
 
-    void addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer);
+    GetAddressResponse addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer);
 
     void deleteAddressById(Integer addressId, Customer customer);
+
+    GetAddressResponse setPrimaryAddressById(Integer addressId, Customer customer);
 }

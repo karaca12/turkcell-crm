@@ -27,17 +27,20 @@ public class AddressServiceImpl implements AddressService {
 
 
     @Override
+    @Transactional
     public List<GetAddressResponse> addAddressesForCustomer(List<AddAddressToCustomerRequest> addressRequests, Customer customer) {
 
         List<GetAddressResponse> response = new ArrayList<>();
 
-        for (AddAddressToCustomerRequest addressRequest :
-                addressRequests) {
+        for (int i = 0; i < addressRequests.size(); i++) {
+            AddAddressToCustomerRequest addressRequest = addressRequests.get(i);
             Address address = AddressMapper.INSTANCE.addAddressToCustomerRequestToAddress(addressRequest);
+            if (i == 0) {
+                address.setIsPrimary(true);
+            }
             address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(addressRequest.getStreetName(), addressRequest.getCity()));
             address.setCustomer(customer);
             response.add(AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address)));
-
         }
         return response;
     }
@@ -49,30 +52,50 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional
-    public void updateAddressForCustomer(UpdateAddressRequest updatedAddress, Customer customer) {
-            businessRules.customerMustContainAddress(customer,updatedAddress.getUpdatedId());
-            Address address = AddressMapper.INSTANCE.updateAddressRequestToAddress(updatedAddress);
-            address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(updatedAddress.getStreetName(), updatedAddress.getCity()));
-            address.setCustomer(customer);
-            addressRepository.updateAddressById(address,updatedAddress.getUpdatedId());
+    public GetAddressResponse updateAddressForCustomer(UpdateAddressRequest updatedAddress, Customer customer) {
+        businessRules.customerMustContainAddress(customer, updatedAddress.getUpdatedId());
+        Address address = AddressMapper.INSTANCE.updateAddressRequestToAddress(updatedAddress);
+        address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(updatedAddress.getStreetName(), updatedAddress.getCity()));
+        address.setCustomer(customer);
+        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.updateAddressById(address, updatedAddress.getUpdatedId()));
     }
 
     @Override
     @Transactional
-    public void addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer) {
+    public GetAddressResponse addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer) {
         Address address = AddressMapper.INSTANCE.addAddressToCustomerRequestToAddress(request);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(request.getStreetName(), request.getCity()));
         address.setCustomer(customer);
+        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
+    }
+
+    @Transactional
+    @Override
+    public void deleteAddressById(Integer addressId, Customer customer) {
+        businessRules.customerMustContainAddress(customer, addressId);
+        businessRules.customerShouldNotHaveOneAddressForDelete(customer);
+        Address address = businessRules.getAddressFromOptional(addressRepository.findById(addressId));
+        businessRules.deletedAddressCannotBePrimary(address);
+        address.setDeleted(true);
+        address.setDeletedAt(LocalDateTime.now());
         addressRepository.save(address);
     }
 
     @Override
-    public void deleteAddressById(Integer addressId, Customer customer) {
-        businessRules.customerMustContainAddress(customer,addressId);
+    @Transactional
+    public GetAddressResponse setPrimaryAddressById(Integer addressId, Customer customer) {
+        businessRules.customerMustContainAddress(customer, addressId);
         Address address = businessRules.getAddressFromOptional(addressRepository.findById(addressId));
-        address.setDeleted(true);
-        address.setDeletedAt(LocalDateTime.now());
-        addressRepository.save(address);
+        businessRules.checkIfAddressIsAlreadyAPrimaryAddress(address);
+
+        for (Address searchedAddress : customer.getAddresses()) {
+            if (searchedAddress.getIsPrimary()) {
+                searchedAddress.setIsPrimary(false);
+                addressRepository.save(searchedAddress);
+            }
+        }
+        address.setIsPrimary(true);
+        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
     }
 
 

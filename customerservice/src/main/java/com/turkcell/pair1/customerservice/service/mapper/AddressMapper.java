@@ -26,5 +26,4 @@ public interface AddressMapper {
     List<GetAddressResponse> getAddressResponsesFromAddresses(List<Address> addresses);
 
 
-
 }

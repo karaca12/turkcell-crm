@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -17,11 +18,11 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
 
     List<Address> findByIsDeletedFalseAndCustomer(Customer customer);
 
-    @Transactional
     @Modifying
     @Query("update Address a set a.street = :#{#address.street}, a.flatNumber = :#{#address.flatNumber}," +
             " a.description = :#{#address.description}," +
             " a.updatedAt=current timestamp " +
             "where a.id = :#{#updatedId}")
-    void updateAddressById(@Param("address") Address address,Integer updatedId);
+    Address updateAddressById(@Param("address") Address address,Integer updatedId);
+
 }

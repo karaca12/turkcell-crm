@@ -35,7 +35,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     boolean existsByNationalityId(String nationalityId);
 
-    @Transactional
     @Modifying
     @Query("update Customer c set c.firstName = :#{#updateRequest.firstName}, c.middleName = :#{#updateRequest.middleName}," +
             " c.lastName = :#{#updateRequest.lastName}, c.birthDate = :#{#updateRequest.birthDate}," +
@@ -43,13 +42,12 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             " c.motherName = :#{#updateRequest.motherName}, c.nationalityId = :#{#updateRequest.nationalityId}," +
             " c.updatedAt=current timestamp " +
             "where c.id=:#{#id} and c.isDeleted=false ")
-    void updateCustomerInfoById(Integer id,@Param("updateRequest") UpdateCustomerInfoRequest updateRequest);
+    Customer updateCustomerInfoById(Integer id,@Param("updateRequest") UpdateCustomerInfoRequest updateRequest);
 
-    @Transactional
     @Modifying
     @Query("update Customer c set c.email = :#{#updateRequest.email}, c.homePhone = :#{#updateRequest.homePhone}," +
             " c.mobilePhone = :#{#updateRequest.mobilePhone}, c.fax = :#{#updateRequest.fax}," +
             " c.updatedAt=current timestamp " +
             "where c.id=:#{#id} and c.isDeleted=false ")
-    void updateCustomerContactMediumById(Integer id, UpdateContactMediumRequest updateRequest);
+    Customer updateCustomerContactMediumById(Integer id, UpdateContactMediumRequest updateRequest);
 }

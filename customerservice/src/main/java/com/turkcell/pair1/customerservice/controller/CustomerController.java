@@ -39,8 +39,8 @@ public class CustomerController {
 
     @PutMapping("updateCustomerInfoByCustomerId/{customerId}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateCustomerInfoByCustomerId(@PathVariable String customerId,@RequestBody @Valid UpdateCustomerInfoRequest request) {
-        customerService.updateCustomerInfoByCustomerId(customerId,request);
+    public GetCustomerInfoResponse updateCustomerInfoByCustomerId(@PathVariable String customerId,@RequestBody @Valid UpdateCustomerInfoRequest request) {
+        return customerService.updateCustomerInfoByCustomerId(customerId,request);
     }
 
     @GetMapping("getCustomerInfoByCustomerId/{customerId}")
@@ -62,16 +62,22 @@ public class CustomerController {
     }
 
     @PutMapping("updateCustomerAddressByCustomerId/{customerId}")
-    public void updateCustomerAddressByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateAddressRequest request) {
-        customerService.updateCustomerAddressByCustomerId(customerId, request);
+    public GetAddressResponse updateCustomerAddressByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateAddressRequest request) {
+        return customerService.updateCustomerAddressByCustomerId(customerId, request);
     }
+
     @PostMapping("createAddressToCustomerByCustomerId/{customerId}")
-    public void createAddressToCustomerByCustomerId(@PathVariable String customerId, @Valid @RequestBody AddAddressToCustomerRequest request) {
-        customerService.createAddressToCustomerByCustomerId(customerId, request);
+    public GetAddressResponse createAddressToCustomerByCustomerId(@PathVariable String customerId, @Valid @RequestBody AddAddressToCustomerRequest request) {
+        return customerService.createAddressToCustomerByCustomerId(customerId, request);
     }
-    @DeleteMapping("deleteAddressByCustomerAndAddressId/{customerId}/{addressId}")
-    public void deleteAddressByCustomerAndAddressId(@PathVariable String customerId,@PathVariable Integer addressId) {
-        customerService.deleteAddressByCustomerAndAddressId(customerId,addressId);
+    @DeleteMapping("deleteAddressByCustomerIdAndAddressId/{customerId}/{addressId}")
+    public void deleteAddressByCustomerIdAndAddressId(@PathVariable String customerId, @PathVariable Integer addressId) {
+        customerService.deleteAddressByCustomerIdAndAddressId(customerId,addressId);
+    }
+
+    @PutMapping("setPrimaryAddressByCustomerIdAndAddressId/{customerId}/{addressId}")
+    public GetAddressResponse setPrimaryAddressByCustomerIdAndAddressId(@PathVariable String customerId, @PathVariable Integer addressId){
+        return customerService.setPrimaryAddressByCustomerIdAndAddressId(customerId,addressId);
     }
 
     @DeleteMapping("deleteCustomerByCustomerId/{customerId}")
@@ -80,7 +86,7 @@ public class CustomerController {
     }
 
     @PutMapping("updateCustomerContactMediumByCustomerId/{customerId}")
-    public void updateCustomerContactMediumByCustomerId(@PathVariable String customerId, @RequestBody UpdateContactMediumRequest request) {
-        customerService.updateCustomerContactMediumByCustomerId(customerId, request);
+    public GetCustomerContactInfoResponse updateCustomerContactMediumByCustomerId(@PathVariable String customerId, @RequestBody UpdateContactMediumRequest request) {
+        return customerService.updateCustomerContactMediumByCustomerId(customerId, request);
     }
 }

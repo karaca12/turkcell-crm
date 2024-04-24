@@ -11,7 +11,7 @@
         <module name="discoveryserver" />
         <module name="configserver" />
       </profile>
-      <profile name="Annotation profile for invoiceservice" enabled="true">
+      <profile name="Annotation profile for customerservice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -22,10 +22,10 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="invoiceservice" />
-        <module name="authservice" />
         <module name="customerservice" />
-        <module name="orderservice" />
+        <module name="authservice" />
         <module name="productservice" />
+        <module name="orderservice" />
       </profile>
     </annotationProcessing>
   </component>

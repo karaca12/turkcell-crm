@@ -1,14 +1,15 @@
 package com.turkcell.pair1.authservice.service.implementation;
 
 import com.turkcell.pair1.authservice.service.abstraction.AuthService;
+import com.turkcell.pair1.authservice.service.abstraction.UserService;
 import com.turkcell.pair1.authservice.service.dto.request.LoginRequest;
+import com.turkcell.pair1.authservice.service.dto.request.RegisterRequest;
 import com.turkcell.pair1.jwt.JwtService;
-import com.turkcell.pair1.service.abstraction.UserService;
-import com.turkcell.pair1.service.dto.request.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,11 @@ public class AuthServiceImpl implements AuthService {
 
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        if (!authentication.isAuthenticated()){
+        if (!authentication.isAuthenticated()) {
             throw new RuntimeException();
         }
 
-        UserDetails user= userService.loadUserByUsername(request.getUsername());
-        return jwtService.generateToken(user.getUsername());
+        UserDetails user = userService.loadUserByUsername(request.getUsername());
+        return jwtService.generateToken(user.getUsername(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
     }
 }
