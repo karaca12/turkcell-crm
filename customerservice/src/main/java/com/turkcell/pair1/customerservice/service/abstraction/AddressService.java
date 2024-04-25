@@ -1,6 +1,5 @@
 package com.turkcell.pair1.customerservice.service.abstraction;
 
-import com.turkcell.pair1.customerservice.entity.Address;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateAddressRequest;

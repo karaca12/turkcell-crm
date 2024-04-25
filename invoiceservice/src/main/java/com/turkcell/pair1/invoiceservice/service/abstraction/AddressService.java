@@ -4,7 +4,6 @@ import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.BillingAccount;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
-import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateBillingAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 
 import java.util.List;

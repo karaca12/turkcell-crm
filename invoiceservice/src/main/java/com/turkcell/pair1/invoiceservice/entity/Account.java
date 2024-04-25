@@ -2,10 +2,8 @@ package com.turkcell.pair1.invoiceservice.entity;
 
 import com.turkcell.pair1.invoiceservice.core.entity.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 

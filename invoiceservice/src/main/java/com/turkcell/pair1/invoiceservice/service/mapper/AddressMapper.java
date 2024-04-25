@@ -3,13 +3,10 @@ package com.turkcell.pair1.invoiceservice.service.mapper;
 import com.turkcell.pair1.invoiceservice.entity.Address;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
-import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateBillingAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 @Mapper
 public interface AddressMapper {

@@ -2,7 +2,6 @@ package com.turkcell.pair1.invoiceservice.service.rules;
 
 import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.Address;
-import com.turkcell.pair1.invoiceservice.entity.BillingAccount;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

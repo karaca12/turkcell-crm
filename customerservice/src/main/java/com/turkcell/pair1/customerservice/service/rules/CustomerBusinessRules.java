@@ -9,7 +9,6 @@ import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerRes
 import com.turkcell.pair1.service.abstraction.MessageService;
 import com.turkcell.pair1.service.constants.Messages;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
