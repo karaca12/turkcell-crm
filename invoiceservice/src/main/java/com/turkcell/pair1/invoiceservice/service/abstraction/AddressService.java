@@ -11,5 +11,13 @@ import java.util.List;
 public interface AddressService {
     List<GetAddressResponse> addAddressesForAccount(List<AddAddressToAccountRequest> request, Account account);
 
-    void updateAddressForBillingAccount(BillingAccount billingAccount, List<UpdateAddressRequest> addressList);
+    void updateAddressForBillingAccount(BillingAccount billingAccount, UpdateAddressRequest updatedAddress);
+
+    List<GetAddressResponse> getAddressesFromBillingAccountByBillingAccountId(BillingAccount billingAccount);
+
+    GetAddressResponse addAddressForAccount(AddAddressToAccountRequest request, BillingAccount billingAccount);
+
+    void deleteAddressById(Integer addressId, BillingAccount billingAccount);
+
+    GetAddressResponse setPrimaryAddressById(Integer addressId, BillingAccount billingAccount);
 }

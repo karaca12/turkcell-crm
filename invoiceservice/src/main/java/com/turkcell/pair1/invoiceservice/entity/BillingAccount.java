@@ -33,5 +33,5 @@ public class BillingAccount {
     @Column(name = "account_number")
     private String accountNumber;
 
-    private String customerId;
+
 }

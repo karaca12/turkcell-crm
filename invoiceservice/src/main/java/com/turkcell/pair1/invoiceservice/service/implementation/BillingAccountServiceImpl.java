@@ -8,9 +8,13 @@ import com.turkcell.pair1.invoiceservice.repository.BillingAccountRepository;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BillingAccountService;
+import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.CreateBillingAccountRequest;
-import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateBillingAccountRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateBillingAccountInfoRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CreateBillingAccountResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetBillingAccountInfoResponse;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
 import com.turkcell.pair1.invoiceservice.service.mapper.BillingAccountMapper;
 import com.turkcell.pair1.invoiceservice.service.rules.BillingAccountBusinessRules;
@@ -18,13 +22,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class BillingAccountServiceImpl implements BillingAccountService {
     private final AccountRepository accountRepository;
     private final BillingAccountRepository billingAccountRepository;
     private final AddressService addressService;
-    private final BillingAccountBusinessRules billingAccountBusinessRules;
+    private final BillingAccountBusinessRules businessRules;
     private final BasketService basketService;
 
     @Override
@@ -33,6 +41,7 @@ public class BillingAccountServiceImpl implements BillingAccountService {
         Account account = AccountMapper.INSTANCE.getAccountFromCreateRequest(request);
         Account savedAccount = accountRepository.save(account);
         BillingAccount billingAccount = BillingAccountMapper.INSTANCE.getBillingAccountFromCreateRequest(request);
+        billingAccount.setAccountNumber(UUID.randomUUID().toString());
         billingAccount.setAccount(savedAccount);
         billingAccount.getAccount().setBasket(basket);
         BillingAccount savedBillingAccount = billingAccountRepository.save(billingAccount);
@@ -43,10 +52,56 @@ public class BillingAccountServiceImpl implements BillingAccountService {
 
     @Transactional
     @Override
-    public void updateBillingAccountByBillingAccountId(Integer billingAccountId, UpdateBillingAccountRequest request) {
-        BillingAccount billingAccount = billingAccountBusinessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndId(billingAccountId));
+    public void updateBillingAccountByAccountNumber(String accountNumber, UpdateBillingAccountInfoRequest request) {
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
         billingAccountRepository.updateBillingAccountById(billingAccount.getId(), request);
         accountRepository.updateAccountById(billingAccount.getAccount().getId());
-        addressService.updateAddressForBillingAccount(billingAccount, request.getAddressList());
+    }
+
+    @Override
+    public void deleteBillingAccountByAccountNumber(String accountNumber) {
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        businessRules.ensureBillingAccountHasNoActiveProducts(billingAccount);
+        billingAccount.getAccount().setDeleted(true);
+        billingAccount.getAccount().setDeletedAt(LocalDateTime.now());
+        billingAccountRepository.save(billingAccount);
+    }
+
+    @Override
+    public List<GetAddressResponse> getBillingAccountAddressesByAccountNumber(String accountNumber) {
+        return addressService.getAddressesFromBillingAccountByBillingAccountId(businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber)));
+
+    }
+
+    @Override
+    public GetAddressResponse createAddressToBillingAccountByAccountNumber(String accountNumber, AddAddressToAccountRequest request) {
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        return addressService.addAddressForAccount(request, billingAccount);
+
+    }
+
+    @Override
+    public void deleteAddressByAccountNumberAndAddressId(String accountNumber, Integer addressId) {
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        addressService.deleteAddressById(addressId, billingAccount);
+    }
+
+    @Override
+    public GetAddressResponse setPrimaryAddressByAccountNumberAndAddressId(String accountNumber, Integer addressId) {
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        return addressService.setPrimaryAddressById(addressId, billingAccount);
+    }
+
+    @Override
+    public void updateBillingAccountAddressByAccountNumber(String accountNumber, UpdateAddressRequest request) {
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        addressService.updateAddressForBillingAccount(billingAccount, request);
+    }
+
+    @Override
+    public GetBillingAccountInfoResponse getBillingAccountInfoByAccountNumber(String accountNumber) {
+        businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByBillingAccountAndAccountNumber(accountNumber));
+        return BillingAccountMapper.INSTANCE.getBillingAccountInfoFromBillingAccount(billingAccount);
     }
 }

@@ -8,11 +8,13 @@ import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final BasketService basketService;
+
     @Override
     public Optional<Account> getAccountById(Integer id) {
         return accountRepository.findByIsDeletedFalseAndId(id);
@@ -35,6 +38,11 @@ public class AccountServiceImpl implements AccountService {
     public boolean isActive(Integer accountId) {
         Optional<Account> account = getAccountById(accountId);
         return (account.isPresent() && !account.get().isDeleted());
+    }
+
+    @Override
+    public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId) {
+        return AccountMapper.INSTANCE.getCustomerInfoResponsesFromCustomers(accountRepository.findByIsDeletedFalseAndCustomerId(customerId));
     }
 
     @Override

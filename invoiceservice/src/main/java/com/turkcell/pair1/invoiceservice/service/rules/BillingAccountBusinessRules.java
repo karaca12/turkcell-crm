@@ -10,7 +10,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BillingAccountBusinessRules {
     private final BillingAccountRepository billingAccountRepository;
-    public BillingAccount getBillingAccountFromOptional(Optional<BillingAccount> optionalCustomer) {
-        return optionalCustomer.orElseThrow();
+    public BillingAccount getBillingAccountFromOptional(Optional<BillingAccount> optionalBillingAccount) {
+        return optionalBillingAccount.orElseThrow();
+    }
+
+    public void ensureBillingAccountHasNoActiveProducts(BillingAccount billingAccount) {
+        //TODO: implement after product service is implemented
     }
 }

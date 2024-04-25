@@ -26,4 +26,6 @@ public class Account extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "basket_id")
     private Basket basket;
+
+    private String customerId;
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -33,4 +34,8 @@ public class Address extends BaseEntity {
     @NotNull
     @Column(name = "description", nullable = false)
     private String description;
+
+    @ColumnDefault(value = "false")
+    @Column(name = "isPrimary")
+    private Boolean isPrimary;
 }

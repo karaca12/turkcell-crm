@@ -4,7 +4,9 @@ import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AccountService {
@@ -14,4 +16,5 @@ public interface AccountService {
     BasketItem addItemToBasket(AddItemToBasketRequest request);
     boolean isActive(Integer accountId);
 
+    List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId);
 }
