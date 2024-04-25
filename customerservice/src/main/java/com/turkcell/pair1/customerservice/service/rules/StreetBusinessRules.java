@@ -1,6 +1,6 @@
 package com.turkcell.pair1.customerservice.service.rules;
 
-import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
+import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.customerservice.entity.Street;
 import com.turkcell.pair1.customerservice.repository.StreetRepository;
 import com.turkcell.pair1.service.abstraction.MessageService;

@@ -1,14 +1,15 @@
 package com.turkcell.pair1.customerservice.service.rules;
 
+import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.customerservice.client.OrderServiceClient;
 import com.turkcell.pair1.customerservice.client.ProductServiceClient;
-import com.turkcell.pair1.customerservice.core.exception.types.BusinessException;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import com.turkcell.pair1.service.constants.Messages;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
