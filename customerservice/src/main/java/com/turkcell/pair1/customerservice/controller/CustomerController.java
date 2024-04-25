@@ -39,8 +39,8 @@ public class CustomerController {
 
     @PutMapping("updateCustomerInfoByCustomerId/{customerId}")
     @ResponseStatus(HttpStatus.OK)
-    public GetCustomerInfoResponse updateCustomerInfoByCustomerId(@PathVariable String customerId,@RequestBody @Valid UpdateCustomerInfoRequest request) {
-        return customerService.updateCustomerInfoByCustomerId(customerId,request);
+    public void updateCustomerInfoByCustomerId(@PathVariable String customerId,@RequestBody @Valid UpdateCustomerInfoRequest request) {
+        customerService.updateCustomerInfoByCustomerId(customerId,request);
     }
 
     @GetMapping("getCustomerInfoByCustomerId/{customerId}")
@@ -62,8 +62,8 @@ public class CustomerController {
     }
 
     @PutMapping("updateCustomerAddressByCustomerId/{customerId}")
-    public GetAddressResponse updateCustomerAddressByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateAddressRequest request) {
-        return customerService.updateCustomerAddressByCustomerId(customerId, request);
+    public void updateCustomerAddressByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateAddressRequest request) {
+        customerService.updateCustomerAddressByCustomerId(customerId, request);
     }
 
     @PostMapping("createAddressToCustomerByCustomerId/{customerId}")
@@ -86,7 +86,7 @@ public class CustomerController {
     }
 
     @PutMapping("updateCustomerContactMediumByCustomerId/{customerId}")
-    public GetCustomerContactInfoResponse updateCustomerContactMediumByCustomerId(@PathVariable String customerId, @RequestBody UpdateContactMediumRequest request) {
-        return customerService.updateCustomerContactMediumByCustomerId(customerId, request);
+    public void updateCustomerContactMediumByCustomerId(@PathVariable String customerId, @RequestBody UpdateContactMediumRequest request) {
+        customerService.updateCustomerContactMediumByCustomerId(customerId, request);
     }
 }

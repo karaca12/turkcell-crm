@@ -14,7 +14,7 @@ public interface AddressService {
     List<GetAddressResponse> getAddressesFromCustomerByCustomerId(Customer customer);
 
 
-    GetAddressResponse updateAddressForCustomer(UpdateAddressRequest updatedAddresses, Customer customer);
+    void updateAddressForCustomer(UpdateAddressRequest updatedAddresses, Customer customer);
 
     GetAddressResponse addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer);
 
