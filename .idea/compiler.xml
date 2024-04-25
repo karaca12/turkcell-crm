@@ -8,12 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="gatewayserver" />
-        <module name="common" />
         <module name="discoveryserver" />
         <module name="configserver" />
         <module name="common" />
       </profile>
-      <profile name="Annotation profile for productservice" enabled="true">
+      <profile name="Annotation profile for orderservice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -26,8 +25,8 @@
         <module name="invoiceservice" />
         <module name="customerservice" />
         <module name="authservice" />
-        <module name="productservice" />
         <module name="orderservice" />
+        <module name="productservice" />
       </profile>
     </annotationProcessing>
   </component>

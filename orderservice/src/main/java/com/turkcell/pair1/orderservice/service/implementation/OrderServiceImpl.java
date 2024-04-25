@@ -1,6 +1,6 @@
 package com.turkcell.pair1.orderservice.service.implementation;
 
-import com.turkcell.pair1.orderservice.core.exception.type.BusinessException;
+
 import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
