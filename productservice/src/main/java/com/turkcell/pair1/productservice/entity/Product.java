@@ -23,11 +23,6 @@ public class Product extends BaseEntity {
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "campaign_id")
-    private Long campaignId;
-
-    @Column(name = "campaign_name")
-    private String campaignName;
 
     @Column(name = "product_offer_name")
     private String productOfferName;
@@ -38,13 +33,13 @@ public class Product extends BaseEntity {
     @Column(name = "product_spec_id")
     private Long productSpecId;
 
-    @Column(name = "service_start_date")
-    private LocalDate serviceStartDate;
-
     @Column(name = "prod_chars")
     private String prodChars;
 
-    @ManyToOne
-    @JoinColumn(name = "service_address_id")
-    private Address serviceAddress;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "campaign_id", nullable = false)
+    private Campaign campaign;
+
+
 }

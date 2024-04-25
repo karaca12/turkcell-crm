@@ -11,6 +11,7 @@
         <module name="common" />
         <module name="discoveryserver" />
         <module name="configserver" />
+        <module name="common" />
       </profile>
       <profile name="Annotation profile for productservice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />

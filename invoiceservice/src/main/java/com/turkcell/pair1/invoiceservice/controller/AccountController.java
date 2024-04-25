@@ -3,9 +3,12 @@ package com.turkcell.pair1.invoiceservice.controller;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/invoice/accounts")
@@ -27,5 +30,9 @@ private final AccountService accountService;
     @ResponseStatus(HttpStatus.OK) // TODO: GLOBAL EXCEPTION HANDLER NEEDED.
     public void addItemToBasket(@RequestBody AddItemToBasketRequest request) {
         accountService.addItemToBasket(request);
+    }
+    @GetMapping("/getProducts/{accountId}")
+    public List<GetAccountProductResponse> getAccountProducts(@PathVariable int accountId){
+        return accountService.getProductsForAccount(accountId);
     }
 }
