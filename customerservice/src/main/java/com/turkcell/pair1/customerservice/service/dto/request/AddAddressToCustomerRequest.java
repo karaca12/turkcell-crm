@@ -1,7 +1,7 @@
 package com.turkcell.pair1.customerservice.service.dto.request;
 
 
-import com.turkcell.pair1.service.constants.Messages;
+import com.turkcell.pair1.message.Messages;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

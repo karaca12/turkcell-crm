@@ -6,8 +6,8 @@ import com.turkcell.pair1.customerservice.client.ProductServiceClient;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
+import com.turkcell.pair1.message.Messages;
 import com.turkcell.pair1.service.abstraction.MessageService;
-import com.turkcell.pair1.service.constants.Messages;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
