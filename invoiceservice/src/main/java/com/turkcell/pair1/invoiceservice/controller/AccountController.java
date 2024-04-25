@@ -3,7 +3,6 @@ package com.turkcell.pair1.invoiceservice.controller;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
-import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +35,9 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId) {
         return accountService.getCustomerAccountsByCustomerId(customerId);
+    }
+    @GetMapping("/getProducts/{accountId}")
+    public List<GetAccountProductResponse> getAccountProducts(@PathVariable int accountId){
+        return accountService.getProductsForAccount(accountId);
     }
 }

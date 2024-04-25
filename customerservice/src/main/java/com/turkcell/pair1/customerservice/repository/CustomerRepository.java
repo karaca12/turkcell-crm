@@ -41,12 +41,12 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             " c.motherName = :#{#updateRequest.motherName}, c.nationalityId = :#{#updateRequest.nationalityId}," +
             " c.updatedAt=current timestamp " +
             "where c.id=:#{#id} and c.isDeleted=false ")
-    Customer updateCustomerInfoById(Integer id,@Param("updateRequest") UpdateCustomerInfoRequest updateRequest);
+    void updateCustomerInfoById(Integer id,@Param("updateRequest") UpdateCustomerInfoRequest updateRequest);
 
     @Modifying
     @Query("update Customer c set c.email = :#{#updateRequest.email}, c.homePhone = :#{#updateRequest.homePhone}," +
             " c.mobilePhone = :#{#updateRequest.mobilePhone}, c.fax = :#{#updateRequest.fax}," +
             " c.updatedAt=current timestamp " +
             "where c.id=:#{#id} and c.isDeleted=false ")
-    Customer updateCustomerContactMediumById(Integer id, UpdateContactMediumRequest updateRequest);
+    void updateCustomerContactMediumById(Integer id, UpdateContactMediumRequest updateRequest);
 }

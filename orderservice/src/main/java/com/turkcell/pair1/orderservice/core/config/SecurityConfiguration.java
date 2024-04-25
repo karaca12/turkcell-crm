@@ -1,4 +1,4 @@
-package com.turkcell.pair1.orderservice.core.config;
+/*package com.turkcell.pair1.orderservice.core.config;
 
 import com.turkcell.pair1.configuration.BaseSecurityService;
 import lombok.RequiredArgsConstructor;
@@ -23,4 +23,4 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-}
+}*/

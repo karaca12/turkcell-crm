@@ -52,12 +52,12 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional
-    public GetAddressResponse updateAddressForCustomer(UpdateAddressRequest updatedAddress, Customer customer) {
+    public void updateAddressForCustomer(UpdateAddressRequest updatedAddress, Customer customer) {
         businessRules.customerMustContainAddress(customer, updatedAddress.getUpdatedId());
         Address address = AddressMapper.INSTANCE.updateAddressRequestToAddress(updatedAddress);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(updatedAddress.getStreetName(), updatedAddress.getCity()));
         address.setCustomer(customer);
-        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.updateAddressById(address, updatedAddress.getUpdatedId()));
+        addressRepository.updateAddressById(address, updatedAddress.getUpdatedId());
     }
 
     @Override

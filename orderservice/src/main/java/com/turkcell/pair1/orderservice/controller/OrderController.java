@@ -1,12 +1,12 @@
 package com.turkcell.pair1.orderservice.controller;
 
+import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -14,8 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     private final OrderService orderService;
 
+
     @GetMapping
     public String getCustomerIdByOrderId(@RequestParam String orderId) {
         return orderService.getCustomerIdByOrderId(orderId);
     }
+    @PostMapping
+    public Order placeOrder(@RequestBody Order order) {
+        return orderService.placeOrder(order);
+
+
+    }
+    @GetMapping("/account/{accountId}")
+    public List<Order> getOrdersByAccountId(@PathVariable int accountId) {
+        return orderService.findOrdersByAccountId(accountId);
+    }
+
 }

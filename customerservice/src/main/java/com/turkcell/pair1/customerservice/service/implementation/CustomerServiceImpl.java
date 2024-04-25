@@ -55,9 +55,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public GetCustomerInfoResponse updateCustomerInfoByCustomerId(String customerId, UpdateCustomerInfoRequest request) {
+    public void updateCustomerInfoByCustomerId(String customerId, UpdateCustomerInfoRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        return CustomerMapper.INSTANCE.getCustomerInfoResponseFromCustomer(customerRepository.updateCustomerInfoById(customer.getId(), request));
+        customerRepository.updateCustomerInfoById(customer.getId(), request);
     }
 
 
@@ -80,9 +80,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public GetAddressResponse updateCustomerAddressByCustomerId(String customerId, UpdateAddressRequest request) {
+    public void updateCustomerAddressByCustomerId(String customerId, UpdateAddressRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        return addressService.updateAddressForCustomer(request, customer);
+        addressService.updateAddressForCustomer(request, customer);
     }
 
     @Override
@@ -119,9 +119,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public GetCustomerContactInfoResponse updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request) {
+    public void updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        return CustomerMapper.INSTANCE.getCustomerContactInfoResponseFromCustomer(customerRepository.updateCustomerContactMediumById(customer.getId(), request));
+        customerRepository.updateCustomerContactMediumById(customer.getId(), request);
     }
 
 }
