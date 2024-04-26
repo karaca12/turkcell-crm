@@ -17,7 +17,6 @@ public interface AccountMapper {
 
     AccountDto accountToAccountDto(Account account);
 
-
     @Mapping(source = "billingAccount.status", target = "status")
     @Mapping(source = "billingAccount.accountNumber", target = "accountNumber")
     @Mapping(source = "billingAccount.name", target = "name")
@@ -26,9 +25,6 @@ public interface AccountMapper {
     @Mapping(source = "addressList", target = "addresses")
     Account getAccountFromCreateRequest(CreateBillingAccountRequest request);
 
-    default List<GetCustomerAccountsResponse> getCustomerInfoResponsesFromCustomers(List<Account> accounts) {
-        return accounts.stream()
-                .map(this::getCustomerInfoResponseFromCustomer)
-                .collect(Collectors.toList());
-    }
+    List<GetCustomerAccountsResponse> getCustomerInfoResponsesFromCustomers(List<Account> accounts);
+
 }

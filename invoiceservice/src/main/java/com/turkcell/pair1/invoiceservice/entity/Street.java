@@ -29,4 +29,5 @@ public class Street extends BaseEntity {
 
     @OneToMany(mappedBy = "street")
     private List<Address> addresses;
+
 }

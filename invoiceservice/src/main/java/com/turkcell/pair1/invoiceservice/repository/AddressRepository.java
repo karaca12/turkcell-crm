@@ -22,5 +22,4 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
             "where a.id = :#{#updatedId}")
     void updateAddressById(@Param("address") Address address,Integer updatedId);
 
-
 }

@@ -1,6 +1,7 @@
 package com.turkcell.pair1.invoiceservice.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,20 +19,18 @@ public class BillingAccount {
     @JoinColumn(name = "account_id")
     private Account account;
 
-
+    @NotNull
     @Column(name = "name")
     private String name;
 
-
+    @NotNull
     @Column(name = "description")
     private String description;
-
 
     @Column(name = "status")
     private String status;
 
     @Column(name = "account_number")
     private String accountNumber;
-
 
 }
