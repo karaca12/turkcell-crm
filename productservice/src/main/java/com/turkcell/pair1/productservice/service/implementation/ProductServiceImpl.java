@@ -70,4 +70,14 @@ public class ProductServiceImpl implements ProductService {
         }
         return responses;
 }
+
+    @Override
+    public void submitConfigurations() {
+        //TODO ????
+    }
+
+    @Override
+    public void configureProduct() {
+
+    }
 }

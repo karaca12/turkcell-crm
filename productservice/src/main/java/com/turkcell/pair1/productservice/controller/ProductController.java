@@ -38,4 +38,14 @@ public class ProductController {
             @RequestParam(required = false) String productOfferName) {
         return productService.searchProducts(productOfferId, productOfferName);
     }
+
+    @GetMapping("/configure") //TODO ??
+    public void configureProduct(/*@RequestBody ConfigureRequest configureRequest*/) {
+        productService.configureProduct();
+    }
+
+    @PostMapping("/submitConfigurations")
+    public void submitConfigurations() {
+        productService.submitConfigurations();
+    }
 }
