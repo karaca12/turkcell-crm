@@ -1,4 +1,3 @@
-/*
 package com.turkcell.pair1.invoiceservice.core.configuration;
 
 import com.turkcell.pair1.configuration.BaseSecurityService;
@@ -25,4 +24,3 @@ public class SecurityConfiguration {
         return http.build();
     }
 }
-*/
