@@ -29,7 +29,7 @@
     <repository>
       <id>github</id>
       <name>Github Packages</name>
-      <url>https://maven.pkg.github.com/karaca12/turkcell-crm-core</url>
+      <url>https://maven.pkg.github.com/karaca12/turkcell-crm</url>
     </repository>
   </distributionManagement>
 </project>
