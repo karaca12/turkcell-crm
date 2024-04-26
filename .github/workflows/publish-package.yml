@@ -1,4 +1,4 @@
-name: Publish core package to Github packages
+name: Publish common package to Github packages
 on:
   push:
     paths:
