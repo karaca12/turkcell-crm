@@ -16,6 +16,6 @@ jobs:
           distribution: "adopt"
 
       - name: Publish package
-        run: mvn deploy --file common/pom.xml
+        run: mvn deploy -f common/pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
