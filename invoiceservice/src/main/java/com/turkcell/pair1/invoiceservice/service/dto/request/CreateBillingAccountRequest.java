@@ -1,6 +1,6 @@
 package com.turkcell.pair1.invoiceservice.service.dto.request;
 
-import com.turkcell.pair1.message.Messages;
+import com.turkcell.common.message.Messages;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

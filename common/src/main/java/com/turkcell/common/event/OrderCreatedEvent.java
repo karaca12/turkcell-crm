@@ -1,4 +1,4 @@
-package com.turkcell.pair1.event;
+package com.turkcell.common.event;
 
 import java.time.LocalDateTime;
 

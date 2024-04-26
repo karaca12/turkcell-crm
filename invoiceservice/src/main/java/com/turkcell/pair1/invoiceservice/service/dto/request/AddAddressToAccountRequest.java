@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.turkcell.pair1.message.Messages;
+import com.turkcell.common.message.Messages;
 
 @Getter
 @Setter

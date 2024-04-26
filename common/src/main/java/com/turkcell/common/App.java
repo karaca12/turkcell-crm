@@ -1,4 +1,4 @@
-package com.turkcell.pair1;
+package com.turkcell.common;
 
 public class App 
 {

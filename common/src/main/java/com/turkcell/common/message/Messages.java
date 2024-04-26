@@ -1,4 +1,4 @@
-package com.turkcell.pair1.message;
+package com.turkcell.common.message;
 
 public class Messages {
     public static class BusinessErrors {
