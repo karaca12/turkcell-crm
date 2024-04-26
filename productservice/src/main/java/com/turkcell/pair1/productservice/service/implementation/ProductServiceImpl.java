@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findByCatalogueId(catalogueId);
         List<ProductDtoResponse> productDtoResponses = new ArrayList<>();
         for (Product product : products) {
-            ProductDtoResponse productDtoResponse = new ProductDtoResponse(product.getProductName(),product.getId());
+            ProductDtoResponse productDtoResponse = ProductMapper.INSTANCE.productDtoResponseFromProduct(product);
             productDtoResponses.add(productDtoResponse);
         }
         return productDtoResponses;
@@ -52,4 +52,22 @@ public class ProductServiceImpl implements ProductService {
         return ProductMapper.INSTANCE.accountProductDtoFromProduct(productRepository.getProductById(id));
     }
 
+    @Override
+    public List<ProductDtoResponse> searchProducts(Long productOfferId, String productOfferName) {
+        List<Product> products;
+        if (productOfferId != null && productOfferName != null) {
+            products = productRepository.findByProductOfferIdAndProductOfferNameContaining(productOfferId, productOfferName);
+        } else if (productOfferId != null) {
+            products = productRepository.findByProductOfferId(productOfferId);
+        } else if (productOfferName != null && !productOfferName.isEmpty()) {
+            products = productRepository.findByProductOfferNameContaining(productOfferName);
+        } else {
+            products = productRepository.findAll();
+        }
+        List<ProductDtoResponse> responses = new ArrayList<>();
+        for (Product product : products) {
+            responses.add(ProductMapper.INSTANCE.productDtoResponseFromProduct(product));
+        }
+        return responses;
+}
 }

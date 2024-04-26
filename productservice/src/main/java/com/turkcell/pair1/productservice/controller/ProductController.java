@@ -4,8 +4,11 @@ import com.turkcell.pair1.productservice.entity.Product;
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
+import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -27,5 +30,12 @@ public class ProductController {
     @GetMapping("/{id}")
     public GetAccountProductResponse getProduct(@PathVariable int id) {
         return productService.getProductById(id);
+    }
+
+    @GetMapping("/search")
+    public List<ProductDtoResponse> searchProducts(
+            @RequestParam(required = false) Long productOfferId,
+            @RequestParam(required = false) String productOfferName) {
+        return productService.searchProducts(productOfferId, productOfferName);
     }
 }
