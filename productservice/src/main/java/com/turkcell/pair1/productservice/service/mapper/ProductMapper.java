@@ -1,7 +1,6 @@
 package com.turkcell.pair1.productservice.service.mapper;
 
 
-import com.turkcell.pair1.productservice.entity.Campaign;
 import com.turkcell.pair1.productservice.entity.Product;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;

@@ -29,7 +29,6 @@ public class AccountController {
     }
 
     @PostMapping("/addBasketItem")
-    //@ResponseStatus(HttpStatus.OK) // TODO: GLOBAL EXCEPTION HANDLER NEEDED.
     public void addItemToBasket(@RequestBody AddItemToBasketRequest request) {
         accountService.addItemToBasket(request);
     }

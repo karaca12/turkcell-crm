@@ -1,6 +1,5 @@
 package com.turkcell.pair1.productservice.service.dto.response;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

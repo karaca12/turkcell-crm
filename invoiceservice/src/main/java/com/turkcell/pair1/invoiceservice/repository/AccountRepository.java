@@ -19,6 +19,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     Optional<Account> findByIsDeletedFalseAndId(Integer id);
 
-    List<Account> findByIsDeletedFalseAndCustomerId(String id);
+    List<Account> findByCustomerId(String id);
 
 }

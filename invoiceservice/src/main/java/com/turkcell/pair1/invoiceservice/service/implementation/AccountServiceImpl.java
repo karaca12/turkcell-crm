@@ -51,7 +51,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId) {
-        return AccountMapper.INSTANCE.getCustomerInfoResponsesFromCustomers(accountRepository.findByIsDeletedFalseAndCustomerId(customerId));
+        return AccountMapper.INSTANCE.getCustomerInfoResponsesFromCustomers(accountRepository.findByCustomerId(customerId));
     }
 
     @Override

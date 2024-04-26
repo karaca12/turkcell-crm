@@ -2,8 +2,8 @@ package com.turkcell.pair1.productservice.controller;
 
 import com.turkcell.pair1.productservice.entity.Product;
 import com.turkcell.pair1.productservice.service.abstraction.CatalogueService;
-import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductToCatalogueRequest;
+import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

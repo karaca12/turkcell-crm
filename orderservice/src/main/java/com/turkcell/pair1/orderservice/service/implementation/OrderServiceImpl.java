@@ -6,8 +6,6 @@ import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
-//import com.turkcell.pair1.service.abstraction.MessageService;
-//import com.turkcell.pair1.service.constants.Messages;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

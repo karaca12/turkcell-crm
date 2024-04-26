@@ -2,7 +2,6 @@ package com.turkcell.pair1.invoiceservice.entity;
 
 import com.turkcell.pair1.invoiceservice.core.entity.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,5 +27,6 @@ public class Account extends BaseEntity {
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
+    @Column(name = "customer_id", nullable = false)
     private String customerId;
 }

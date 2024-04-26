@@ -22,4 +22,6 @@ public class CreateBillingAccountRequest {
     private String description;
     @NotEmpty(message = Messages.ValidationErrors.NOT_EMPTY)
     List<@Valid AddAddressToAccountRequest> addressList;
+    @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
+    private String customerId;
 }

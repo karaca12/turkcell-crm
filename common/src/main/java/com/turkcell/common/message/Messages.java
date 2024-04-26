@@ -11,6 +11,9 @@ public class Messages {
         public static final String CUSTOMER_HAS_ONLY_ONE_ADDRESS = "customerHasOnlyOneAddress";
         public static final String CANNOT_DELETE_PRIMARY_ADDRESS = "cannotDeletePrimaryAddress";
         public static final String ADDRESS_ALREADY_IS_PRIMARY = "addressAlreadyIsPrimary";
+        public static final String NO_ACCOUNT_FOUND = "noAccountFound";
+        public static final String ACCOUNT_DOES_NOT_CONTAIN_ADDRESS = "accountDoesNotContainAddress";
+        public static final String ACCOUNT_HAS_ONLY_ONE_ADDRESS = "accountHasOnlyOneAddress";
     }
 
     public static class ValidationErrors {
