@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor // TODO: implement this
+@NoArgsConstructor
 public class AccountDto {
     private String accountNumber;
     private boolean isDeleted;

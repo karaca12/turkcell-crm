@@ -15,6 +15,7 @@ public interface AccountService {
     AccountDto getAccountDtoById(Integer accountId);
     void saveAccount(Account account);
     BasketItem addItemToBasket(AddItemToBasketRequest request);
+    void clearBasket(Integer accountId);
     boolean isActive(Integer accountId);
     List<GetAccountProductResponse> getProductsForAccount(int accountId);
 

@@ -77,6 +77,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public void clearBasket(Integer accountId) { // TODO: business rules??
+        Account account = getAccountById(accountId).orElseThrow();
+        basketService.clearBasket(account);
+    }
+
+    @Override
     public void saveAccount(Account account) {
         accountRepository.save(account);
     }

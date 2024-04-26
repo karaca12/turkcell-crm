@@ -11,10 +11,5 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class BasketController {
     private final BasketService basketService;
-
-    @PostMapping("/clear")
-    @ResponseStatus(HttpStatus.OK)
-    public void clearBasket(@RequestBody ClearBasketRequest request) {
-        basketService.clearBasket(request.getAccountId());
-    }
+// Moved everything to account controller
 }

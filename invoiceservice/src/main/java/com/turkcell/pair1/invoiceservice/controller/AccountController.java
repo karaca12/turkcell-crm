@@ -3,6 +3,7 @@ package com.turkcell.pair1.invoiceservice.controller;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.request.ClearBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,15 @@ public class AccountController {
     }
 
     @PostMapping("/addBasketItem")
-    @ResponseStatus(HttpStatus.OK) // TODO: GLOBAL EXCEPTION HANDLER NEEDED.
+    //@ResponseStatus(HttpStatus.OK) // TODO: GLOBAL EXCEPTION HANDLER NEEDED.
     public void addItemToBasket(@RequestBody AddItemToBasketRequest request) {
         accountService.addItemToBasket(request);
+    }
+
+    @PostMapping("/clearBasket")
+    @ResponseStatus(HttpStatus.OK)
+    public void clearBasket(@RequestBody ClearBasketRequest request) {
+        accountService.clearBasket(request.getAccountId());
     }
 
     @GetMapping("getCustomerAccountsByCustomerId/{customerId}")

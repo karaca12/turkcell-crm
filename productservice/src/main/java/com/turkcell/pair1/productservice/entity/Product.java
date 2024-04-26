@@ -41,5 +41,7 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "campaign_id", nullable = false)
     private Campaign campaign;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "catalogue_id")
+    private Catalogue catalogue;
 }

@@ -1,8 +1,10 @@
 package com.turkcell.pair1.invoiceservice.service.implementation;
 
+import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.Basket;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
 import com.turkcell.pair1.invoiceservice.repository.BasketRepository;
+import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,13 +27,12 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Transactional
-    public void clearBasket(Integer accountId) {
-//        Account account = accountService.getAccountById(accountId).orElseThrow(/* TODO: IMPLEMENT*/);
-//        Basket basket = account.getBasket();
-//        if (basket != null) {
-//            basket.getBasketItems().clear();
-//            basketRepository.save(basket);
-//        }
+    public void clearBasket(Account account) {
+        Basket basket = account.getBasket();
+        if (basket != null) {
+            basket.getBasketItems().clear();
+            basketRepository.save(basket);
+        }
     }
 
     @Override
