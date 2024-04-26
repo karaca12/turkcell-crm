@@ -101,7 +101,6 @@ public class BillingAccountServiceImpl implements BillingAccountService {
     @Override
     public GetBillingAccountInfoResponse getBillingAccountInfoByAccountNumber(String accountNumber) {
         businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
-        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccountNumber(accountNumber));
-        return BillingAccountMapper.INSTANCE.getBillingAccountInfoFromBillingAccount(billingAccount);
+        return BillingAccountMapper.INSTANCE.getBillingAccountInfoFromBillingAccount(billingAccountRepository.findByAccountNumber(accountNumber));
     }
 }
