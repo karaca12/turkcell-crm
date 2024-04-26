@@ -86,11 +86,16 @@
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>com.turkcell.pair1</groupId>
-            <artifactId>core</artifactId>
-            <version>1.2.6</version>
-        </dependency>-->
+            <artifactId>turkcell-crm-core</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.turkcell.pair1</groupId>
+            <artifactId>common</artifactId>
+            <version>1.2.0</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -104,6 +109,19 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>Github Packages</name>
+            <url>https://maven.pkg.github.com/karaca12/turkcell-crm-core</url>
+        </repository>
+        <repository>
+            <id>github</id>
+            <name>Github Packages</name>
+            <url>https://maven.pkg.github.com/karaca12/turkcell-crm</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
