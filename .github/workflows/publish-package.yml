@@ -1,5 +1,7 @@
 name: Publish common package to Github packages
-on: push
+on:
+  push:
+    - 'common/**'
 
 jobs:
   publish:
@@ -14,7 +16,8 @@ jobs:
         with:
           java-version: "17"
           distribution: "adopt"
+
       - name: Publish package
-        run: mvn deploy
+        run: mvn deploy -pl common
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
