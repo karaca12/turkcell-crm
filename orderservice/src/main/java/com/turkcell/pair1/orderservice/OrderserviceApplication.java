@@ -1,11 +1,11 @@
 package com.turkcell.pair1.orderservice;
 
-//import com.turkcell.pair1.annotation.EnableSecurity;
+import com.turkcell.pair1.annotation.EnableSecurity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-//@EnableSecurity
+@EnableSecurity
 public class OrderserviceApplication {
 
 	public static void main(String[] args) {
