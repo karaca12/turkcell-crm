@@ -1,7 +1,5 @@
 name: Publish common package to Github packages
-on:
-  push:
-    - 'common/**'
+on: push
 
 jobs:
   publish:
