@@ -11,7 +11,7 @@ public class StreetBusinessRules {
     private final StreetRepository streetRepository;
 
     public Street getStreetByNameAndCity(String street, String city) {
-        return streetRepository.findByNameAndCity_Name(street,city).orElseThrow();
+        return streetRepository.findByNameAndCity_Name(street, city).orElseThrow();
     }
 
 }

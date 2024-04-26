@@ -3,8 +3,8 @@ package com.turkcell.pair1.invoiceservice.service.implementation;
 import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.Basket;
 import com.turkcell.pair1.invoiceservice.entity.BillingAccount;
-import com.turkcell.pair1.invoiceservice.repository.AccountRepository;
 import com.turkcell.pair1.invoiceservice.repository.BillingAccountRepository;
+import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BillingAccountService;
@@ -29,17 +29,17 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class BillingAccountServiceImpl implements BillingAccountService {
-    private final AccountRepository accountRepository;
     private final BillingAccountRepository billingAccountRepository;
     private final AddressService addressService;
     private final BillingAccountBusinessRules businessRules;
     private final BasketService basketService;
+    private final AccountService accountService;
 
     @Override
     public CreateBillingAccountResponse create(CreateBillingAccountRequest request) {
         Basket basket = basketService.createBasket();
         Account account = AccountMapper.INSTANCE.getAccountFromCreateRequest(request);
-        Account savedAccount = accountRepository.save(account);
+        Account savedAccount = accountService.save(account);
         BillingAccount billingAccount = BillingAccountMapper.INSTANCE.getBillingAccountFromCreateRequest(request);
         billingAccount.setAccountNumber(UUID.randomUUID().toString());
         billingAccount.setAccount(savedAccount);
@@ -52,10 +52,10 @@ public class BillingAccountServiceImpl implements BillingAccountService {
 
     @Transactional
     @Override
-    public void updateBillingAccountByAccountNumber(String accountNumber, UpdateBillingAccountInfoRequest request) {
+    public void updateBillingAccountInfoByAccountNumber(String accountNumber, UpdateBillingAccountInfoRequest request) {
         BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
         billingAccountRepository.updateBillingAccountById(billingAccount.getId(), request);
-        accountRepository.updateAccountById(billingAccount.getAccount().getId());
+        accountService.updateAccountById(billingAccount.getAccount().getId());
     }
 
     @Override

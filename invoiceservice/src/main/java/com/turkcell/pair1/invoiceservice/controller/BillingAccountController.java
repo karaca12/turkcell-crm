@@ -30,7 +30,7 @@ public class BillingAccountController {
     @PutMapping("updateBillingAccountByAccountNumber/{accountNumber}")
     @ResponseStatus(HttpStatus.OK)
     public void updateBillingAccountByAccountNumber(@PathVariable String accountNumber, @RequestBody @Valid UpdateBillingAccountInfoRequest request) {
-        billingAccountService.updateBillingAccountByAccountNumber(accountNumber, request);
+        billingAccountService.updateBillingAccountInfoByAccountNumber(accountNumber, request);
     }
 
     @DeleteMapping("deleteBillingAccountByAccountNumber/{accountNumber}")

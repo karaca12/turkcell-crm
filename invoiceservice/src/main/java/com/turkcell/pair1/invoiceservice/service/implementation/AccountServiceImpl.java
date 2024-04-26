@@ -10,9 +10,9 @@ import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
-import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountOrderResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetOrderItemResponse;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +29,9 @@ import java.util.stream.Collectors;
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final BasketService basketService;
-
     private final ProductServiceClient productServiceClient;
     private final OrderServiceClient orderServiceClient;
+
     @Override
     public Optional<Account> getAccountById(Integer id) {
         return accountRepository.findByIsDeletedFalseAndId(id);
@@ -65,6 +65,16 @@ public class AccountServiceImpl implements AccountService {
         return productIds.stream()
                 .map(productServiceClient::getProductById)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
+
+    @Override
+    public void updateAccountById(Integer id) {
+        accountRepository.updateAccountById(id);
     }
 
     @Override

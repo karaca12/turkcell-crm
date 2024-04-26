@@ -6,10 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class BillingAccountBusinessRules {
     private final BillingAccountRepository billingAccountRepository;
+
     public BillingAccount getBillingAccountFromOptional(Optional<BillingAccount> optionalBillingAccount) {
         return optionalBillingAccount.orElseThrow();
     }

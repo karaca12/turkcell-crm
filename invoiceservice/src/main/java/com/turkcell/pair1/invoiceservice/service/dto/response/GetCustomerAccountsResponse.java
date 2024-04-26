@@ -13,5 +13,4 @@ public class GetCustomerAccountsResponse {
     private String status;
     private String accountNumber;
     private String name;
-
 }

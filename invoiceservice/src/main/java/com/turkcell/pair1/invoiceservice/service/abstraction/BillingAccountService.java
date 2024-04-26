@@ -13,7 +13,7 @@ import java.util.List;
 public interface BillingAccountService {
     CreateBillingAccountResponse create(CreateBillingAccountRequest request);
 
-    void updateBillingAccountByAccountNumber(String accountNumber, UpdateBillingAccountInfoRequest billingAccountRequest);
+    void updateBillingAccountInfoByAccountNumber(String accountNumber, UpdateBillingAccountInfoRequest billingAccountRequest);
 
     void deleteBillingAccountByAccountNumber(String accountNumber);
 
@@ -24,6 +24,7 @@ public interface BillingAccountService {
     void deleteAddressByAccountNumberAndAddressId(String accountNumber, Integer addressId);
 
     GetAddressResponse setPrimaryAddressByAccountNumberAndAddressId(String accountNumber, Integer addressId);
+
     void updateBillingAccountAddressByAccountNumber(String accountNumber, UpdateAddressRequest request);
 
     GetBillingAccountInfoResponse getBillingAccountInfoByAccountNumber(String accountNumber);

@@ -12,13 +12,22 @@ import java.util.Optional;
 
 public interface AccountService {
     Optional<Account> getAccountById(Integer accountId);
+
     AccountDto getAccountDtoById(Integer accountId);
+
     void saveAccount(Account account);
+
     BasketItem addItemToBasket(AddItemToBasketRequest request);
+
     void clearBasket(Integer accountId);
+
     boolean isActive(Integer accountId);
+
     List<GetAccountProductResponse> getProductsForAccount(int accountId);
 
+    Account save(Account account);
+
+    void updateAccountById(Integer id);
 
     List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId);
 }
