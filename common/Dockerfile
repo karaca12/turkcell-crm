@@ -10,5 +10,5 @@ COPY . /app/
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17-jdk
-COPY --from=build /app/target/common-1.2.2.jar /app/myapp.jar
+COPY --from=build /app/target/common-1.2.1.jar /app/myapp.jar
 CMD java -jar /app/myapp.jar
