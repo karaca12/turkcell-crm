@@ -62,6 +62,7 @@ public class AddressServiceImpl implements AddressService {
     @Transactional
     public GetAddressResponse addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer) {
         Address address = AddressMapper.INSTANCE.addAddressToCustomerRequestToAddress(request);
+        address.setIsPrimary(false);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(request.getStreetName(), request.getCity()));
         address.setCustomer(customer);
         return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
