@@ -35,9 +35,7 @@ public class AddressServiceImpl implements AddressService {
         for (int i = 0; i < addressRequests.size(); i++) {
             AddAddressToCustomerRequest addressRequest = addressRequests.get(i);
             Address address = AddressMapper.INSTANCE.addAddressToCustomerRequestToAddress(addressRequest);
-            if (i == 0) {
-                address.setIsPrimary(true);
-            }
+            address.setIsPrimary(i == 0);
             address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(addressRequest.getStreetName(), addressRequest.getCity()));
             address.setCustomer(customer);
             response.add(AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address)));
