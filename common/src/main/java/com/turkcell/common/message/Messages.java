@@ -14,6 +14,7 @@ public class Messages {
         public static final String NO_ACCOUNT_FOUND = "noAccountFound";
         public static final String ACCOUNT_DOES_NOT_CONTAIN_ADDRESS = "accountDoesNotContainAddress";
         public static final String ACCOUNT_HAS_ONLY_ONE_ADDRESS = "accountHasOnlyOneAddress";
+        public static final String WRONG_USERNAME_OR_PASSWORD = "wrongUsernameOrPassword";
     }
 
     public static class ValidationErrors {
