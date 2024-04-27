@@ -45,6 +45,12 @@ public class AccountController {
     public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId) {
         return accountService.getCustomerAccountsByCustomerId(customerId);
     }
+
+    @GetMapping("getCustomerIdByAccountNumber/{accountNumber}")
+    public String getCustomerIdByAccountNumber(@PathVariable String accountNumber) {
+        return accountService.getCustomerIdByAccountNumber(accountNumber);
+    }
+
     @GetMapping("/getProducts/{accountId}")
     public List<GetAccountProductResponse> getAccountProducts(@PathVariable int accountId){
         return accountService.getProductsForAccount(accountId);

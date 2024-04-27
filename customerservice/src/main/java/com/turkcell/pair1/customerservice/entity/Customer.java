@@ -50,9 +50,6 @@ public class Customer extends BaseEntity {
     @Column(name = "nationality_id", nullable = false,length = 11)
     private String  nationalityId;
 
-    @Column(name = "account_number")
-    private String accountNumber;
-
     @NotNull
     @Column(name = "email", nullable = false)
     private String email;

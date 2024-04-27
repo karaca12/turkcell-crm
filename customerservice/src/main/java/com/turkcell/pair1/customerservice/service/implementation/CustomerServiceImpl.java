@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
     public List<SearchCustomerResponse> search(SearchCustomerRequest request, PageInfo pageInfo) {
         Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
 
-        List<SearchCustomerResponse> response = customerRepository.search(request, businessRules.getCustomerIdFromOrderNumber(request.getOrderNumber()), pageable);
+        List<SearchCustomerResponse> response = customerRepository.search(request, businessRules.getCustomerIdFromOrderNumberOrAccountNumber(request.getOrderNumber(),request.getAccountNumber()), pageable);
         businessRules.checkIfSearchIsEmpty(response);
         return response;
     }
@@ -41,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CreateCustomerResponse create(CreateCustomerRequest request) {
         businessRules.customerWithSameNationalityIdCannotExist(request.getNationalityId());
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateRequest(request);
-        customer.setCustomerId(UUID.randomUUID().toString());
+        customer.setCustomerId(businessRules.generateCustomerId());
         Customer savedCustomer = customerRepository.save(customer);
         CreateCustomerResponse response = CustomerMapper.INSTANCE.getCreateCustomerResponseFromCustomer(savedCustomer);
         response.setAddressList(addressService.addAddressesForCustomer(request.getAddressList(), savedCustomer));

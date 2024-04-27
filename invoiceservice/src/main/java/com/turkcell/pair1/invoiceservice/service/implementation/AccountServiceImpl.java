@@ -12,6 +12,7 @@ import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.*;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
+import com.turkcell.pair1.invoiceservice.service.rules.AccountBusinessRules;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ public class AccountServiceImpl implements AccountService {
     private final BasketService basketService;
     private final ProductServiceClient productServiceClient;
     private final OrderServiceClient orderServiceClient;
+    private final AccountBusinessRules businessRules;
 
     @Override
     public Optional<Account> getAccountById(Integer id) {
@@ -92,10 +94,16 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId) {
         GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productId);
-        GetAccountOrderResponse  order = orderServiceClient.getOrderById(orderId);
+        GetAccountOrderResponse order = orderServiceClient.getOrderById(orderId);
         productDetail.setServiceAddress(order.getServiceAddress().get(0)); //TODO:find the primary address
         productDetail.setServiceStartDate(order.getServiceStartDate());
 
         return productDetail;//TODO:result is gonna be cleared version from now
+    }
+
+    @Override
+    public String getCustomerIdByAccountNumber(String accountNumber) {
+        Account account = businessRules.getAccountFromOptional(accountRepository.findByBillingAccount_AccountNumber(accountNumber));
+        return account.getCustomerId();
     }
 }

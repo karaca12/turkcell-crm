@@ -31,4 +31,6 @@ public interface AccountService {
     List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId);
 
     GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId);
+
+    String getCustomerIdByAccountNumber(String accountNumber);
 }

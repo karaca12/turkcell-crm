@@ -22,7 +22,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             "from Customer c " +
             "where (:#{#request.nationalityId} is null or c.nationalityId=:#{#request.nationalityId}) " +
             "and (:#{#request.customerId} is null or c.customerId=:#{#request.customerId})" +
-            "and (:#{#request.accountNumber} is null or c.accountNumber=:#{#request.accountNumber})" +
             "and (:#{#request.mobilePhone} is null or c.mobilePhone=:#{#request.mobilePhone})" +
             "and (:#{#request.firstName} is null or c.firstName=:#{#request.firstName})" +
             "and (:#{#request.lastName} is null or c.lastName=:#{#request.lastName}) " +
@@ -49,4 +48,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             " c.updatedAt=current timestamp " +
             "where c.id=:#{#id} and c.isDeleted=false ")
     void updateCustomerContactMediumById(Integer id, UpdateContactMediumRequest updateRequest);
+
+    boolean existsByCustomerId(String customerId);
 }

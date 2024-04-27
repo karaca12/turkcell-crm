@@ -21,4 +21,5 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     List<Account> findByCustomerId(String id);
 
+    Optional<Account> findByBillingAccount_AccountNumber(String accountNumber);
 }
