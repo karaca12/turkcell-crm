@@ -51,8 +51,10 @@ public class CustomerController {
 
     @GetMapping("getCustomerAddressesByCustomerId/{customerId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<GetAddressResponse> getCustomerAddressesById(@PathVariable String customerId) {
-        return customerService.getCustomerAddressesByCustomerId(customerId);
+    public List<GetAddressResponse> getCustomerAddressesById(@PathVariable String customerId,
+                                                             @RequestParam int page, @RequestParam int size) {
+        PageInfo pageInfo = new PageInfo(page, size);
+        return customerService.getCustomerAddressesByCustomerId(customerId,pageInfo);
     }
 
     @GetMapping("getCustomerContactInfoByCustomerId/{customerId}")
@@ -67,7 +69,7 @@ public class CustomerController {
     }
 
     @PostMapping("createAddressToCustomerByCustomerId/{customerId}")
-    public GetAddressResponse createAddressToCustomerByCustomerId(@PathVariable String customerId, @Valid @RequestBody AddAddressToCustomerRequest request) {
+    public CreateAddressToCustomerResponse createAddressToCustomerByCustomerId(@PathVariable String customerId, @Valid @RequestBody AddAddressToCustomerRequest request) {
         return customerService.createAddressToCustomerByCustomerId(customerId, request);
     }
     @DeleteMapping("deleteAddressByCustomerIdAndAddressId/{customerId}/{addressId}")
@@ -76,8 +78,8 @@ public class CustomerController {
     }
 
     @PutMapping("setPrimaryAddressByCustomerIdAndAddressId/{customerId}/{addressId}")
-    public GetAddressResponse setPrimaryAddressByCustomerIdAndAddressId(@PathVariable String customerId, @PathVariable Integer addressId){
-        return customerService.setPrimaryAddressByCustomerIdAndAddressId(customerId,addressId);
+    public void setPrimaryAddressByCustomerIdAndAddressId(@PathVariable String customerId, @PathVariable Integer addressId){
+        customerService.setPrimaryAddressByCustomerIdAndAddressId(customerId,addressId);
     }
 
     @DeleteMapping("deleteCustomerByCustomerId/{customerId}")

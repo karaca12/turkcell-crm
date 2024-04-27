@@ -7,6 +7,7 @@ import com.turkcell.pair1.customerservice.client.OrderServiceClient;
 import com.turkcell.pair1.customerservice.client.ProductServiceClient;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
+import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfoRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -101,4 +102,9 @@ public class CustomerBusinessRules {
     }
 
 
+    public void checkIfNationalityIdAlreadyExists(Customer customer, UpdateCustomerInfoRequest request) {
+        if (!request.getNationalityId().equals(customer.getNationalityId())) {
+            customerWithSameNationalityIdCannotExist(request.getNationalityId());
+        }
+    }
 }

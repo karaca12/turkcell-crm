@@ -17,7 +17,7 @@ public interface CustomerService {
 
     GetCustomerInfoResponse getCustomerInfoByCustomerId(String customerId);
 
-    List<GetAddressResponse> getCustomerAddressesByCustomerId(String customerId);
+    List<GetAddressResponse> getCustomerAddressesByCustomerId(String customerId,PageInfo pageInfo);
 
     GetCustomerContactInfoResponse getCustomerContactInfoByCustomerId(String customerId);
 
@@ -27,7 +27,7 @@ public interface CustomerService {
 
     void updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request);
 
-    GetAddressResponse createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request);
+    CreateAddressToCustomerResponse createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request);
 
     void deleteAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
 

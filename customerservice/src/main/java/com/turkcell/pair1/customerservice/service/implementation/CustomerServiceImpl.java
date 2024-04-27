@@ -1,6 +1,7 @@
 package com.turkcell.pair1.customerservice.service.implementation;
 
 import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
+import com.turkcell.pair1.customerservice.entity.Address;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
@@ -56,6 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public void updateCustomerInfoByCustomerId(String customerId, UpdateCustomerInfoRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
+        businessRules.checkIfNationalityIdAlreadyExists(customer,request);
         customerRepository.updateCustomerInfoById(customer.getId(), request);
     }
 
@@ -67,8 +69,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<GetAddressResponse> getCustomerAddressesByCustomerId(String customerId) {
-        return addressService.getAddressesFromCustomerByCustomerId(businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId)));
+    public List<GetAddressResponse> getCustomerAddressesByCustomerId(String customerId,PageInfo pageInfo) {
+        Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
+        return addressService.getAddressesFromCustomerByCustomerId(businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId)),pageable);
     }
 
     @Override
@@ -86,7 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public GetAddressResponse createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request) {
+    public CreateAddressToCustomerResponse createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
         return addressService.addAddressForCustomer(request, customer);
     }
@@ -113,6 +116,7 @@ public class CustomerServiceImpl implements CustomerService {
         businessRules.ensureCustomerHasNoActiveProducts(customer);
         customer.setDeleted(true);
         customer.setDeletedAt(LocalDateTime.now());
+        addressService.deleteAddressesWhenDeletingCustomer(customer);
         customerRepository.save(customer);
     }
 

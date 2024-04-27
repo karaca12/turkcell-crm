@@ -7,10 +7,12 @@ import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
 import com.turkcell.pair1.customerservice.service.abstraction.StreetService;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateAddressRequest;
+import com.turkcell.pair1.customerservice.service.dto.response.CreateAddressToCustomerResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.customerservice.service.mapper.AddressMapper;
 import com.turkcell.pair1.customerservice.service.rules.AddressBusinessRules;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,8 +46,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<GetAddressResponse> getAddressesFromCustomerByCustomerId(Customer customer) {
-        return AddressMapper.INSTANCE.getAddressResponsesFromAddresses(addressRepository.findByIsDeletedFalseAndCustomer(customer));
+    public List<GetAddressResponse> getAddressesFromCustomerByCustomerId(Customer customer, Pageable pageable) {
+        return AddressMapper.INSTANCE.getAddressResponsesFromAddresses(addressRepository.findByIsDeletedFalseAndCustomer(customer,pageable));
     }
 
     @Override
@@ -60,12 +62,12 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional
-    public GetAddressResponse addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer) {
+    public CreateAddressToCustomerResponse addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer) {
         Address address = AddressMapper.INSTANCE.addAddressToCustomerRequestToAddress(request);
         address.setIsPrimary(false);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(request.getStreetName(), request.getCity()));
         address.setCustomer(customer);
-        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
+        return AddressMapper.INSTANCE.getCreateAddressResponseFromAddress(addressRepository.save(address));
     }
 
     @Transactional
@@ -95,5 +97,14 @@ public class AddressServiceImpl implements AddressService {
         }
         address.setIsPrimary(true);
         return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
+    }
+
+    @Override
+    public void deleteAddressesWhenDeletingCustomer(Customer customer) {
+        for (Address address: customer.getAddresses()){
+            address.setDeleted(true);
+            address.setDeletedAt(LocalDateTime.now());
+            addressRepository.save(address);
+        }
     }
 }

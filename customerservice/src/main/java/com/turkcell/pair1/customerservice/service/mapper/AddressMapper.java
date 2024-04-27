@@ -3,6 +3,7 @@ package com.turkcell.pair1.customerservice.service.mapper;
 import com.turkcell.pair1.customerservice.entity.Address;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateAddressRequest;
+import com.turkcell.pair1.customerservice.service.dto.response.CreateAddressToCustomerResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.GetAddressResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,6 +19,10 @@ public interface AddressMapper {
     Address addAddressToCustomerRequestToAddress(AddAddressToCustomerRequest request);
 
     Address updateAddressRequestToAddress(UpdateAddressRequest request);
+
+    @Mapping(source = "street.name",target = "street")
+    @Mapping(source = "street.city.name",target = "city")
+    CreateAddressToCustomerResponse getCreateAddressResponseFromAddress(Address address);
 
     @Mapping(source = "street.name",target = "street")
     @Mapping(source = "street.city.name",target = "city")
