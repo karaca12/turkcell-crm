@@ -16,8 +16,6 @@ public interface AccountService {
 
     AccountDto getAccountDtoById(Integer accountId);
 
-    void saveAccount(Account account);
-
     BasketItem addItemToBasket(AddItemToBasketRequest request);
 
     void clearBasket(Integer accountId);
@@ -31,5 +29,6 @@ public interface AccountService {
     void updateAccountById(Integer id);
 
     List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId);
+
     GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId);
 }

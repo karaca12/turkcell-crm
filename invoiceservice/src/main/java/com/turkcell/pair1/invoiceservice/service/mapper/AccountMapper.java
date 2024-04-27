@@ -16,14 +16,13 @@ public interface AccountMapper {
 
     AccountDto accountToAccountDto(Account account);
 
-    @Mapping(source = "billingAccount.status", target = "status")
     @Mapping(source = "billingAccount.accountNumber", target = "accountNumber")
     @Mapping(source = "billingAccount.name", target = "name")
-    GetCustomerAccountsResponse getCustomerInfoResponseFromCustomer(Account account);
+    GetCustomerAccountsResponse getCustomerAccountResponseFromAccount(Account account);
 
     @Mapping(source = "addressList", target = "addresses")
     Account getAccountFromCreateRequest(CreateBillingAccountRequest request);
 
-    List<GetCustomerAccountsResponse> getCustomerInfoResponsesFromCustomers(List<Account> accounts);
+    List<GetCustomerAccountsResponse> getCustomerAccountResponsesFromAccounts(List<Account> accounts);
 
 }

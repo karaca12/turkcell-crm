@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetCustomerAccountsResponse {
-    private String status;
+    private boolean isDeleted;
     private String accountNumber;
     private String name;
 }
