@@ -16,8 +16,6 @@ import java.util.List;
 public class OrderItem {
     private int productId;
     private double price;
-    private LocalDate serviceStartDate;
-    private List<Address> serviceAddress;
 
 
 }

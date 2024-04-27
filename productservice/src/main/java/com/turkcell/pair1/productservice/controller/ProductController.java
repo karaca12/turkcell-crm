@@ -3,6 +3,7 @@ package com.turkcell.pair1.productservice.controller;
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
+import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public GetAccountProductResponse getProduct(@PathVariable int id) {
-        return productService.getProductById(id);
+        return productService.getAccountProductById(id);
     }
 
     @GetMapping("/search")
@@ -46,5 +47,10 @@ public class ProductController {
     @PostMapping("/submitConfigurations")
     public void submitConfigurations() {
         productService.submitConfigurations();
+    }
+    @GetMapping("/productDetails/{productId}")
+    public GetDetailedAccountProductResponse getDetailedProduct(@PathVariable int productId) {
+        return productService.getDetailedProduct(productId);
+
     }
 }

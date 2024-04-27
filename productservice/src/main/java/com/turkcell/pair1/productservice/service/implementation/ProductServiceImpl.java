@@ -5,6 +5,7 @@ import com.turkcell.pair1.productservice.repository.ProductRepository;
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
+import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
 import com.turkcell.pair1.productservice.service.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public GetAccountProductResponse getProductById(int id) {
+    public GetAccountProductResponse getAccountProductById(int id) {
         return ProductMapper.INSTANCE.accountProductDtoFromProduct(productRepository.getProductById(id));
     }
 
@@ -79,4 +80,10 @@ public class ProductServiceImpl implements ProductService {
     public void configureProduct() {
 
     }
+
+    @Override
+    public GetDetailedAccountProductResponse getDetailedProduct(int id) {
+        return ProductMapper.INSTANCE.getDetailedProductFromProduct(productRepository.getProductById(id));
+    }
+
 }

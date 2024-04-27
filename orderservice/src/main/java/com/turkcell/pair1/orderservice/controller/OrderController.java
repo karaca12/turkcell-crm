@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -27,6 +28,11 @@ public class OrderController {
     @GetMapping("/account/{accountId}")
     public List<Order> getOrdersByAccountId(@PathVariable int accountId) {
         return orderService.findOrdersByAccountId(accountId);
+    }
+    @GetMapping("/{orderId}")
+    public Optional<Order> getOrderById(@PathVariable String orderId){
+        return orderService.getOrderById(orderId);
+
     }
 
 }

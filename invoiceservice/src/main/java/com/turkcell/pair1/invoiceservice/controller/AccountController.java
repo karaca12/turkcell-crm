@@ -6,6 +6,7 @@ import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequ
 import com.turkcell.pair1.invoiceservice.service.dto.request.ClearBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetDetailedAccountProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +48,10 @@ public class AccountController {
     @GetMapping("/getProducts/{accountId}")
     public List<GetAccountProductResponse> getAccountProducts(@PathVariable int accountId){
         return accountService.getProductsForAccount(accountId);
+    }
+
+    @GetMapping("/getDetailedProduct/{productId}/{orderId}")
+    public GetDetailedAccountProductResponse getDetailedAccountProduct(@PathVariable int productId,@PathVariable String orderId){
+        return accountService.getDetailedAccountProduct(productId,orderId);
     }
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,4 +23,6 @@ public class Order {
     //TODO:customerId account id ile account tarafindan cekilecek.
     private String customerId;
     private double totalPrice;
+    private LocalDate serviceStartDate;
+    private List<Address> serviceAddress;
 }

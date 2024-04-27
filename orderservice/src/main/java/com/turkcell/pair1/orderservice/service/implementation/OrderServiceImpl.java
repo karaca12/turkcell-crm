@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +36,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> findOrdersByAccountId(int accountId) {
         return orderRepository.findByAccountId(accountId);
+    }
+
+    @Override
+    public Optional<Order> getOrderById(String orderId) {
+        return orderRepository.findById(orderId);
     }
 }

@@ -12,4 +12,6 @@ import java.util.List;
 public interface OrderServiceClient {
     @GetMapping("/api/orders/account/{accountId}")
     List<GetAccountOrderResponse> findOrdersByAccountId(@PathVariable("accountId") int accountId);
+    @GetMapping("/api/orders/{orderId}")
+    GetAccountOrderResponse getOrderById(@PathVariable("orderId") String orderId);
 }

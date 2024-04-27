@@ -6,6 +6,7 @@ import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetDetailedAccountProductResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,4 +31,5 @@ public interface AccountService {
     void updateAccountById(Integer id);
 
     List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId);
+    GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId);
 }

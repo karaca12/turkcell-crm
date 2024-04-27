@@ -10,10 +10,7 @@ import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
-import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountOrderResponse;
-import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
-import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
-import com.turkcell.pair1.invoiceservice.service.dto.response.GetOrderItemResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.*;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -95,5 +92,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void saveAccount(Account account) {
         accountRepository.save(account);
+    }
+
+    @Override
+    public GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId) {
+        GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productId);
+        GetAccountOrderResponse  order = orderServiceClient.getOrderById(orderId);
+        productDetail.setServiceAddress(order.getServiceAddress().get(0)); //TODO:find the primary address
+        productDetail.setServiceStartDate(order.getServiceStartDate());
+
+        return productDetail;//TODO:result is gonna be cleared version from now
     }
 }
