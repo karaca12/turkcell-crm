@@ -86,7 +86,7 @@ public class CustomerController {
     }
 
     @PutMapping("updateCustomerContactMediumByCustomerId/{customerId}")
-    public void updateCustomerContactMediumByCustomerId(@PathVariable String customerId, @RequestBody UpdateContactMediumRequest request) {
+    public void updateCustomerContactMediumByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateContactMediumRequest request) {
         customerService.updateCustomerContactMediumByCustomerId(customerId, request);
     }
 }
