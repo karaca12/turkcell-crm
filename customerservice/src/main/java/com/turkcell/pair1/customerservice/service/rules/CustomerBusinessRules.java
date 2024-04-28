@@ -28,9 +28,11 @@ public class CustomerBusinessRules {
 
     private static final Random random = new Random();
 
-    public void customerWithSameNationalityIdCannotExist(String nationalityId) {
+    public boolean customerWithSameNationalityIdCannotExist(String nationalityId) {
         if (customerRepository.existsByNationalityId(nationalityId)) {
             throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.DUPLICATE_NATIONALITY_ID_ERROR));
+        }else {
+            return true;
         }
     }
 
