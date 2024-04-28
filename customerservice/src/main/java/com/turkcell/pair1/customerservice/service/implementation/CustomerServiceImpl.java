@@ -1,7 +1,6 @@
 package com.turkcell.pair1.customerservice.service.implementation;
 
 import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
-import com.turkcell.pair1.customerservice.entity.Address;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
@@ -33,13 +32,13 @@ public class CustomerServiceImpl implements CustomerService {
 
         List<SearchCustomerResponse> response = customerRepository.search(request, businessRules.getCustomerIdFromOrderNumberOrAccountNumber(request.getOrderNumber(),request.getAccountNumber()), pageable);
         businessRules.checkIfSearchIsEmpty(response);
-        return response;
+        return businessRules.sortSearchResponse(response);
     }
 
     @Override
     @Transactional
     public CreateCustomerResponse create(CreateCustomerRequest request) {
-        businessRules.customerWithSameNationalityIdCannotExist(request.getNationalityId());
+        businessRules.customerWithSameNationalityIdCannotExistUnlessForeign(request.getNationalityId());
         Customer customer = CustomerMapper.INSTANCE.getCustomerFromCreateRequest(request);
         customer.setCustomerId(businessRules.generateCustomerId());
         Customer savedCustomer = customerRepository.save(customer);
@@ -50,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean checkNationalityId(String nationalityId) {
-        return businessRules.customerWithSameNationalityIdCannotExist(nationalityId);
+        return businessRules.customerWithSameNationalityIdCannotExistUnlessForeign(nationalityId);
     }
 
     @Override

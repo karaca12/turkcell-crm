@@ -1,6 +1,5 @@
 package com.turkcell.pair1.orderservice.controller;
 
-import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
@@ -8,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -17,7 +15,7 @@ public class OrderController {
     private final OrderService orderService;
 
 
-    @GetMapping
+    @GetMapping("getCustomerIdByOrderId")
     public String getCustomerIdByOrderId(@RequestParam String orderId) {
         return orderService.getCustomerIdByOrderId(orderId);
     }

@@ -11,11 +11,10 @@ import com.turkcell.pair1.customerservice.service.dto.request.UpdateCustomerInfo
 import com.turkcell.pair1.customerservice.service.dto.response.SearchCustomerResponse;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -26,13 +25,19 @@ public class CustomerBusinessRules {
     private final ProductServiceClient productServiceClient;
     private final InvoiceServiceClient invoiceServiceClient;
 
-    private static final Random random = new Random();
+    private final Random random = new Random();
+    @Value("${foreignNatId}")
+    private String foreignNatId;
 
-    public boolean customerWithSameNationalityIdCannotExist(String nationalityId) {
-        if (customerRepository.existsByNationalityId(nationalityId)) {
-            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.DUPLICATE_NATIONALITY_ID_ERROR));
-        }else {
+    public boolean customerWithSameNationalityIdCannotExistUnlessForeign(String nationalityId) {
+        if (nationalityId.equals(foreignNatId)) {
             return true;
+        } else {
+            if (customerRepository.existsByNationalityId(nationalityId)) {
+                throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.DUPLICATE_NATIONALITY_ID_ERROR));
+            } else {
+                return true;
+            }
         }
     }
 
@@ -106,7 +111,15 @@ public class CustomerBusinessRules {
 
     public void checkIfNationalityIdAlreadyExists(Customer customer, UpdateCustomerInfoRequest request) {
         if (!request.getNationalityId().equals(customer.getNationalityId())) {
-            customerWithSameNationalityIdCannotExist(request.getNationalityId());
+            customerWithSameNationalityIdCannotExistUnlessForeign(request.getNationalityId());
         }
+    }
+
+    public List<SearchCustomerResponse> sortSearchResponse(List<SearchCustomerResponse> response) {
+        response.sort(Comparator.comparing(SearchCustomerResponse::getFirstName)
+                .thenComparing(SearchCustomerResponse::getLastName)
+                .thenComparing(SearchCustomerResponse::getCustomerId));
+
+        return response;
     }
 }

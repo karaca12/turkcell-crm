@@ -19,7 +19,7 @@ public class CustomerController {
 
     @PostMapping("search")
     @ResponseStatus(HttpStatus.OK)
-    public List<SearchCustomerResponse> search(@RequestBody SearchCustomerRequest request,
+    public List<SearchCustomerResponse> search(@RequestBody @Valid SearchCustomerRequest request,
                                                @RequestParam int page, @RequestParam int size) {
         PageInfo pageInfo = new PageInfo(page, size);
         return customerService.search(request, pageInfo);

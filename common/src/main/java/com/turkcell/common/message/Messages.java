@@ -24,5 +24,9 @@ public class Messages {
         public static final String MIN = "{validation.minValue}";
         public static final String EMAIL = "{validation.email}";
         public static final String NATIONALITY_ID = "{validation.nationalityId}";
+        public static final String NOT_WHOLE_NUMBER = "{validation.notWholeNumber}";
+        public static final String NOT_ALPHABETICAL = "{validation.notAlphabetical}";
+        public static final String INVALID_MOBILE_PHONE = "{validation.invalidMobilePhone}";
+        public static final String LENGTH = "{validation.length}";
     }
 }

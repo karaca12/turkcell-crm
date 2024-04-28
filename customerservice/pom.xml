@@ -90,7 +90,7 @@
 		<dependency>
 			<groupId>com.turkcell.pair1</groupId>
 			<artifactId>common</artifactId>
-			<version>1.2.3</version>
+			<version>1.2.4</version>
 		</dependency>
 	</dependencies>
 

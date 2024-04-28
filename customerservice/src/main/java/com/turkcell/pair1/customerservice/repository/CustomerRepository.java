@@ -20,12 +20,12 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("select new com.turkcell.pair1.customerservice.service.dto.response." +
             "SearchCustomerResponse(c.customerId,c.firstName,c.middleName,c.lastName,c.nationalityId) " +
             "from Customer c " +
-            "where (:#{#request.nationalityId} is null or c.nationalityId=:#{#request.nationalityId}) " +
-            "and (:#{#request.customerId} is null or c.customerId=:#{#request.customerId})" +
-            "and (:#{#request.mobilePhone} is null or c.mobilePhone=:#{#request.mobilePhone})" +
-            "and (:#{#request.firstName} is null or c.firstName=:#{#request.firstName})" +
-            "and (:#{#request.lastName} is null or c.lastName=:#{#request.lastName}) " +
-            "and (:#{#customerId} is null or c.customerId=:#{#customerId}) " +
+            "where (:#{#request.nationalityId} is null or c.nationalityId like %:#{#request.nationalityId}%) " +
+            "and (:#{#request.customerId} is null or c.customerId like %:#{#request.customerId}%)" +
+            "and (:#{#request.mobilePhone} is null or c.mobilePhone like %:#{#request.mobilePhone}%)" +
+            "and (:#{#request.firstName} is null or c.firstName like %:#{#request.firstName}%)" +
+            "and (:#{#request.lastName} is null or c.lastName like %:#{#request.lastName}%) " +
+            "and (:#{#customerId} is null or c.customerId like %:#{#customerId}%) " +
             "and c.isDeleted=false ")
     List<SearchCustomerResponse> search(@Param("request") SearchCustomerRequest request, String customerId, Pageable pageable);
 

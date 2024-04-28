@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,9 +22,12 @@ import java.util.List;
 @NoArgsConstructor
 public class CreateCustomerRequest {
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
+    @Length(min = 1, max = 50,message = Messages.ValidationErrors.LENGTH)
     String firstName;
+    @Length(min = 1, max = 50,message = Messages.ValidationErrors.LENGTH)
     String middleName;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
+    @Length(min = 1, max = 50,message = Messages.ValidationErrors.LENGTH)
     String lastName;
     @NotNull(message = Messages.ValidationErrors.NOT_NULL)
     LocalDate birthDate;
