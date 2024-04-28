@@ -1,9 +1,13 @@
 package com.turkcell.pair1.productservice.service.implementation;
 
 import com.turkcell.pair1.productservice.entity.Product;
+import com.turkcell.pair1.productservice.entity.ProductAttribute;
 import com.turkcell.pair1.productservice.repository.ProductRepository;
+import com.turkcell.pair1.productservice.service.abstraction.ProductAttributeService;
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
+import com.turkcell.pair1.productservice.service.dto.ProductAttributeDto;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
+import com.turkcell.pair1.productservice.service.dto.request.ProductConfigurationRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
@@ -18,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
+    private final ProductAttributeService productAttributeService;
 
     @Override
     public boolean hasActiveProducts(String customerId) {
@@ -77,8 +82,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void configureProduct() {
-
+    public void configureProduct(List<ProductConfigurationRequest> productConfigurationRequests) {
+        for (ProductConfigurationRequest config : productConfigurationRequests) {
+            Product product = getProductById(config.getProductId());
+            for (ProductAttributeDto attribute : config.getAttributes()) {
+                ProductAttribute productAttribute = ProductMapper.INSTANCE.productAttributeFromProductAttributeDto(attribute);
+                productAttribute.setProduct(product);
+                productAttributeService.save(productAttribute);
+            }
+        }
     }
 
     @Override

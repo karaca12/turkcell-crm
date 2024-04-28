@@ -2,6 +2,7 @@ package com.turkcell.pair1.productservice.service.abstraction;
 
 import com.turkcell.pair1.productservice.entity.Product;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
+import com.turkcell.pair1.productservice.service.dto.request.ProductConfigurationRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
@@ -20,6 +21,6 @@ public interface ProductService {
 
     void submitConfigurations();
 
-    void configureProduct();
+    void configureProduct(List<ProductConfigurationRequest> productConfigurationRequests);
     GetDetailedAccountProductResponse getDetailedProduct(int id);
 }
