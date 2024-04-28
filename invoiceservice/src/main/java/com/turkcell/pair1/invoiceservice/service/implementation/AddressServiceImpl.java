@@ -94,8 +94,15 @@ public class AddressServiceImpl implements AddressService {
             }
         }
         address.setIsPrimary(true);
-        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
         return AddressMapper.INSTANCE.getAddressesResponseFromAddress(addressRepository.save(address));
+    }
 
+    @Override
+    public void deletedAddressesWhenDeletingBillingAccounts(BillingAccount billingAccount) {
+        for (Address address : billingAccount.getAccount().getAddresses()) {
+            address.setDeleted(true);
+            address.setDeletedAt(LocalDateTime.now());
+            addressRepository.save(address);
+        }
     }
 }

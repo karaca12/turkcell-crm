@@ -22,4 +22,6 @@ public interface AddressService {
     void deleteAddressById(Integer addressId, BillingAccount billingAccount);
 
     GetAddressResponse setPrimaryAddressById(Integer addressId, BillingAccount billingAccount);
+
+    void deletedAddressesWhenDeletingBillingAccounts(BillingAccount billingAccount);
 }

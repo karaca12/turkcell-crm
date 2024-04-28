@@ -67,6 +67,7 @@ public class BillingAccountServiceImpl implements BillingAccountService {
         businessRules.ensureBillingAccountHasNoActiveProducts(billingAccount);
         billingAccount.getAccount().setDeleted(true);
         billingAccount.getAccount().setDeletedAt(LocalDateTime.now());
+        addressService.deletedAddressesWhenDeletingBillingAccounts(billingAccount);
         billingAccountRepository.save(billingAccount);
     }
 
