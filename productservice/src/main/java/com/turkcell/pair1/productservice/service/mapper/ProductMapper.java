@@ -2,6 +2,8 @@ package com.turkcell.pair1.productservice.service.mapper;
 
 
 import com.turkcell.pair1.productservice.entity.Product;
+import com.turkcell.pair1.productservice.entity.ProductAttribute;
+import com.turkcell.pair1.productservice.service.dto.ProductAttributeDto;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
@@ -20,5 +22,7 @@ public interface ProductMapper {
     @Mapping(source = "campaign.name",target = "campaignName")
     GetAccountProductResponse accountProductDtoFromProduct(Product product);
     GetDetailedAccountProductResponse getDetailedProductFromProduct(Product product);
+
+    ProductAttribute productAttributeFromProductAttributeDto(ProductAttributeDto productAttributeDto);
 
 }

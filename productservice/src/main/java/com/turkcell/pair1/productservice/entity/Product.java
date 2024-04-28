@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -31,12 +34,12 @@ public class Product extends BaseEntity {
     @Column(name = "product_spec_id")
     private Long productSpecId;
 
-    @Column(name = "prod_chars")
-    private String prodChars;
+    @OneToMany(mappedBy = "product")
+    List<ProductAttribute> productAttributes = new ArrayList<>();
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "campaign_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
     @ManyToOne(fetch = FetchType.LAZY)

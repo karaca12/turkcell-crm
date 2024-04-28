@@ -2,6 +2,7 @@ package com.turkcell.pair1.productservice.controller;
 
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
+import com.turkcell.pair1.productservice.service.dto.request.ProductConfigurationRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
@@ -39,9 +40,9 @@ public class ProductController {
         return productService.searchProducts(productOfferId, productOfferName);
     }
 
-    @GetMapping("/configure") //TODO ??
-    public void configureProduct(/*@RequestBody ConfigureRequest configureRequest*/) {
-        productService.configureProduct();
+    @PostMapping("/configure")
+    public void configureProduct(@RequestBody List<ProductConfigurationRequest> configurations) {
+        productService.configureProduct(configurations);
     }
 
     @PostMapping("/submitConfigurations")
