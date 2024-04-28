@@ -28,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +44,7 @@ public class BillingAccountServiceImpl implements BillingAccountService {
         Account account = AccountMapper.INSTANCE.getAccountFromCreateRequest(request);
         Account savedAccount = accountService.save(account);
         BillingAccount billingAccount = BillingAccountMapper.INSTANCE.getBillingAccountFromCreateRequest(request);
-        billingAccount.setAccountNumber(UUID.randomUUID().toString());
+        billingAccount.setAccountNumber(businessRules.generateAccountNumber());
         billingAccount.setAccount(savedAccount);
         billingAccount.getAccount().setBasket(basket);
         BillingAccount savedBillingAccount = billingAccountRepository.save(billingAccount);

@@ -9,12 +9,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
 public class BillingAccountBusinessRules {
     private final BillingAccountRepository billingAccountRepository;
     private final MessageService messageService;
+
+    private static final Random random = new Random();
 
 
     public BillingAccount getBillingAccountFromOptional(Optional<BillingAccount> optionalBillingAccount) {
@@ -23,5 +26,28 @@ public class BillingAccountBusinessRules {
 
     public void ensureBillingAccountHasNoActiveProducts(BillingAccount billingAccount) {
         //TODO: implement after product service is implemented
+    }
+
+    public String generateAccountNumber() {
+        String accountNumber;
+        accountNumber = generateUniqueAccountNumber();
+        if (!isUniqueNumber(accountNumber)) {
+            return accountNumber;
+        } else {
+            return generateAccountNumber();
+        }
+    }
+
+    private String generateUniqueAccountNumber() {
+        StringBuilder accountNumberBuilder = new StringBuilder();
+        accountNumberBuilder.append(random.nextInt(5) + 1);
+        for (int i = 0; i < 6; i++) {
+            accountNumberBuilder.append(random.nextInt(10));
+        }
+        return accountNumberBuilder.toString();
+    }
+
+    private boolean isUniqueNumber(String accountNumber) {
+        return billingAccountRepository.existsByAccountNumber(accountNumber);
     }
 }

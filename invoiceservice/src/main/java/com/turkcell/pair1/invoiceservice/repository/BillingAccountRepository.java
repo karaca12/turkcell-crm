@@ -21,4 +21,5 @@ public interface BillingAccountRepository extends JpaRepository<BillingAccount, 
 
     BillingAccount findByAccountNumber(String accountNumber);
 
+    boolean existsByAccountNumber(String accountNumber);
 }
