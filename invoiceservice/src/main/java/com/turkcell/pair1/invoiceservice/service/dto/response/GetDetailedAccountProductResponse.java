@@ -23,7 +23,7 @@ public class GetDetailedAccountProductResponse {
 
     private Long productSpecId;
 
-    private Address serviceAddress;
+    private GetServiceAddressResponse serviceAddress;
     private LocalDate serviceStartDate;
 
 

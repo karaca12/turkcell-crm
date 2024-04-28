@@ -6,6 +6,8 @@ import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
+import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
+import com.turkcell.pair1.orderservice.service.mapper.OrderMapper;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> getOrderById(String orderId) {
-        return orderRepository.findById(orderId);
+    public GetOrderByIdResponse getOrderById(String orderId) {
+        return OrderMapper.INSTANCE.getOrderByIdResponseFromOrder(orderRepository.findById(orderId).orElseThrow(()->new RuntimeException("No order Found")));
     }
 }

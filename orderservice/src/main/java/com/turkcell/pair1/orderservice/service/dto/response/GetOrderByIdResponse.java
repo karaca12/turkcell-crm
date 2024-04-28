@@ -1,6 +1,5 @@
-package com.turkcell.pair1.invoiceservice.service.dto.response;
+package com.turkcell.pair1.orderservice.service.dto.response;
 
-import com.turkcell.pair1.invoiceservice.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetAccountOrderResponse {
+public class GetOrderByIdResponse {
     private String orderId;
     private List<GetOrderItemResponse> items;
     private List<GetServiceAddressResponse> serviceAddress;
