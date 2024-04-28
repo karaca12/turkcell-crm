@@ -1,4 +1,4 @@
-package com.turkcell.pair1.invoiceservice.service.dto.response;
+package com.turkcell.pair1.orderservice.service.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,9 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class GetOrderItemResponse {
+@NoArgsConstructor
+public class AddOrderItemRequest {
     private int productId;
     private double price;
 }

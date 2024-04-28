@@ -11,5 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Address {
     private Street street;
+    private Integer flatNumber;
     private String description;
 }

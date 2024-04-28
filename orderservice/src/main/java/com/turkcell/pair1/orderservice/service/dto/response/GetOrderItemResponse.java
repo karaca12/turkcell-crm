@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetOrderItemResponse {
     private int productId;
+    private double price;
 }

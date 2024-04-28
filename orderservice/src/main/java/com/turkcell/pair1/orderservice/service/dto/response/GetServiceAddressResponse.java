@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GetServiceAddressResponse {
     private String description;
+    private Integer flatNumber;
     private String streetName;
     private String cityName;
 }
