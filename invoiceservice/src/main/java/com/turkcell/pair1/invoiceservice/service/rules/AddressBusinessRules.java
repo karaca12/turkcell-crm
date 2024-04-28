@@ -38,14 +38,14 @@ public class AddressBusinessRules {
     }
 
     public void deletedAddressCannotBePrimary(Address address) {
-        if (address.getIsPrimary()) {
+        if (address.isPrimary()) {
             throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.CANNOT_DELETE_PRIMARY_ADDRESS));
 
         }
     }
 
     public void checkIfAddressIsAlreadyAPrimaryAddress(Address address) {
-        if (address.getIsPrimary()) {
+        if (address.isPrimary()) {
             throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.ADDRESS_ALREADY_IS_PRIMARY));
 
         }

@@ -37,7 +37,7 @@ public class AddressServiceImpl implements AddressService {
         for (int i = 0; i < addressRequests.size(); i++) {
             AddAddressToCustomerRequest addressRequest = addressRequests.get(i);
             Address address = AddressMapper.INSTANCE.addAddressToCustomerRequestToAddress(addressRequest);
-            address.setIsPrimary(i == 0);
+            address.setPrimary(i == 0);
             address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(addressRequest.getStreetName(), addressRequest.getCity()));
             address.setCustomer(customer);
             response.add(AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address)));
@@ -47,7 +47,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<GetAddressResponse> getAddressesFromCustomerByCustomerId(Customer customer, Pageable pageable) {
-        return AddressMapper.INSTANCE.getAddressResponsesFromAddresses(addressRepository.findByIsDeletedFalseAndCustomer(customer,pageable));
+        return AddressMapper.INSTANCE.getAddressResponsesFromAddresses(addressRepository.findByIsDeletedFalseAndCustomer(customer, pageable));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class AddressServiceImpl implements AddressService {
     @Transactional
     public CreateAddressToCustomerResponse addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer) {
         Address address = AddressMapper.INSTANCE.addAddressToCustomerRequestToAddress(request);
-        address.setIsPrimary(false);
+        address.setPrimary(false);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(request.getStreetName(), request.getCity()));
         address.setCustomer(customer);
         return AddressMapper.INSTANCE.getCreateAddressResponseFromAddress(addressRepository.save(address));
@@ -90,18 +90,18 @@ public class AddressServiceImpl implements AddressService {
         businessRules.checkIfAddressIsAlreadyAPrimaryAddress(address);
 
         for (Address searchedAddress : customer.getAddresses()) {
-            if (searchedAddress.getIsPrimary()) {
-                searchedAddress.setIsPrimary(false);
+            if (searchedAddress.isPrimary()) {
+                searchedAddress.setPrimary(false);
                 addressRepository.save(searchedAddress);
             }
         }
-        address.setIsPrimary(true);
+        address.setPrimary(true);
         return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
     }
 
     @Override
     public void deleteAddressesWhenDeletingCustomer(Customer customer) {
-        for (Address address: customer.getAddresses()){
+        for (Address address : customer.getAddresses()) {
             address.setDeleted(true);
             address.setDeletedAt(LocalDateTime.now());
             addressRepository.save(address);

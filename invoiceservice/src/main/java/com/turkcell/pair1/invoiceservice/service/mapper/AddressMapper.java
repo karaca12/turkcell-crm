@@ -25,6 +25,7 @@ public interface AddressMapper {
 
     @Mapping(source = "street.name", target = "street")
     @Mapping(source = "street.city.name", target = "city")
+    @Mapping(source = "primary",target = "primary")
     GetAddressResponse getAddressesResponseFromAddress(Address address);
 
     @Mapping(source = "street.name", target = "street")

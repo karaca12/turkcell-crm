@@ -15,4 +15,5 @@ public class GetAddressResponse {
     private String street;
     private Integer flatNumber;
     private String description;
+    private boolean isPrimary;
 }

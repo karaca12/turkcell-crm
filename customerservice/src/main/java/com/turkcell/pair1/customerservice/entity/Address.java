@@ -37,6 +37,6 @@ public class Address extends BaseEntity {
 
     @ColumnDefault(value = "false")
     @Column(name = "isPrimary")
-    private Boolean isPrimary;
+    private boolean isPrimary;
 
 }

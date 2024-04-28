@@ -36,7 +36,7 @@ public class AddressServiceImpl implements AddressService {
             AddAddressToAccountRequest addressRequest = request.get(i);
             Address address = AddressMapper.INSTANCE.addAddressToAccountRequestToAddress(addressRequest);
             if (i == 0) {
-                address.setIsPrimary(true);
+                address.setPrimary(true);
             }
             address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(addressRequest.getStreetName(), addressRequest.getCity()));
             address.setAccounts(account);
@@ -65,7 +65,7 @@ public class AddressServiceImpl implements AddressService {
     public CreateAddressToBillingAccountResponse addAddressForAccount(AddAddressToAccountRequest request, BillingAccount billingAccount) {
         Address address = AddressMapper.INSTANCE.addAddressToAccountRequestToAddress(request);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(request.getStreetName(), request.getCity()));
-        address.setIsPrimary(false);
+        address.setPrimary(false);
         address.setAccounts(billingAccount.getAccount());
         return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
     }
@@ -88,12 +88,12 @@ public class AddressServiceImpl implements AddressService {
         businessRules.checkIfAddressIsAlreadyAPrimaryAddress(address);
 
         for (Address searchedAddress : billingAccount.getAccount().getAddresses()) {
-            if (searchedAddress.getIsPrimary()) {
-                searchedAddress.setIsPrimary(false);
+            if (searchedAddress.isPrimary()) {
+                searchedAddress.setPrimary(false);
                 addressRepository.save(searchedAddress);
             }
         }
-        address.setIsPrimary(true);
+        address.setPrimary(true);
         return AddressMapper.INSTANCE.getAddressesResponseFromAddress(addressRepository.save(address));
     }
 
