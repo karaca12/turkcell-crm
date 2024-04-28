@@ -2,6 +2,7 @@ package com.turkcell.pair1.productservice.controller;
 
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
 import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
+import com.turkcell.pair1.productservice.service.dto.request.ProductConfiguration;
 import com.turkcell.pair1.productservice.service.dto.request.ProductConfigurationRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
@@ -41,7 +42,7 @@ public class ProductController {
     }
 
     @PostMapping("/configure")
-    public void configureProduct(@RequestBody List<ProductConfigurationRequest> configurations) {
+    public void configureProduct(@RequestBody List<ProductConfigurationRequest<ProductConfiguration>> configurations) {
         productService.configureProduct(configurations);
     }
 

@@ -6,7 +6,10 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class ProductConfigurationRequest {
+public class ProductConfigurationRequest<T extends ProductConfiguration> {
     private Integer productId;
     private List<ProductAttributeDto> attributes;
+    private String productType; // modem or internetService
+    private T configuration;
 }
+
