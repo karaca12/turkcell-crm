@@ -31,10 +31,10 @@ public class CustomerController {
         return customerService.create(request);
     }
 
-    @PostMapping("nationalityId")
+    @GetMapping("checkIfNationalityIdUnique")
     @ResponseStatus(HttpStatus.OK)
-    public void checkNationalityId(@RequestParam String nationalityId) {
-        customerService.checkNationalityId(nationalityId);
+    public boolean checkIfNationalityIdUnique(@RequestParam String nationalityId) {
+        return customerService.checkNationalityId(nationalityId);
     }
 
     @PutMapping("updateCustomerInfoByCustomerId/{customerId}")

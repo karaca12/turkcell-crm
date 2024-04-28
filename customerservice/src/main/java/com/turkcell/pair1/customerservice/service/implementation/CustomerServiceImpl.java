@@ -49,8 +49,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void checkNationalityId(String nationalityId) {
-        businessRules.customerWithSameNationalityIdCannotExist(nationalityId);
+    public boolean checkNationalityId(String nationalityId) {
+        return businessRules.customerWithSameNationalityIdCannotExist(nationalityId);
     }
 
     @Override

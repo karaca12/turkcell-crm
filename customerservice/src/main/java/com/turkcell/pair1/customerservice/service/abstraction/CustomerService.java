@@ -11,7 +11,7 @@ public interface CustomerService {
 
     CreateCustomerResponse create(CreateCustomerRequest request);
 
-    void checkNationalityId(String nationalityId);
+    boolean checkNationalityId(String nationalityId);
 
     void updateCustomerInfoByCustomerId(String customerId,UpdateCustomerInfoRequest request);
 
