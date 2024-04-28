@@ -1,6 +1,7 @@
 package com.turkcell.pair1.invoiceservice.repository;
 
 import com.turkcell.pair1.invoiceservice.entity.Account;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +20,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     Optional<Account> findByIsDeletedFalseAndId(Integer id);
 
-    List<Account> findByCustomerId(String id);
+    List<Account> findByCustomerId(String id, Pageable pageable);
 
     Optional<Account> findByBillingAccount_AccountNumber(String accountNumber);
 }

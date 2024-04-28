@@ -1,10 +1,12 @@
 package com.turkcell.pair1.invoiceservice.controller;
 
+import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BillingAccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.CreateBillingAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateBillingAccountInfoRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.CreateAddressToBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CreateBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetBillingAccountInfoResponse;
@@ -29,7 +31,7 @@ public class BillingAccountController {
 
     @PutMapping("updateBillingAccountByAccountNumber/{accountNumber}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateBillingAccountByAccountNumber(@PathVariable String accountNumber, @RequestBody @Valid UpdateBillingAccountInfoRequest request) {
+    public void updateBillingAccountInfoByAccountNumber(@PathVariable String accountNumber, @RequestBody @Valid UpdateBillingAccountInfoRequest request) {
         billingAccountService.updateBillingAccountInfoByAccountNumber(accountNumber, request);
     }
 
@@ -40,12 +42,13 @@ public class BillingAccountController {
 
     @GetMapping("getBillingAccountAddressesByAccountNumber/{accountNumber}")
     @ResponseStatus(HttpStatus.OK)
-    public List<GetAddressResponse> getBillingAccountAddressesByAccountNumber(@PathVariable String accountNumber) {
-        return billingAccountService.getBillingAccountAddressesByAccountNumber(accountNumber);
+    public List<GetAddressResponse> getBillingAccountAddressesByAccountNumber(@PathVariable String accountNumber,@RequestParam int page, @RequestParam int size) {
+        PageInfo pageInfo = new PageInfo(page, size);
+        return billingAccountService.getBillingAccountAddressesByAccountNumber(accountNumber, pageInfo);
     }
 
     @PostMapping("createAddressToBillingAccountByAccountNumber/{accountNumber}")
-    public GetAddressResponse createAddressToBillingAccountByAccountNumber(@PathVariable String accountNumber, @Valid @RequestBody AddAddressToAccountRequest request) {
+    public CreateAddressToBillingAccountResponse createAddressToBillingAccountByAccountNumber(@PathVariable String accountNumber, @Valid @RequestBody AddAddressToAccountRequest request) {
         return billingAccountService.createAddressToBillingAccountByAccountNumber(accountNumber, request);
     }
 
@@ -55,8 +58,8 @@ public class BillingAccountController {
     }
 
     @PutMapping("setPrimaryAddressByAccountNumberAndAddressId/{accountNumber}/{addressId}")
-    public GetAddressResponse setPrimaryAddressByAccountNumberAndAddressId(@PathVariable String accountNumber, @PathVariable Integer addressId) {
-        return billingAccountService.setPrimaryAddressByAccountNumberAndAddressId(accountNumber, addressId);
+    public void setPrimaryAddressByAccountNumberAndAddressId(@PathVariable String accountNumber, @PathVariable Integer addressId) {
+        billingAccountService.setPrimaryAddressByAccountNumberAndAddressId(accountNumber, addressId);
     }
 
     @PutMapping("updateBillingAccountAddressByAccountNumber/{accountNumber}")

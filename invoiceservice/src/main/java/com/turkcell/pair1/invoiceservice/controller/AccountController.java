@@ -1,5 +1,6 @@
 package com.turkcell.pair1.invoiceservice.controller;
 
+import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
@@ -42,8 +43,9 @@ public class AccountController {
 
     @GetMapping("getCustomerAccountsByCustomerId/{customerId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId) {
-        return accountService.getCustomerAccountsByCustomerId(customerId);
+    public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId,@RequestParam int page, @RequestParam int size) {
+        PageInfo pageInfo = new PageInfo(page, size);
+        return accountService.getCustomerAccountsByCustomerId(customerId, pageInfo);
     }
 
     @GetMapping("getCustomerIdByAccountNumber/{accountNumber}")

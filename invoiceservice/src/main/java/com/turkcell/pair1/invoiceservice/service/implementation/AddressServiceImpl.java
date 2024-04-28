@@ -8,10 +8,12 @@ import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.StreetService;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.CreateAddressToBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.invoiceservice.service.mapper.AddressMapper;
 import com.turkcell.pair1.invoiceservice.service.rules.AddressBusinessRules;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +40,7 @@ public class AddressServiceImpl implements AddressService {
             }
             address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(addressRequest.getStreetName(), addressRequest.getCity()));
             address.setAccounts(account);
-            response.add(AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address)));
+            response.add(AddressMapper.INSTANCE.getAddressesResponseFromAddress(addressRepository.save(address)));
         }
         return response;
     }
@@ -54,13 +56,13 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<GetAddressResponse> getAddressesFromBillingAccountByBillingAccountId(BillingAccount billingAccount) {
-        return AddressMapper.INSTANCE.getAddressResponsesFromAddresses(addressRepository.findByIsDeletedFalseAndAccounts(billingAccount.getAccount()));
+    public List<GetAddressResponse> getAddressesFromBillingAccountByBillingAccountId(BillingAccount billingAccount, Pageable pageable) {
+        return AddressMapper.INSTANCE.getAddressResponsesFromAddresses(addressRepository.findByIsDeletedFalseAndAccounts(billingAccount.getAccount(), pageable));
 
     }
 
     @Override
-    public GetAddressResponse addAddressForAccount(AddAddressToAccountRequest request, BillingAccount billingAccount) {
+    public CreateAddressToBillingAccountResponse addAddressForAccount(AddAddressToAccountRequest request, BillingAccount billingAccount) {
         Address address = AddressMapper.INSTANCE.addAddressToAccountRequestToAddress(request);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(request.getStreetName(), request.getCity()));
         address.setIsPrimary(false);
@@ -93,5 +95,7 @@ public class AddressServiceImpl implements AddressService {
         }
         address.setIsPrimary(true);
         return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
+        return AddressMapper.INSTANCE.getAddressesResponseFromAddress(addressRepository.save(address));
+
     }
 }

@@ -9,11 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAddressResponse {
+public class CreateAddressToBillingAccountResponse {
     private Integer id;
     private String city;
     private String street;
     private Integer flatNumber;
     private String description;
-    private Boolean isPrimary;
 }

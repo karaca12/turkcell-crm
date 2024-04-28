@@ -1,5 +1,6 @@
 package com.turkcell.pair1.invoiceservice.service.implementation;
 
+import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.Basket;
 import com.turkcell.pair1.invoiceservice.entity.BillingAccount;
@@ -12,6 +13,7 @@ import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccount
 import com.turkcell.pair1.invoiceservice.service.dto.request.CreateBillingAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateBillingAccountInfoRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.CreateAddressToBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CreateBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetBillingAccountInfoResponse;
@@ -19,6 +21,8 @@ import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
 import com.turkcell.pair1.invoiceservice.service.mapper.BillingAccountMapper;
 import com.turkcell.pair1.invoiceservice.service.rules.BillingAccountBusinessRules;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,13 +72,14 @@ public class BillingAccountServiceImpl implements BillingAccountService {
     }
 
     @Override
-    public List<GetAddressResponse> getBillingAccountAddressesByAccountNumber(String accountNumber) {
-        return addressService.getAddressesFromBillingAccountByBillingAccountId(businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber)));
+    public List<GetAddressResponse> getBillingAccountAddressesByAccountNumber(String accountNumber, PageInfo pageInfo) {
+        Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
+        return addressService.getAddressesFromBillingAccountByBillingAccountId(businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber)), pageable);
 
     }
 
     @Override
-    public GetAddressResponse createAddressToBillingAccountByAccountNumber(String accountNumber, AddAddressToAccountRequest request) {
+    public CreateAddressToBillingAccountResponse createAddressToBillingAccountByAccountNumber(String accountNumber, AddAddressToAccountRequest request) {
         BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
         return addressService.addAddressForAccount(request, billingAccount);
 

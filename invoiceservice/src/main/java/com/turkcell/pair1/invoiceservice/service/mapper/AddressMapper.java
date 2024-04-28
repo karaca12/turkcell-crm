@@ -3,6 +3,7 @@ package com.turkcell.pair1.invoiceservice.service.mapper;
 import com.turkcell.pair1.invoiceservice.entity.Address;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.CreateAddressToBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,5 +25,9 @@ public interface AddressMapper {
 
     @Mapping(source = "street.name", target = "street")
     @Mapping(source = "street.city.name", target = "city")
-    GetAddressResponse getAddressResponseFromAddress(Address address);
+    GetAddressResponse getAddressesResponseFromAddress(Address address);
+
+    @Mapping(source = "street.name", target = "street")
+    @Mapping(source = "street.city.name", target = "city")
+    CreateAddressToBillingAccountResponse getAddressResponseFromAddress(Address address);
 }

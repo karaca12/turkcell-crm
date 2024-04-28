@@ -3,10 +3,12 @@ package com.turkcell.pair1.invoiceservice.service.rules;
 import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.invoiceservice.entity.Account;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -16,5 +18,15 @@ public class AccountBusinessRules {
 
     public Account getAccountFromOptional(Optional<Account> optionalAccount) {
         return optionalAccount.orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ACCOUNT_FOUND)));
+    }
+
+    public void convertToAccountType(List<GetCustomerAccountsResponse> responses) {
+        for (GetCustomerAccountsResponse response : responses) {
+            if ((int)response.getAccountNumber().charAt(0) - '0' <= 5) {
+                response.setType("Billing Account");
+            } else {
+                response.setType(null);
+            }
+        }
     }
 }

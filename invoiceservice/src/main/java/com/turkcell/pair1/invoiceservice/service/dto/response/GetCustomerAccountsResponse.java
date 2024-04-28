@@ -13,4 +13,5 @@ public class GetCustomerAccountsResponse {
     private boolean isDeleted;
     private String accountNumber;
     private String name;
+    private String type;
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CreateBillingAccountResponse {
     private Integer id;
+    private String customerId;
     private String name;
     private String description;
     List<GetAddressResponse> addressList;

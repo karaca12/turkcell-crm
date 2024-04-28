@@ -1,9 +1,11 @@
 package com.turkcell.pair1.invoiceservice.service.abstraction;
 
+import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.CreateBillingAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateBillingAccountInfoRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.CreateAddressToBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CreateBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetBillingAccountInfoResponse;
@@ -17,9 +19,9 @@ public interface BillingAccountService {
 
     void deleteBillingAccountByAccountNumber(String accountNumber);
 
-    List<GetAddressResponse> getBillingAccountAddressesByAccountNumber(String accountNumber);
+    List<GetAddressResponse> getBillingAccountAddressesByAccountNumber(String accountNumber, PageInfo pageInfo);
 
-    GetAddressResponse createAddressToBillingAccountByAccountNumber(String accountNumber, AddAddressToAccountRequest request);
+    CreateAddressToBillingAccountResponse createAddressToBillingAccountByAccountNumber(String accountNumber, AddAddressToAccountRequest request);
 
     void deleteAddressByAccountNumberAndAddressId(String accountNumber, Integer addressId);
 
@@ -28,5 +30,4 @@ public interface BillingAccountService {
     void updateBillingAccountAddressByAccountNumber(String accountNumber, UpdateAddressRequest request);
 
     GetBillingAccountInfoResponse getBillingAccountInfoByAccountNumber(String accountNumber);
-
 }

@@ -1,5 +1,6 @@
 package com.turkcell.pair1.invoiceservice.service.abstraction;
 
+import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
@@ -28,7 +29,7 @@ public interface AccountService {
 
     void updateAccountById(Integer id);
 
-    List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId);
+    List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId, PageInfo pageInfo);
 
     GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId);
 
