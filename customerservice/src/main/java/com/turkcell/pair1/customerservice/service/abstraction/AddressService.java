@@ -22,7 +22,7 @@ public interface AddressService {
 
     void deleteAddressById(Integer addressId, Customer customer);
 
-    GetAddressResponse setPrimaryAddressById(Integer addressId, Customer customer);
+    void setPrimaryAddressById(Integer addressId, Customer customer);
 
     void deleteAddressesWhenDeletingCustomer(Customer customer);
 }

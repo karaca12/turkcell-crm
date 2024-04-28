@@ -84,7 +84,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional
-    public GetAddressResponse setPrimaryAddressById(Integer addressId, Customer customer) {
+    public void setPrimaryAddressById(Integer addressId, Customer customer) {
         businessRules.customerMustContainAddress(customer, addressId);
         Address address = businessRules.getAddressFromOptional(addressRepository.findById(addressId));
         businessRules.checkIfAddressIsAlreadyAPrimaryAddress(address);
@@ -96,7 +96,7 @@ public class AddressServiceImpl implements AddressService {
             }
         }
         address.setPrimary(true);
-        return AddressMapper.INSTANCE.getAddressResponseFromAddress(addressRepository.save(address));
+        addressRepository.save(address);
     }
 
     @Override

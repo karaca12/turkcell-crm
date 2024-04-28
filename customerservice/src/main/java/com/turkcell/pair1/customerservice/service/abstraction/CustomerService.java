@@ -31,6 +31,8 @@ public interface CustomerService {
 
     void deleteAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
 
-    GetAddressResponse setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
+    void setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
+
+    boolean checkByCustomerIdIfCustomerExists(String customerId);
 }
 

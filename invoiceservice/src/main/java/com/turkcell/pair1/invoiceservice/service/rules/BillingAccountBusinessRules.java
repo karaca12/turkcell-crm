@@ -2,6 +2,7 @@ package com.turkcell.pair1.invoiceservice.service.rules;
 
 import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
+import com.turkcell.pair1.invoiceservice.client.CustomerServiceClient;
 import com.turkcell.pair1.invoiceservice.entity.BillingAccount;
 import com.turkcell.pair1.invoiceservice.repository.BillingAccountRepository;
 import com.turkcell.pair1.service.abstraction.MessageService;
@@ -16,6 +17,7 @@ import java.util.Random;
 public class BillingAccountBusinessRules {
     private final BillingAccountRepository billingAccountRepository;
     private final MessageService messageService;
+    private final CustomerServiceClient customerServiceClient;
 
     private static final Random random = new Random();
 
@@ -49,5 +51,11 @@ public class BillingAccountBusinessRules {
 
     private boolean isUniqueNumber(String accountNumber) {
         return billingAccountRepository.existsByAccountNumber(accountNumber);
+    }
+
+    public void checkIfCustomerExists(String customerId) {
+        if (!customerServiceClient.checkByCustomerIdIfCustomerExists(customerId)){
+            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND));
+        }
     }
 }

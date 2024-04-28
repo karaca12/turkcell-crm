@@ -102,9 +102,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
-    public GetAddressResponse setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId) {
+    public void setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId) {
         Customer customer = businessRules.getCustomerFromOptional(customerRepository.findByIsDeletedFalseAndCustomerId(customerId));
-        return addressService.setPrimaryAddressById(addressId, customer);
+        addressService.setPrimaryAddressById(addressId, customer);
+    }
+
+    @Override
+    public boolean checkByCustomerIdIfCustomerExists(String customerId) {
+        return customerRepository.existsByCustomerId(customerId);
     }
 
 

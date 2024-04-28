@@ -37,6 +37,12 @@ public class CustomerController {
         return customerService.checkNationalityId(nationalityId);
     }
 
+    @GetMapping("checkByCustomerIdIfCustomerExists/{customerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean checkByCustomerIdIfCustomerExists(@PathVariable String customerId) {
+        return customerService.checkByCustomerIdIfCustomerExists(customerId);
+    }
+
     @PutMapping("updateCustomerInfoByCustomerId/{customerId}")
     @ResponseStatus(HttpStatus.OK)
     public void updateCustomerInfoByCustomerId(@PathVariable String customerId,@RequestBody @Valid UpdateCustomerInfoRequest request) {

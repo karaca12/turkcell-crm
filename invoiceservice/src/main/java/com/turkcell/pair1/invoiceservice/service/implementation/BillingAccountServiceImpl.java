@@ -40,6 +40,7 @@ public class BillingAccountServiceImpl implements BillingAccountService {
 
     @Override
     public CreateBillingAccountResponse create(CreateBillingAccountRequest request) {
+        businessRules.checkIfCustomerExists(request.getCustomerId());
         Basket basket = basketService.createBasket();
         Account account = AccountMapper.INSTANCE.getAccountFromCreateRequest(request);
         Account savedAccount = accountService.save(account);
