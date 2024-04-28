@@ -1,5 +1,6 @@
 package com.turkcell.pair1.orderservice.entity;
 
+import com.turkcell.pair1.orderservice.core.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,14 +16,12 @@ import java.util.List;
 @Getter
 @Setter
 @Document(value = "orders")
-public class Order {
-    @Id
-    private String id;
+public class Order extends BaseEntity {
     private int accountId;
     private List<OrderItem> items;
     //TODO:customerId account id ile account tarafindan cekilecek.
     private String customerId;
     private double totalPrice;
     private LocalDate serviceStartDate;
-    private List<Address> serviceAddress;
+    private Address serviceAddress;
 }

@@ -13,6 +13,5 @@ import lombok.Setter;
 public class City {
 
     private String name;
-    private String zipCode;
 
 }

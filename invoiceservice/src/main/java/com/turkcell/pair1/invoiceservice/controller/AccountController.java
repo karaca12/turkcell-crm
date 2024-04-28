@@ -52,7 +52,7 @@ public class AccountController {
     }
 
     @GetMapping("/getProducts/{accountId}")
-    public List<GetAccountProductResponse> getAccountProducts(@PathVariable int accountId){
+    public List<GetAccountProductResponse> getAccountProducts(@PathVariable Integer accountId){
         return accountService.getProductsForAccount(accountId);
     }
 

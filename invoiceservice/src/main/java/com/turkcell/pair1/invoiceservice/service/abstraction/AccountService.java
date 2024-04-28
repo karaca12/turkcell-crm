@@ -22,7 +22,7 @@ public interface AccountService {
 
     boolean isActive(Integer accountId);
 
-    List<GetAccountProductResponse> getProductsForAccount(int accountId);
+    List<GetAccountProductResponse> getProductsForAccount(Integer accountId);
 
     Account save(Account account);
 

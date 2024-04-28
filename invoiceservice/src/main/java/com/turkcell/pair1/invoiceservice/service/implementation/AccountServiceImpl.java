@@ -54,10 +54,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<GetAccountProductResponse> getProductsForAccount(int accountId) {
+    public List<GetAccountProductResponse> getProductsForAccount(Integer accountId) {
         List<GetAccountOrderResponse> orders = orderServiceClient.findOrdersByAccountId(accountId);
         Set<Integer> productIds = orders.stream()
-                .flatMap(order -> order.getItems().stream())
+                .flatMap(order -> order.getOrderItems().stream())
                 .map(GetOrderItemResponse::getProductId)
                 .collect(Collectors.toSet());
 
@@ -95,7 +95,7 @@ public class AccountServiceImpl implements AccountService {
     public GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId) {
         GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productId);
         GetAccountOrderResponse order = orderServiceClient.getOrderById(orderId);
-        productDetail.setServiceAddress(order.getServiceAddress().get(0)); //TODO:find the primary address
+        productDetail.setServiceAddress(order.getAddress()); //TODO:find the primary address//order is gonna have one address no need to find the primary one
         productDetail.setServiceStartDate(order.getServiceStartDate());
 
         return productDetail;//TODO:result is gonna be cleared version from now

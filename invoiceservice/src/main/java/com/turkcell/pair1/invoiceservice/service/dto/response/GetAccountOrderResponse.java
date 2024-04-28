@@ -15,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class GetAccountOrderResponse {
     private String orderId;
-    private List<GetOrderItemResponse> items;
-    private List<GetServiceAddressResponse> serviceAddress;
+    private List<GetOrderItemResponse> OrderItems;
+    private GetServiceAddressResponse address;
     private LocalDate serviceStartDate;
 
 }
