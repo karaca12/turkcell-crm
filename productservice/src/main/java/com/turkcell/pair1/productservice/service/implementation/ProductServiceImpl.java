@@ -1,5 +1,7 @@
 package com.turkcell.pair1.productservice.service.implementation;
 
+import com.turkcell.common.message.Messages;
+import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.productservice.entity.Product;
 import com.turkcell.pair1.productservice.entity.ProductAttribute;
 import com.turkcell.pair1.productservice.entity.product.InternetService;
@@ -13,6 +15,7 @@ import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductR
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
 import com.turkcell.pair1.productservice.service.mapper.ProductMapper;
+import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductAttributeService productAttributeService;
+    private final MessageService messageService;
 
     @Override
     public boolean hasActiveProducts(String customerId) {
@@ -32,7 +36,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(Integer productId) {
-        return productRepository.findByIsDeletedFalseAndId(productId).orElseThrow();
+        return productRepository.findByIsDeletedFalseAndId(productId).orElseThrow(
+                () -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_PRODUCT_FOUND))
+        );
     }
 
     @Override
@@ -55,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public GetAccountProductResponse getAccountProductById(int id) {
-        return ProductMapper.INSTANCE.accountProductDtoFromProduct(productRepository.getProductById(id));
+        return ProductMapper.INSTANCE.accountProductDtoFromProduct(getProductById(id));
     }
 
     @Override
@@ -84,14 +90,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void configureProduct(List<ProductConfigurationRequest<ProductConfiguration>> productConfigurationRequests) {
-        for (ProductConfigurationRequest<?> config : productConfigurationRequests) {
+        for (ProductConfigurationRequest<ProductConfiguration> config : productConfigurationRequests) {
             Product product = getProductById(config.getProductId());
             if (config.getProductType().equalsIgnoreCase("modem") && config.getConfiguration() instanceof ModemConfiguration) {
                 configureModem((Modem) product, (ModemConfiguration) config.getConfiguration());
             } else if (config.getProductType().equalsIgnoreCase("internetservice") && config.getConfiguration() instanceof InternetServiceConfiguration) {
                 configureInternetService((InternetService) product, (InternetServiceConfiguration) config.getConfiguration());
             } else {
-                throw new IllegalArgumentException("Invalid configuration type for product type: " + config.getProductType());
+                throw new BusinessException(String.format(messageService.getMessage(Messages.BusinessErrors.INVALID_PRODUCT_TYPE), config.getProductType()));
             }
             productRepository.save(product);
             for (ProductAttributeDto attribute : config.getAttributes()) {
