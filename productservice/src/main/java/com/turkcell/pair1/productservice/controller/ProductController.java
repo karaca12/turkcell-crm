@@ -46,15 +46,6 @@ public class ProductController {
         return productService.searchProducts(productOfferId, productOfferName);
     }
 
-    @PostMapping("/configure")
-    public void configureProduct(@RequestBody List<ProductConfigurationRequest<ProductConfiguration>> configurations) {
-        productService.configureProduct(configurations);
-    }
-
-    @PostMapping("/submitConfigurations")
-    public void submitConfigurations() {
-        productService.submitConfigurations();
-    }
     @GetMapping("/productDetails/{productId}")
     public GetDetailedAccountProductResponse getDetailedProduct(@PathVariable int productId) {
         return productService.getDetailedProduct(productId);
