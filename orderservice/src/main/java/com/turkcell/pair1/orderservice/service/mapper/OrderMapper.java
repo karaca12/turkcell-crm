@@ -28,7 +28,7 @@ public interface OrderMapper {
     @Mapping(source = "streetName",target = "street.streetName")
     Address getAddressFromAddAddressRequest(AddServiceAddressRequest addressRequest);
 
-    GetOrderItemResponse getOrderItemResponseFromOrderItem(OrderItem orderItem);
+
 
     List<GetOrderItemResponse> getOrderItemListResponseFromOrderItem(List<OrderItem> orderItems);
     @Mapping(source = "id",target = "orderId")
@@ -40,7 +40,7 @@ public interface OrderMapper {
 
     List<OrderItem> getOrderItemListFromAddRequest(List<AddOrderItemRequest> requests);
 
-
+    @Mapping(target = "totalPrice", ignore = true)
     Order getOrderFromAddRequest(PlaceOrderRequest request);
 
 }

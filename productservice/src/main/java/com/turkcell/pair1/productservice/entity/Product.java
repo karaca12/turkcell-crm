@@ -35,6 +35,9 @@ public class Product extends BaseEntity {
     @Column(name = "product_spec_id")
     private Long productSpecId;
 
+    @Column(name = "product_price")
+    private double productPrice;
+
     @OneToMany(mappedBy = "product")
     List<ProductAttribute> productAttributes = new ArrayList<>();
 

@@ -19,7 +19,6 @@ public class PlaceOrderRequest {
     private List<AddOrderItemRequest> orderItems;
     //TODO:customerId account id ile account tarafindan cekilecek.
     private String customerId;
-    private double totalPrice;
     private LocalDate serviceStartDate;
     private AddServiceAddressRequest addressRequest;
 }

@@ -89,6 +89,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public double getProductPriceById(int productId) {
+        return productRepository.getProductById(productId).getProductPrice();
+    }
+
+    @Override
     public void configureProduct(List<ProductConfigurationRequest<ProductConfiguration>> productConfigurationRequests) {
         for (ProductConfigurationRequest<ProductConfiguration> config : productConfigurationRequests) {
             Product product = getProductById(config.getProductId());

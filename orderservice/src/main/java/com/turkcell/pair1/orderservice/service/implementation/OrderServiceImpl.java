@@ -3,9 +3,12 @@ package com.turkcell.pair1.orderservice.service.implementation;
 
 import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
+import com.turkcell.pair1.orderservice.client.ProductServiceClient;
 import com.turkcell.pair1.orderservice.entity.Order;
+import com.turkcell.pair1.orderservice.entity.OrderItem;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
+import com.turkcell.pair1.orderservice.service.dto.request.AddOrderItemRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 import com.turkcell.pair1.orderservice.service.mapper.OrderMapper;
@@ -22,6 +25,7 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MessageService messageService;
+    private final ProductServiceClient productServiceClient;
 
 
     @Override
@@ -36,7 +40,18 @@ public class OrderServiceImpl implements OrderService {
     public void placeOrder(PlaceOrderRequest request) {
         Order order=OrderMapper.INSTANCE.getOrderFromAddRequest(request);
         order.setServiceAddress(OrderMapper.INSTANCE.getAddressFromAddAddressRequest(request.getAddressRequest()));
-        order.setItems(OrderMapper.INSTANCE.getOrderItemListFromAddRequest(request.getOrderItems()));
+
+        List<OrderItem> orderItems=new ArrayList<>();
+        double totalPrice = 0.0;
+        for (AddOrderItemRequest item : request.getOrderItems()) {
+            double price = productServiceClient.getProductPriceById(item.getProductId());
+            OrderItem orderitem=new OrderItem(item.getProductId(), price);
+            orderItems.add(orderitem);
+            totalPrice += price;
+        }
+        order.setItems(orderItems);
+
+        order.setTotalPrice(totalPrice);
 
 
         orderRepository.save(order);

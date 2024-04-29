@@ -21,6 +21,7 @@ public interface ProductService {
     List<ProductDtoResponse> searchProducts(Long productOfferId, String productOfferName);
 
     void submitConfigurations();
+    double getProductPriceById(int productId);
 
     void configureProduct(List<ProductConfigurationRequest<ProductConfiguration>> productConfigurationRequests);
     GetDetailedAccountProductResponse getDetailedProduct(int id);
