@@ -16,35 +16,25 @@ import java.util.List;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-
-    @NotNull
-    @Column(name = "product_name")
-    private String productName;
-
-
     @Column(name = "product_offer_name")
     private String productOfferName;
 
     @Column(name = "product_offer_id")
-    private Long productOfferId;
+    private String productOfferId;
 
     @Column(name = "product_spec_id")
-    private Long productSpecId;
+    private String productSpecId;
 
     @Column(name = "product_price")
     private double productPrice;
 
-    @OneToMany(mappedBy = "product")
-    List<ProductAttribute> productAttributes = new ArrayList<>();
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "campaign_id")
-    private Campaign campaign;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "campaign_product",
+            joinColumns = @JoinColumn(name = "campaign_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Campaign> campaigns;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "catalogue_id")

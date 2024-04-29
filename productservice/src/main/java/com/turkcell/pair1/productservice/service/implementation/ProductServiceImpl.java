@@ -3,13 +3,8 @@ package com.turkcell.pair1.productservice.service.implementation;
 import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.productservice.entity.Product;
-import com.turkcell.pair1.productservice.entity.ProductAttribute;
-import com.turkcell.pair1.productservice.entity.product.InternetService;
-import com.turkcell.pair1.productservice.entity.product.Modem;
 import com.turkcell.pair1.productservice.repository.ProductRepository;
-import com.turkcell.pair1.productservice.service.abstraction.ProductAttributeService;
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
-import com.turkcell.pair1.productservice.service.dto.ProductAttributeDto;
 import com.turkcell.pair1.productservice.service.dto.request.*;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
@@ -26,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
-    private final ProductAttributeService productAttributeService;
     private final MessageService messageService;
 
     @Override
@@ -95,39 +89,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void configureProduct(List<ProductConfigurationRequest<ProductConfiguration>> productConfigurationRequests) {
-        for (ProductConfigurationRequest<ProductConfiguration> config : productConfigurationRequests) {
-            Product product = getProductById(config.getProductId());
-            if (config.getProductType().equalsIgnoreCase("modem") && config.getConfiguration() instanceof ModemConfiguration) {
-                configureModem((Modem) product, (ModemConfiguration) config.getConfiguration());
-            } else if (config.getProductType().equalsIgnoreCase("internetservice") && config.getConfiguration() instanceof InternetServiceConfiguration) {
-                configureInternetService((InternetService) product, (InternetServiceConfiguration) config.getConfiguration());
-            } else {
-                throw new BusinessException(String.format(messageService.getMessage(Messages.BusinessErrors.INVALID_PRODUCT_TYPE), config.getProductType()));
-            }
-            productRepository.save(product);
-            for (ProductAttributeDto attribute : config.getAttributes()) {
-                ProductAttribute productAttribute = ProductMapper.INSTANCE.productAttributeFromProductAttributeDto(attribute);
-                productAttribute.setProduct(product);
-                productAttributeService.save(productAttribute);
-            }
-        }
     }
 
     @Override
     public GetDetailedAccountProductResponse getDetailedProduct(int id) {
         return ProductMapper.INSTANCE.getDetailedProductFromProduct(productRepository.getProductById(id));
-    }
-    private void configureModem(Modem modem, ModemConfiguration config) {
-        modem.setBrand(config.getBrand());
-        modem.setSerialNumber(config.getSerialNumber());
-        modem.setModel(config.getModel());
-    }
-
-    private void configureInternetService(InternetService service, InternetServiceConfiguration config) {
-        service.setPstnNo(config.getPstnNo());
-        service.setXdslUsername(config.getXdslUsername());
-        service.setBandwidth(config.getBandwidth());
-        service.setXdslNo(config.getXdslNo());
-        service.setXdslPassword(config.getXdslPassword());
     }
 }

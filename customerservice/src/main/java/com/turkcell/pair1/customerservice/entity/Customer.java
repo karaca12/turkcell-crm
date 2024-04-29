@@ -14,11 +14,6 @@ import java.util.List;
 @Entity
 @Table(name = "customers")
 public class Customer extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
-
     @Column(name = "customer_id")
     private String customerId;
 

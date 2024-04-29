@@ -12,11 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "accounts")
 public class Account extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
-
     @OneToOne(mappedBy = "account")
     private BillingAccount billingAccount;
 
