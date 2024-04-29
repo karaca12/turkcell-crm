@@ -30,11 +30,6 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-discoveryserver ./discoveryserver
           docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-discoveryserver          
 
-      - name: Build and push common package image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-common ./common
-          docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-common
-
       - name: Build and push gateway-server image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-gatewayserver ./gatewayserver
