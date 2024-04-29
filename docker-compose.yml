@@ -1,13 +1,21 @@
 services:
   discovery-server:
-    build: ./discoveryserver
+    build:
+      context: ./discoveryserver
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
     ports:
       - "8888:8888"
     networks:
       - common
 
   gateway-server:
-    build: ./gatewayserver
+    build:
+      context: ./gatewayserver
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
     ports:
       - "8001:8001"
     environment:
@@ -19,14 +27,22 @@ services:
       - common
 
   config-server:
-    build: ./configserver
+    build:
+      context: ./configserver
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
     ports:
       - "8079:8079"
     networks:
       - common
 
   auth-service:
-    build: ./authservice
+    build:
+      context: ./authservice
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
     ports:
       - "8084:8084"
     environment:
@@ -41,7 +57,11 @@ services:
       - common
 
   customer-service:
-    build: ./customerservice
+    build:
+      context: ./customerservice
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
     ports:
       - "8083:8083"
     environment:
@@ -56,7 +76,11 @@ services:
       - common
 
   invoice-service:
-    build: ./invoiceservice
+    build:
+      context: ./invoiceservice
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
     ports:
       - "8082:8082"
     environment:
@@ -71,7 +95,11 @@ services:
       - common
 
   order-service:
-    build: ./orderservice
+    build:
+      context: ./orderservice
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
     ports:
       - "8081:8081"
     environment:
@@ -86,7 +114,11 @@ services:
       - common
 
   product-service:
-    build: ./productservice
+    build:
+      context: ./productservice
+      args:
+        GITHUB_USERNAME: ${GITHUB_USERNAME}
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
     ports:
       - "8080:8080"
     environment:
