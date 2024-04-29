@@ -27,8 +27,8 @@
 
   <distributionManagement>
     <repository>
-      <id>github_spring</id>
-      <name>Github Packages</name>
+      <id>github</id>
+      <name>Github Packages Common</name>
       <url>https://maven.pkg.github.com/karaca12/turkcell-crm</url>
     </repository>
   </distributionManagement>
