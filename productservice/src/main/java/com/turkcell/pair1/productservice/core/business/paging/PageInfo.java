@@ -1,4 +1,4 @@
-package com.turkcell.pair1.productservice.service.dto.request;
+package com.turkcell.pair1.productservice.core.business.paging;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddProductRequest {
-
-    private String productOfferName;
-
+public class PageInfo {
+    private int page;
+    private int size;
 }

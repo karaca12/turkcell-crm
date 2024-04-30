@@ -4,9 +4,9 @@ import com.turkcell.pair1.orderservice.entity.Address;
 import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.entity.OrderItem;
 import com.turkcell.pair1.orderservice.entity.ProductSpec;
+import com.turkcell.pair1.orderservice.service.dto.response.AddOrderAddressResponse;
 import com.turkcell.pair1.orderservice.service.dto.request.AddOrderItemRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.AddProductSpecRequest;
-import com.turkcell.pair1.orderservice.service.dto.request.AddServiceAddressRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderItemResponse;
@@ -28,8 +28,8 @@ public interface OrderMapper {
     GetServiceAddressResponse getServiceAddressFromAddress(Address address);
 
     @Mapping(source = "city", target = "street.city.name")
-    @Mapping(source = "streetName", target = "street.streetName")
-    Address getAddressFromAddAddressRequest(AddServiceAddressRequest addressRequest);
+    @Mapping(source = "street", target = "street.streetName")
+    Address getAddressFromAddressResponse(AddOrderAddressResponse addressRequest);
 
     @Mapping(source = "productSpec.specId", target = "specId")
     GetOrderItemResponse getOrderItemResponseFromOrderItem(OrderItem orderItem);
@@ -46,7 +46,6 @@ public interface OrderMapper {
     List<OrderItem> getOrderItemListFromAddRequest(List<AddOrderItemRequest> requests);
 
     @Mappings({
-            @Mapping(source = "addressRequest", target = "serviceAddress"),
             @Mapping(source = "orderItems", target = "items")
     })
     Order getOrderFromAddRequest(PlaceOrderRequest request);

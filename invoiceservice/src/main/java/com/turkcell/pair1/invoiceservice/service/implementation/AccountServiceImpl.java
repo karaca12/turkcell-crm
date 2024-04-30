@@ -8,6 +8,7 @@ import com.turkcell.pair1.invoiceservice.entity.Basket;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
 import com.turkcell.pair1.invoiceservice.repository.AccountRepository;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
+import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
@@ -33,6 +34,7 @@ public class AccountServiceImpl implements AccountService {
     private final ProductServiceClient productServiceClient;
     private final OrderServiceClient orderServiceClient;
     private final AccountBusinessRules businessRules;
+    private final AddressService addressService;
 
     @Override
     public Optional<Account> getAccountByAccountNumber(String accountNumber) {
@@ -120,6 +122,14 @@ public class AccountServiceImpl implements AccountService {
     public String generateAccountNumber() {
         return businessRules.generateAccountNumber();
     }
+
+    @Override
+    public CheckAccountForOrderResponse checkIfAccountExistsAndGetAddress(String accountNumber, Integer addressId) {
+
+        return businessRules.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
+
+    }
+
 
     private String determineProductSpecId(List<GetOrderItemResponse> orderItems, int productId) {
         for (GetOrderItemResponse orderItem : orderItems) {

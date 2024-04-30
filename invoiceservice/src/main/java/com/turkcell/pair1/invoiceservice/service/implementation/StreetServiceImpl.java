@@ -15,4 +15,5 @@ public class StreetServiceImpl implements StreetService {
     public Street findStreetByNameAndCityAndIsDeletedFalse(String street, String city) {
         return businessRules.getStreetByNameAndCity(street, city);
     }
+
 }

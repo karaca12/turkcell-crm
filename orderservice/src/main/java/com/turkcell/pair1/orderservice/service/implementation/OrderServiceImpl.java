@@ -9,10 +9,12 @@ import com.turkcell.pair1.orderservice.entity.OrderItem;
 import com.turkcell.pair1.orderservice.entity.ProductSpec;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
+import com.turkcell.pair1.orderservice.service.dto.response.AddOrderAddressResponse;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderItemResponse;
 import com.turkcell.pair1.orderservice.service.mapper.OrderMapper;
+import com.turkcell.pair1.orderservice.service.rules.OrderBusinessRules;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MessageService messageService;
     private final ProductServiceClient productServiceClient;
+    private final OrderBusinessRules businessRules;
 
     @Override
     public String getCustomerIdByOrderId(String orderId) {
@@ -39,15 +42,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void placeOrder(PlaceOrderRequest request) {
+        AddOrderAddressResponse addressResponse= businessRules.checkIfAccountExistsAndGetAddress(request.getAccountNumber(),request.getAccountAddressId());
         Order order = OrderMapper.INSTANCE.getOrderFromAddRequest(request);
+        order.setServiceAddress(OrderMapper.INSTANCE.getAddressFromAddressResponse(addressResponse));
 
-        // Map each order item and set the price
         List<OrderItem> orderItems = request.getOrderItems().stream().map(item -> {
             OrderItem orderItem = OrderMapper.INSTANCE.getOrderItemFromAddRequest(item);
-            double price = productServiceClient.getProductPriceById(item.getProductId());
+            double price = productServiceClient.getProductPriceByOfferId(item.getProductOfferId());
             orderItem.setPrice(price);
             ProductSpec spec = OrderMapper.INSTANCE.productSpecFromAddRequest(item.getProductSpec());
-            spec.setSpecId(UUID.randomUUID().toString());  // Generate UUID here
+            businessRules.checkIfSpecsIsJson(spec.getSpecs());
+            spec.setSpecId(UUID.randomUUID().toString());
             orderItem.setProductSpec(spec);
             return orderItem;
         }).collect(Collectors.toList());
@@ -68,8 +73,6 @@ public class OrderServiceImpl implements OrderService {
             orderByAccountNumberResponses.add(getOrderByIdResponse);
 
         }
-
-
         return orderByAccountNumberResponses;
     }
 

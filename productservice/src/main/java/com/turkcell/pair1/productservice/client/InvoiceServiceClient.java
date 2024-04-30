@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "invoiceservice", configuration = FeignClientConfiguration.class)
-public interface AccountServiceClient {
+public interface InvoiceServiceClient {
     @GetMapping("/api/accounts/{accountNumber}")
     AccountDto getAccountByAccountNumber(@PathVariable("accountNumber") String accountNumber);
 }

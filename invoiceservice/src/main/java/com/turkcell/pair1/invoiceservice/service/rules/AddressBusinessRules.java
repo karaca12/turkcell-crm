@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AddressBusinessRules {
     private final MessageService messageService;
-    public void billingAccountMustContainAddress(Account account, Integer id) {
+    public void accountMustContainAddress(Account account, Integer id) {
         boolean contains = false;
         for (Address address : account.getAddresses()) {
             if (address.getId().equals(id)) {

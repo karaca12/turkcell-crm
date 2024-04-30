@@ -2,6 +2,7 @@ package com.turkcell.pair1.productservice.service.implementation;
 
 import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
+import com.turkcell.pair1.productservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.productservice.entity.Product;
 import com.turkcell.pair1.productservice.repository.ProductRepository;
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
@@ -9,9 +10,13 @@ import com.turkcell.pair1.productservice.service.dto.request.*;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
+import com.turkcell.pair1.productservice.service.dto.response.SearchProductResponse;
 import com.turkcell.pair1.productservice.service.mapper.ProductMapper;
+import com.turkcell.pair1.productservice.service.rules.ProductBusinessRules;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +27,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final MessageService messageService;
+    private final ProductBusinessRules businessRules;
 
     @Override
     public boolean hasActiveProducts(String customerId) {
@@ -47,44 +53,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void add(AddProductRequest productAddDto) {
-        Product product= ProductMapper.INSTANCE.productFromAddDto(productAddDto);
-        productRepository.save(product);
-
-    }
-
-    @Override
     public GetAccountProductResponse getAccountProductById(int id) {
         return ProductMapper.INSTANCE.accountProductDtoFromProduct(getProductById(id));
     }
 
     @Override
-    public List<ProductDtoResponse> searchProducts(String productOfferId, String productOfferName) {
-        List<Product> products;
-        if (productOfferId != null && productOfferName != null) {
-            products = productRepository.findByProductOfferIdAndProductOfferNameContaining(productOfferId, productOfferName);
-        } else if (productOfferId != null) {
-            products = productRepository.findByProductOfferId(productOfferId);
-        } else if (productOfferName != null && !productOfferName.isEmpty()) {
-            products = productRepository.findByProductOfferNameContaining(productOfferName);
-        } else {
-            products = productRepository.findAll();
-        }
-        List<ProductDtoResponse> responses = new ArrayList<>();
-        for (Product product : products) {
-            responses.add(ProductMapper.INSTANCE.productDtoResponseFromProduct(product));
-        }
-        return responses;
-}
-
-    @Override
-    public void submitConfigurations() {
-        //TODO ????
+    public List<SearchProductResponse> searchProducts(SearchProductRequest request, PageInfo pageInfo) {
+        Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
+        List<SearchProductResponse> response = productRepository.search(request, pageable);
+        businessRules.checkIfSearchIsEmpty(response);
+        return response;
     }
 
+
     @Override
-    public double getProductPriceById(int productId) {
-        return productRepository.getProductById(productId).getProductPrice();
+    public double getProductPriceByOfferId(String productOfferId) {
+        return businessRules.getProductFromOptional(productRepository.findByProductOfferId(productOfferId)).getProductPrice();
     }
 
 

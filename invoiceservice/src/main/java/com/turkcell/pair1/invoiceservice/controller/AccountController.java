@@ -5,6 +5,7 @@ import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.ClearBasketRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrderResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetDetailedAccountProductResponse;
@@ -62,4 +63,11 @@ public class AccountController {
     public GetDetailedAccountProductResponse getDetailedAccountProduct(@PathVariable int productId, @PathVariable String orderId) {
         return accountService.getDetailedAccountProduct(productId, orderId);
     }
+
+    @GetMapping("checkIfAccountExistsAndGetAddress/{accountNumber}/{addressId}")
+    @ResponseStatus(HttpStatus.OK)
+    public CheckAccountForOrderResponse checkIfAccountExistsAndGetAddress(@PathVariable String accountNumber, @PathVariable Integer addressId) {
+        return accountService.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
+    }
+
 }
