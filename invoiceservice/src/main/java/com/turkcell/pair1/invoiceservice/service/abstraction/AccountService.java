@@ -34,4 +34,6 @@ public interface AccountService {
     GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId);
 
     String getCustomerIdByAccountNumber(String accountNumber);
+
+    String generateAccountNumber();
 }

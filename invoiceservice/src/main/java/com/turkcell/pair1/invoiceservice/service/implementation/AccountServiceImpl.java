@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId, PageInfo pageInfo) {
         Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
-        List<GetCustomerAccountsResponse> responses = AccountMapper.INSTANCE.getCustomerAccountResponsesFromAccounts(accountRepository.findByCustomerId(customerId, pageable));
+        List<GetCustomerAccountsResponse> responses = AccountMapper.INSTANCE.getCustomerAccountResponseFromAccount(accountRepository.findByCustomerId(customerId, pageable));
         businessRules.convertToAccountType(responses);
         return responses;
     }
@@ -109,7 +109,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String getCustomerIdByAccountNumber(String accountNumber) {
-        Account account = businessRules.getAccountFromOptional(accountRepository.findByBillingAccount_AccountNumber(accountNumber));
+        Account account = businessRules.getAccountFromOptional(accountRepository.findByAccountNumber(accountNumber));
         return account.getCustomerId();
+    }
+
+    @Override
+    public String generateAccountNumber() {
+        return businessRules.generateAccountNumber();
     }
 }

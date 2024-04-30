@@ -43,9 +43,9 @@ public class BillingAccountServiceImpl implements BillingAccountService {
         businessRules.checkIfCustomerExists(request.getCustomerId());
         Basket basket = basketService.createBasket();
         Account account = AccountMapper.INSTANCE.getAccountFromCreateRequest(request);
+        account.setAccountNumber(accountService.generateAccountNumber());
         Account savedAccount = accountService.save(account);
         BillingAccount billingAccount = BillingAccountMapper.INSTANCE.getBillingAccountFromCreateRequest(request);
-        billingAccount.setAccountNumber(businessRules.generateAccountNumber());
         billingAccount.setAccount(savedAccount);
         billingAccount.getAccount().setBasket(basket);
         BillingAccount savedBillingAccount = billingAccountRepository.save(billingAccount);
@@ -57,14 +57,14 @@ public class BillingAccountServiceImpl implements BillingAccountService {
     @Transactional
     @Override
     public void updateBillingAccountInfoByAccountNumber(String accountNumber, UpdateBillingAccountInfoRequest request) {
-        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumberAndAccount_IsDeletedFalse(accountNumber));
         billingAccountRepository.updateBillingAccountById(billingAccount.getId(), request);
         accountService.updateAccountById(billingAccount.getAccount().getId());
     }
 
     @Override
     public void deleteBillingAccountByAccountNumber(String accountNumber) {
-        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumberAndAccount_IsDeletedFalse(accountNumber));
         businessRules.ensureBillingAccountHasNoActiveProducts(billingAccount);
         billingAccount.getAccount().setDeleted(true);
         billingAccount.getAccount().setDeletedAt(LocalDateTime.now());
@@ -75,38 +75,38 @@ public class BillingAccountServiceImpl implements BillingAccountService {
     @Override
     public List<GetAddressResponse> getBillingAccountAddressesByAccountNumber(String accountNumber, PageInfo pageInfo) {
         Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
-        return addressService.getAddressesFromBillingAccountByBillingAccountId(businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber)), pageable);
+        return addressService.getAddressesFromBillingAccountByBillingAccountId(businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumberAndAccount_IsDeletedFalse(accountNumber)), pageable);
 
     }
 
     @Override
     public CreateAddressToBillingAccountResponse createAddressToBillingAccountByAccountNumber(String accountNumber, AddAddressToAccountRequest request) {
-        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumberAndAccount_IsDeletedFalse(accountNumber));
         return addressService.addAddressForAccount(request, billingAccount);
 
     }
 
     @Override
     public void deleteAddressByAccountNumberAndAddressId(String accountNumber, Integer addressId) {
-        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumberAndAccount_IsDeletedFalse(accountNumber));
         addressService.deleteAddressById(addressId, billingAccount);
     }
 
     @Override
     public GetAddressResponse setPrimaryAddressByAccountNumberAndAddressId(String accountNumber, Integer addressId) {
-        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumberAndAccount_IsDeletedFalse(accountNumber));
         return addressService.setPrimaryAddressById(addressId, billingAccount);
     }
 
     @Override
     public void updateBillingAccountAddressByAccountNumber(String accountNumber, UpdateAddressRequest request) {
-        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumberAndAccount_IsDeletedFalse(accountNumber));
         addressService.updateAddressForBillingAccount(billingAccount, request);
     }
 
     @Override
     public GetBillingAccountInfoResponse getBillingAccountInfoByAccountNumber(String accountNumber) {
-        businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_IsDeletedFalseAndAccountNumber(accountNumber));
-        return BillingAccountMapper.INSTANCE.getBillingAccountInfoFromBillingAccount(billingAccountRepository.findByAccountNumber(accountNumber));
+        BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumberAndAccount_IsDeletedFalse(accountNumber));
+        return BillingAccountMapper.INSTANCE.getBillingAccountInfoFromBillingAccount(billingAccount);
     }
 }

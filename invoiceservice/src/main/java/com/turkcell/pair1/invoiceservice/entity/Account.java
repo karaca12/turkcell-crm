@@ -24,4 +24,7 @@ public class Account extends BaseEntity {
 
     @Column(name = "customer_id", nullable = false)
     private String customerId;
+
+    @Column(name = "account_number")
+    private String accountNumber;
 }

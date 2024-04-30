@@ -26,8 +26,4 @@ public class BillingAccount {
     @NotNull
     @Column(name = "description")
     private String description;
-
-    @Column(name = "account_number")
-    private String accountNumber;
-
 }
