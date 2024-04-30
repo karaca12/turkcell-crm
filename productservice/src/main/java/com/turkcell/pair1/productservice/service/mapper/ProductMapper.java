@@ -17,8 +17,8 @@ public interface ProductMapper {
     Product productFromAddDto(AddProductRequest productAddDto);
     ProductDtoResponse productDtoResponseFromProduct(Product product);
     @Mapping(source = "id",target = "productId")
-    @Mapping(source = "campaigns.offerId",target = "campaignId")
-    @Mapping(source = "campaigns.offerName",target = "campaignName")
+    @Mapping(source = "campaign.offerId",target = "campaignId")
+    @Mapping(source = "campaign.offerName",target = "campaignName")
     GetAccountProductResponse accountProductDtoFromProduct(Product product);
     GetDetailedAccountProductResponse getDetailedProductFromProduct(Product product);
 }

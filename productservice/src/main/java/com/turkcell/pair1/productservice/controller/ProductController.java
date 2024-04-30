@@ -41,7 +41,7 @@ public class ProductController {
 
     @GetMapping("/search")
     public List<ProductDtoResponse> searchProducts(
-            @RequestParam(required = false) Long productOfferId,
+            @RequestParam(required = false) String productOfferId,
             @RequestParam(required = false) String productOfferName) {
         return productService.searchProducts(productOfferId, productOfferName);
     }

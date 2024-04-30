@@ -30,6 +30,6 @@ public class Campaign extends BaseEntity {
     @Column(name = "end_date",nullable = false)
     private LocalDate endDate;
 
-    @ManyToMany(mappedBy = "campaigns")
+    @OneToMany(mappedBy = "campaign")
     List<Product> products;
 }

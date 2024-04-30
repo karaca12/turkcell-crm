@@ -14,12 +14,7 @@ public class GetDetailedAccountProductResponse {
 
     private String productOfferName;
 
-
-    private Long productOfferId;
-
-
-    private Long productSpecId;
-
+    private String productOfferId;
 
     private String prodChars;
 }

@@ -1,6 +1,5 @@
 package com.turkcell.pair1.orderservice.service.dto.request;
 
-import com.turkcell.pair1.orderservice.entity.ProductSpec;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class AddOrderItemRequest {
-    private int productId;
-    private AddProductSpecRequest productSpec;
+@AllArgsConstructor
+public class AddProductSpecRequest {
+    private String specs;
 }

@@ -16,27 +16,23 @@ import java.util.List;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    @Column(name = "product_offer_name")
-    private String productOfferName;
-
     @Column(name = "product_offer_id")
     private String productOfferId;
 
-    @Column(name = "product_spec_id")
-    private String productSpecId;
+    @Column(name = "product_offer_name")
+    private String productOfferName;
 
     @Column(name = "product_price")
     private double productPrice;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "campaign_product",
-            joinColumns = @JoinColumn(name = "campaign_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Campaign> campaigns;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "campaign_id")
+    private Campaign campaign;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "catalogue_id")
     private Catalogue catalogue;
+
+
+
 }

@@ -11,11 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddProductRequest {
 
-    private String productName;
-    private Long productSpecId;
+    private String productOfferName;
+
     private String prodChars;
     private Long productOfferId;
-    private String productOfferName;
 
 
 }

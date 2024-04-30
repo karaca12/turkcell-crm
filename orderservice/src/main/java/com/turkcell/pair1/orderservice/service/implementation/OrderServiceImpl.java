@@ -6,6 +6,7 @@ import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.orderservice.client.ProductServiceClient;
 import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.entity.OrderItem;
+import com.turkcell.pair1.orderservice.entity.ProductSpec;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
 import com.turkcell.pair1.orderservice.service.dto.request.AddOrderItemRequest;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,24 +41,24 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void placeOrder(PlaceOrderRequest request) {
-        Order order=OrderMapper.INSTANCE.getOrderFromAddRequest(request);
-        order.setServiceAddress(OrderMapper.INSTANCE.getAddressFromAddAddressRequest(request.getAddressRequest()));
+        Order order = OrderMapper.INSTANCE.getOrderFromAddRequest(request);
 
-        List<OrderItem> orderItems=new ArrayList<>();
-        double totalPrice = 0.0;
-        for (AddOrderItemRequest item : request.getOrderItems()) {
+        // Map each order item and set the price
+        List<OrderItem> orderItems = request.getOrderItems().stream().map(item -> {
+            OrderItem orderItem = OrderMapper.INSTANCE.getOrderItemFromAddRequest(item);
             double price = productServiceClient.getProductPriceById(item.getProductId());
-            OrderItem orderitem=new OrderItem(item.getProductId(), price);
-            orderItems.add(orderitem);
-            totalPrice += price;
-        }
+            orderItem.setPrice(price);
+            ProductSpec spec = OrderMapper.INSTANCE.productSpecFromAddRequest(item.getProductSpec());
+            spec.setSpecId(UUID.randomUUID().toString());  // Generate UUID here
+            orderItem.setProductSpec(spec);
+            return orderItem;
+        }).collect(Collectors.toList());
+
         order.setItems(orderItems);
-
-        order.setTotalPrice(totalPrice);
-
-
+        order.setTotalPrice(orderItems.stream().mapToDouble(OrderItem::getPrice).sum());
         orderRepository.save(order);
     }
+
 
     @Override
     public List<GetOrderByIdResponse> findOrdersByAccountId(int accountId) {

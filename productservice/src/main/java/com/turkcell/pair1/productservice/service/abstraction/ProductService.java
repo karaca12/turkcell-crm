@@ -18,7 +18,7 @@ public interface ProductService {
     Product getProductById(Integer productId);
     List<ProductDtoResponse> getProductsByCatalogueId(Integer catalogueId);
 
-    List<ProductDtoResponse> searchProducts(Long productOfferId, String productOfferName);
+    List<ProductDtoResponse> searchProducts(String productOfferId, String productOfferName);
 
     void submitConfigurations();
     double getProductPriceById(int productId);

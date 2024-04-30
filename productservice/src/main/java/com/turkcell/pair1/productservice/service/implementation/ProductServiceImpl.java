@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDtoResponse> searchProducts(Long productOfferId, String productOfferName) {
+    public List<ProductDtoResponse> searchProducts(String productOfferId, String productOfferName) {
         List<Product> products;
         if (productOfferId != null && productOfferName != null) {
             products = productRepository.findByProductOfferIdAndProductOfferNameContaining(productOfferId, productOfferName);
