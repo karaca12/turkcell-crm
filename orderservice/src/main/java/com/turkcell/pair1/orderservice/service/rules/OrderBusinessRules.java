@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
+import com.turkcell.pair1.orderservice.client.CustomerServiceClient;
 import com.turkcell.pair1.orderservice.client.InvoiceServiceClient;
 import com.turkcell.pair1.orderservice.service.dto.response.AddOrderAddressResponse;
 import com.turkcell.pair1.service.abstraction.MessageService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class OrderBusinessRules {
     private final MessageService messageService;
     private final InvoiceServiceClient invoiceServiceClient;
+    private final CustomerServiceClient customerServiceClient;
 
     public boolean checkIfSpecsIsJson(String specs) {
         try {
@@ -31,4 +33,9 @@ public class OrderBusinessRules {
         return invoiceServiceClient.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
     }
 
+    public void checkIfCustomerExistsByCustomerId(String customerId) {
+        if (!customerServiceClient.checkByCustomerIdIfCustomerExists(customerId)) {
+            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND));
+        }
+    }
 }

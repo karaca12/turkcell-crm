@@ -18,7 +18,6 @@ import java.util.List;
 public class Order extends BaseEntity {
     private String accountNumber;
     private List<OrderItem> items;
-    //TODO:customerId account id ile account tarafindan cekilecek.
     private String customerId;
     private double totalPrice;
     private LocalDate serviceStartDate;

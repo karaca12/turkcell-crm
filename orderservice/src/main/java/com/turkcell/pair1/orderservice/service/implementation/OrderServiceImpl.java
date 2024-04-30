@@ -42,6 +42,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void placeOrder(PlaceOrderRequest request) {
+        businessRules.checkIfCustomerExistsByCustomerId(request.getCustomerId());
         AddOrderAddressResponse addressResponse= businessRules.checkIfAccountExistsAndGetAddress(request.getAccountNumber(),request.getAccountAddressId());
         Order order = OrderMapper.INSTANCE.getOrderFromAddRequest(request);
         order.setServiceAddress(OrderMapper.INSTANCE.getAddressFromAddressResponse(addressResponse));
