@@ -34,7 +34,7 @@ public class ProductController {
         return productService.getProductPriceByOfferId(productOfferId);
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public List<SearchProductResponse> searchProducts(@RequestBody SearchProductRequest request,
                                                       @RequestParam int page, @RequestParam int size) {
         PageInfo pageInfo = new PageInfo(page, size);
