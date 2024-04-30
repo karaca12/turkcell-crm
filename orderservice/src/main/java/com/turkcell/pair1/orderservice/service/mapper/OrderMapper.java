@@ -31,24 +31,16 @@ public interface OrderMapper {
     @Mapping(source = "streetName",target = "street.streetName")
     Address getAddressFromAddAddressRequest(AddServiceAddressRequest addressRequest);
 
-
-
+    @Mapping(source = "productSpec.specId",target = "specId")
+    GetOrderItemResponse getOrderItemResponseFromOrderItem(OrderItem orderItem);
     List<GetOrderItemResponse> getOrderItemListResponseFromOrderItem(List<OrderItem> orderItems);
     @Mapping(source = "id",target = "orderId")
     @Mapping(source = "items",target = "orderItems")
     @Mapping(source = "serviceAddress",target = "address")
     GetOrderByIdResponse getOrderByIdResponseFromOrder(Order order);
     List<GetOrderByIdResponse> getOrderByIdResponseListFromOrderList(List<Order> orders);
-    /*@Mapping(target = "price",ignore = true)
-    OrderItem getOrderItemFromAddRequest(AddOrderItemRequest addOrderItemRequest);*/
-
     List<OrderItem> getOrderItemListFromAddRequest(List<AddOrderItemRequest> requests);
 
-    /*@Mapping(target = "totalPrice", ignore = true)
-    Order getOrderFromAddRequest(PlaceOrderRequest request);
-
-    ProductSpec productSpecFromAddRequest(AddProductSpecRequest addProductSpecRequest);
-    */
     @Mappings({
             @Mapping(source = "addressRequest", target = "serviceAddress"),
             @Mapping(source = "orderItems", target = "items")

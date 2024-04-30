@@ -12,6 +12,7 @@ import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
 import com.turkcell.pair1.orderservice.service.dto.request.AddOrderItemRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
+import com.turkcell.pair1.orderservice.service.dto.response.GetOrderItemResponse;
 import com.turkcell.pair1.orderservice.service.mapper.OrderMapper;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -69,7 +70,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public GetOrderByIdResponse getOrderById(String orderId) {
+        Order order=orderRepository.findById(orderId).orElseThrow(()->new RuntimeException("No order Found"));
+        GetOrderByIdResponse getOrderByIdResponse=OrderMapper.INSTANCE.getOrderByIdResponseFromOrder(order);
+        List<GetOrderItemResponse> getOrderItemResponses=OrderMapper.INSTANCE.getOrderItemListResponseFromOrderItem(order.getItems());
+        getOrderByIdResponse.setOrderItems(getOrderItemResponses);
 
-        return OrderMapper.INSTANCE.getOrderByIdResponseFromOrder(orderRepository.findById(orderId).orElseThrow(()->new RuntimeException("No order Found")));
+
+        return getOrderByIdResponse;
     }
 }

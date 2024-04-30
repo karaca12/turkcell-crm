@@ -101,10 +101,13 @@ public class AccountServiceImpl implements AccountService {
     public GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId) {
         GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productId);
         GetAccountOrderResponse order = orderServiceClient.getOrderById(orderId);
-        productDetail.setServiceAddress(order.getAddress()); //TODO:find the primary address//order is gonna have one address no need to find the primary one
+        productDetail.setServiceAddress(order.getAddress());
+        //TODO:find the primary address
         productDetail.setServiceStartDate(order.getServiceStartDate());
 
-        return productDetail;//TODO:result is gonna be cleared version from now
+        productDetail.setProductSpecId(determineProductSpecId(order.getOrderItems(), productId));
+
+        return productDetail;//TODO:prodchar gelicek nasil olucak allah bilir
     }
 
     @Override
@@ -113,8 +116,18 @@ public class AccountServiceImpl implements AccountService {
         return account.getCustomerId();
     }
 
+
     @Override
     public String generateAccountNumber() {
         return businessRules.generateAccountNumber();
+    }
+    private String determineProductSpecId(List<GetOrderItemResponse> orderItems, int productId) {
+        for (GetOrderItemResponse orderItem : orderItems) {
+            if (orderItem.getProductId() == productId) {
+                return orderItem.getSpecId();
+            }
+        }
+        return null;
+
     }
 }
