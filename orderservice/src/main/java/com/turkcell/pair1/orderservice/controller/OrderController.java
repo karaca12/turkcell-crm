@@ -2,7 +2,6 @@ package com.turkcell.pair1.orderservice.controller;
 
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
-import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByAccountNumberResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,7 @@ public class OrderController {
     }
 
     @GetMapping("/account/{accountNumber}")
-    public List<GetOrderByAccountNumberResponse> getOrdersByAccountNumber(@PathVariable String accountNumber) {
+    public List<GetOrderByIdResponse> getOrdersByAccountNumber(@PathVariable String accountNumber) {
         return orderService.findOrdersByAccountNumber(accountNumber);
     }
 

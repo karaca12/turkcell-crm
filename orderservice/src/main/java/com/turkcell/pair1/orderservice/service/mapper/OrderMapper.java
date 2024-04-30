@@ -8,7 +8,6 @@ import com.turkcell.pair1.orderservice.service.dto.request.AddOrderItemRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.AddProductSpecRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.AddServiceAddressRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
-import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByAccountNumberResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderItemResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetServiceAddressResponse;
@@ -42,7 +41,7 @@ public interface OrderMapper {
     @Mapping(source = "serviceAddress", target = "address")
     GetOrderByIdResponse getOrderByIdResponseFromOrder(Order order);
 
-    List<GetOrderByAccountNumberResponse> getOrderByIdResponseListFromOrderList(List<Order> orders);
+    List<GetOrderByIdResponse> getOrderByIdResponseListFromOrderList(List<Order> orders);
 
     List<OrderItem> getOrderItemListFromAddRequest(List<AddOrderItemRequest> requests);
 
