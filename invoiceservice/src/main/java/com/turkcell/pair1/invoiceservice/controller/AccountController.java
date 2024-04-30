@@ -20,14 +20,14 @@ import java.util.List;
 public class AccountController {
     private final AccountService accountService;
 
-    @GetMapping("/{accountId}") // TODO: change this with DTO
-    public AccountDto getAccountDtoById(@PathVariable("accountId") Integer accountId) {
-        return accountService.getAccountDtoById(accountId);
+    @GetMapping("/{accountNumber}") // TODO: change this with DTO
+    public AccountDto getAccountDtoByAccountNumber(@PathVariable("accountNumber") String accountNumber) {
+        return accountService.getAccountDtoByAccountNumber(accountNumber);
     }
 
     @GetMapping("/isActive")
-    public boolean isAccountActive(@RequestParam("accountId") Integer accountId) {
-        return accountService.isActive(accountId);
+    public boolean isAccountActive(@RequestParam("accountNumber") String accountNumber) {
+        return accountService.isActive(accountNumber);
     }
 
     @PostMapping("/addBasketItem")
@@ -38,12 +38,12 @@ public class AccountController {
     @PostMapping("/clearBasket")
     @ResponseStatus(HttpStatus.OK)
     public void clearBasket(@RequestBody ClearBasketRequest request) {
-        accountService.clearBasket(request.getAccountId());
+        accountService.clearBasket(request.getAccountNumber());
     }
 
     @GetMapping("getCustomerAccountsByCustomerId/{customerId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId,@RequestParam int page, @RequestParam int size) {
+    public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId, @RequestParam int page, @RequestParam int size) {
         PageInfo pageInfo = new PageInfo(page, size);
         return accountService.getCustomerAccountsByCustomerId(customerId, pageInfo);
     }
@@ -53,13 +53,13 @@ public class AccountController {
         return accountService.getCustomerIdByAccountNumber(accountNumber);
     }
 
-    @GetMapping("/getProducts/{accountId}")
-    public List<GetAccountProductResponse> getAccountProducts(@PathVariable Integer accountId){
-        return accountService.getProductsForAccount(accountId);
+    @GetMapping("/getProducts/{accountNumber}")
+    public List<GetAccountProductResponse> getAccountProducts(@PathVariable String accountNumber) {
+        return accountService.getProductsForAccount(accountNumber);
     }
 
     @GetMapping("/getDetailedProduct/{productId}/{orderId}")
-    public GetDetailedAccountProductResponse getDetailedAccountProduct(@PathVariable int productId,@PathVariable String orderId){
-        return accountService.getDetailedAccountProduct(productId,orderId);
+    public GetDetailedAccountProductResponse getDetailedAccountProduct(@PathVariable int productId, @PathVariable String orderId) {
+        return accountService.getDetailedAccountProduct(productId, orderId);
     }
 }

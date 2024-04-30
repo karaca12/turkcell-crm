@@ -13,17 +13,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountService {
-    Optional<Account> getAccountById(Integer accountId);
+    Optional<Account> getAccountByAccountNumber(String accountNumber);
 
-    AccountDto getAccountDtoById(Integer accountId);
+    AccountDto getAccountDtoByAccountNumber(String accountNumber);
 
     BasketItem addItemToBasket(AddItemToBasketRequest request);
 
-    void clearBasket(Integer accountId);
+    void clearBasket(String accountNumber);
 
-    boolean isActive(Integer accountId);
+    boolean isActive(String accountNumber);
 
-    List<GetAccountProductResponse> getProductsForAccount(Integer accountId);
+    List<GetAccountProductResponse> getProductsForAccount(String accountNumber);
 
     Account save(Account account);
 

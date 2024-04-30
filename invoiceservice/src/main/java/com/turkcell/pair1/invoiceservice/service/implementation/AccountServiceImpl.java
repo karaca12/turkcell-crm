@@ -35,19 +35,19 @@ public class AccountServiceImpl implements AccountService {
     private final AccountBusinessRules businessRules;
 
     @Override
-    public Optional<Account> getAccountById(Integer id) {
-        return accountRepository.findByIsDeletedFalseAndId(id);
+    public Optional<Account> getAccountByAccountNumber(String accountNumber) {
+        return accountRepository.findByIsDeletedFalseAndAccountNumber(accountNumber);
     }
 
     @Override
-    public AccountDto getAccountDtoById(Integer accountId) {
-        Account account = accountRepository.findByIsDeletedFalseAndId(accountId).orElseThrow(/*TODO*/);
+    public AccountDto getAccountDtoByAccountNumber(String accountNumber) {
+        Account account = accountRepository.findByIsDeletedFalseAndAccountNumber(accountNumber).orElseThrow(/*TODO*/);
         return AccountMapper.INSTANCE.accountToAccountDto(account);
     }
 
     @Override
-    public boolean isActive(Integer accountId) {
-        Optional<Account> account = getAccountById(accountId);
+    public boolean isActive(String accountNumber) {
+        Optional<Account> account = getAccountByAccountNumber(accountNumber);
         return (account.isPresent() && !account.get().isDeleted());
     }
 
@@ -60,8 +60,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<GetAccountProductResponse> getProductsForAccount(Integer accountId) {
-        List<GetAccountOrderResponse> orders = orderServiceClient.findOrdersByAccountId(accountId);
+    public List<GetAccountProductResponse> getProductsForAccount(String accountNumber) {
+        List<GetAccountOrderResponse> orders = orderServiceClient.findOrdersByAccountNumber(accountNumber);
         Set<Integer> productIds = orders.stream()
                 .flatMap(order -> order.getOrderItems().stream())
                 .map(GetOrderItemResponse::getProductId)
@@ -85,15 +85,14 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public BasketItem addItemToBasket(AddItemToBasketRequest request) {
-        Account account = getAccountById(request.getAccountId()).orElseThrow(() -> new IllegalStateException("Account not found."));
+        Account account = getAccountByAccountNumber(request.getAccountNumber()).orElseThrow(() -> new IllegalStateException("Account not found."));
         Basket basket = account.getBasket();
-
         return basketService.addBasketItem(basket, request.getProductId(), request.getQuantity());
     }
 
     @Override
-    public void clearBasket(Integer accountId) { // TODO: business rules??
-        Account account = getAccountById(accountId).orElseThrow();
+    public void clearBasket(String accountNumber) { // TODO: business rules??
+        Account account = getAccountByAccountNumber(accountNumber).orElseThrow();
         basketService.clearBasket(account);
     }
 
@@ -121,6 +120,7 @@ public class AccountServiceImpl implements AccountService {
     public String generateAccountNumber() {
         return businessRules.generateAccountNumber();
     }
+
     private String determineProductSpecId(List<GetOrderItemResponse> orderItems, int productId) {
         for (GetOrderItemResponse orderItem : orderItems) {
             if (orderItem.getProductId() == productId) {

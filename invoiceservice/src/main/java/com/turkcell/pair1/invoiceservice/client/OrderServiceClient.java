@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "orderservice",configuration = FeignClientConfiguration.class)
+@FeignClient(name = "orderservice", configuration = FeignClientConfiguration.class)
 public interface OrderServiceClient {
-    @GetMapping("/api/orders/account/{accountId}")
-    List<GetAccountOrderResponse> findOrdersByAccountId(@PathVariable("accountId") int accountId);
+    @GetMapping("/api/orders/account/{accountNumber}")
+    List<GetAccountOrderResponse> findOrdersByAccountNumber(@PathVariable("accountNumber") String accountNumber);
+
     @GetMapping("/api/orders/{orderId}")
     GetAccountOrderResponse getOrderById(@PathVariable("orderId") String orderId);
 }

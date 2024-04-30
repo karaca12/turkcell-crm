@@ -1,7 +1,5 @@
 package com.turkcell.pair1.orderservice.service.dto.request;
 
-import com.turkcell.pair1.orderservice.entity.Address;
-import com.turkcell.pair1.orderservice.entity.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlaceOrderRequest {
-    private int accountId;
+    private String accountNumber;
     private List<AddOrderItemRequest> orderItems;
     //TODO:customerId account id ile account tarafindan cekilecek.
     private String customerId;

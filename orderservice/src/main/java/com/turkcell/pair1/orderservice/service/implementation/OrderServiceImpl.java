@@ -9,8 +9,8 @@ import com.turkcell.pair1.orderservice.entity.OrderItem;
 import com.turkcell.pair1.orderservice.entity.ProductSpec;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
-import com.turkcell.pair1.orderservice.service.dto.request.AddOrderItemRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
+import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByAccountNumberResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderItemResponse;
 import com.turkcell.pair1.orderservice.service.mapper.OrderMapper;
@@ -18,9 +18,7 @@ import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -30,7 +28,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MessageService messageService;
     private final ProductServiceClient productServiceClient;
-
 
     @Override
     public String getCustomerIdByOrderId(String orderId) {
@@ -60,22 +57,17 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
-
     @Override
-    public List<GetOrderByIdResponse> findOrdersByAccountId(int accountId) {
-
-
-        return OrderMapper.INSTANCE.getOrderByIdResponseListFromOrderList(orderRepository.findByAccountId(accountId));
+    public List<GetOrderByAccountNumberResponse> findOrdersByAccountNumber(String accountNumber) {
+        return OrderMapper.INSTANCE.getOrderByIdResponseListFromOrderList(orderRepository.findByAccountNumber(accountNumber));
     }
 
     @Override
     public GetOrderByIdResponse getOrderById(String orderId) {
-        Order order=orderRepository.findById(orderId).orElseThrow(()->new RuntimeException("No order Found"));
-        GetOrderByIdResponse getOrderByIdResponse=OrderMapper.INSTANCE.getOrderByIdResponseFromOrder(order);
-        List<GetOrderItemResponse> getOrderItemResponses=OrderMapper.INSTANCE.getOrderItemListResponseFromOrderItem(order.getItems());
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("No order Found"));
+        GetOrderByIdResponse getOrderByIdResponse = OrderMapper.INSTANCE.getOrderByIdResponseFromOrder(order);
+        List<GetOrderItemResponse> getOrderItemResponses = OrderMapper.INSTANCE.getOrderItemListResponseFromOrderItem(order.getItems());
         getOrderByIdResponse.setOrderItems(getOrderItemResponses);
-
-
         return getOrderByIdResponse;
     }
 }

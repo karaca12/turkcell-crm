@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class AddItemToBasketRequest {
-    private Integer accountId;
+    private String accountNumber;
     private Integer productId;
     private int quantity;
 }
