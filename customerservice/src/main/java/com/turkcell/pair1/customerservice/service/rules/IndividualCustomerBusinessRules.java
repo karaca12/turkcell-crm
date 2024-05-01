@@ -71,7 +71,9 @@ public class IndividualCustomerBusinessRules {
     }
 
     public void ensureCustomerHasNoActiveProducts(Customer customer) {
-        //TODO: implement after product service is implemented
+        if (orderServiceClient.customerHasActiveProducts(customer.getCustomerId()).isHasActiveProducts()){
+            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.CUSTOMER_HAS_ACTIVE_PRODUCT));
+        }
     }
 
     public void checkIfSearchIsEmpty(List<SearchIndividualCustomerResponse> response) {

@@ -16,8 +16,8 @@ public class Messages {
         public static final String ACCOUNT_HAS_ONLY_ONE_ADDRESS = "accountHasOnlyOneAddress";
         public static final String WRONG_USERNAME_OR_PASSWORD = "wrongUsernameOrPassword";
         public static final String NO_PRODUCT_FOUND = "noProductFound";
-        public static final String INVALID_PRODUCT_TYPE = "Invalid configuration type for product type: %s";
         public static final String SPECS_IS_NOT_JSON = "specsIsNotJson";
+        public static final String CUSTOMER_HAS_ACTIVE_PRODUCT = "customerHasActiveProduct";
         public static final String ACCOUNT_HAS_ACTIVE_PRODUCTS = "accountHasActiveProducts";
     }
 
