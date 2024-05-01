@@ -20,14 +20,14 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateCustomerRequest {
+public class CreateIndividualCustomerRequest {
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
-    @Length(min = 1, max = 50,message = Messages.ValidationErrors.LENGTH)
+    @Length(min = 1, max = 50, message = Messages.ValidationErrors.LENGTH)
     String firstName;
-    @Length(min = 1, max = 50,message = Messages.ValidationErrors.LENGTH)
+    @Length(min = 1, max = 50, message = Messages.ValidationErrors.LENGTH)
     String middleName;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
-    @Length(min = 1, max = 50,message = Messages.ValidationErrors.LENGTH)
+    @Length(min = 1, max = 50, message = Messages.ValidationErrors.LENGTH)
     String lastName;
     @NotNull(message = Messages.ValidationErrors.NOT_NULL)
     LocalDate birthDate;

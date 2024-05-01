@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateCustomerInfoRequest {
+public class UpdateIndividualCustomerInfoRequest {
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     String firstName;
     String middleName;
