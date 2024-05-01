@@ -1,31 +1,30 @@
 package com.turkcell.pair1.customerservice.service.abstraction;
 
 import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
-import com.turkcell.pair1.customerservice.service.dto.request.*;
-import com.turkcell.pair1.customerservice.service.dto.response.*;
+import com.turkcell.pair1.customerservice.entity.Customer;
+import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
+import com.turkcell.pair1.customerservice.service.dto.request.UpdateAddressRequest;
+import com.turkcell.pair1.customerservice.service.dto.request.UpdateContactMediumRequest;
+import com.turkcell.pair1.customerservice.service.dto.response.CreateAddressToCustomerResponse;
+import com.turkcell.pair1.customerservice.service.dto.response.GetAddressResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CustomerService {
-    List<SearchCustomerResponse> search(SearchCustomerRequest request, PageInfo pageInfo);
+    Optional<Customer> findByIsDeletedFalseAndCustomerId(String customerId);
 
-    CreateCustomerResponse create(CreateCustomerRequest request);
+    String generateCustomerId();
 
-    boolean checkNationalityId(String nationalityId);
+    Customer save(Customer customer);
 
-    void updateCustomerInfoByCustomerId(String customerId,UpdateCustomerInfoRequest request);
+    boolean checkByCustomerIdIfCustomerExists(String customerId);
 
-    GetCustomerInfoResponse getCustomerInfoByCustomerId(String customerId);
+    List<GetAddressResponse> getCustomerAddressesByCustomerId(String customerId, PageInfo pageInfo);
 
-    List<GetAddressResponse> getCustomerAddressesByCustomerId(String customerId,PageInfo pageInfo);
-
-    GetCustomerContactInfoResponse getCustomerContactInfoByCustomerId(String customerId);
+    Customer getCustomerFromOptional(Optional<Customer> optionalCustomer);
 
     void updateCustomerAddressByCustomerId(String customerId, UpdateAddressRequest request);
-
-    void deleteCustomerByCustomerId(String customerId);
-
-    void updateCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request);
 
     CreateAddressToCustomerResponse createAddressToCustomerByCustomerId(String customerId, AddAddressToCustomerRequest request);
 
@@ -33,6 +32,5 @@ public interface CustomerService {
 
     void setPrimaryAddressByCustomerIdAndAddressId(String customerId, Integer addressId);
 
-    boolean checkByCustomerIdIfCustomerExists(String customerId);
+    void updateIndividualCustomerContactMediumByCustomerId(String customerId, UpdateContactMediumRequest request);
 }
-

@@ -9,11 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchCustomerResponse {
-
-    private String customerId;
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private String nationalityId;
+public class GetIndividualCustomerContactInfoResponse {
+    private String email;
+    private String homePhone;
+    private String mobilePhone;
+    private String fax;
 }

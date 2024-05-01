@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateCustomerResponse {
+public class CreateIndividualCustomerResponse {
     String customerId;
     String firstName;
     String middleName;
