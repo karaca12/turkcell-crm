@@ -92,4 +92,12 @@ public class OrderServiceImpl implements OrderService {
                 .flatMap(order -> order.getItems().stream())
                 .anyMatch(OrderItem::isActive));
     }
+
+    @Override
+    public AccountHasActiveProductsResponse accountHasActiveProducts(String accountNo) {
+        List<Order> orders = orderRepository.findByAccountNumber(accountNo); // Assuming such a method exists
+        return new AccountHasActiveProductsResponse(orders.stream()
+                .flatMap(order -> order.getItems().stream())
+                .anyMatch(OrderItem::isActive));
+    }
 }

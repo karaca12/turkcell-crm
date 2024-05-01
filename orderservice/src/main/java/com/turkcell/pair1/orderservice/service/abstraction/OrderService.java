@@ -1,6 +1,7 @@
 package com.turkcell.pair1.orderservice.service.abstraction;
 
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
+import com.turkcell.pair1.orderservice.service.dto.response.AccountHasActiveProductsResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.CustomerHasActiveProductsResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 
@@ -16,4 +17,6 @@ public interface OrderService {
     GetOrderByIdResponse getOrderById(String orderId);
 
     CustomerHasActiveProductsResponse customerHasActiveProducts(String customerId);
+
+    AccountHasActiveProductsResponse accountHasActiveProducts(String accountNo);
 }

@@ -2,6 +2,7 @@ package com.turkcell.pair1.orderservice.controller;
 
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
+import com.turkcell.pair1.orderservice.service.dto.response.AccountHasActiveProductsResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.CustomerHasActiveProductsResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,10 @@ public class OrderController {
     @GetMapping("/customer/{customerId}/hasActiveProducts")
     public CustomerHasActiveProductsResponse customerHasActiveProducts(@PathVariable String customerId) {
         return orderService.customerHasActiveProducts(customerId);
+    }
+
+    @GetMapping("/account/{accountNo}/hasActiveProducts")
+    public AccountHasActiveProductsResponse accountHasActiveProducts(@PathVariable String accountNo) {
+        return orderService.accountHasActiveProducts(accountNo);
     }
 }

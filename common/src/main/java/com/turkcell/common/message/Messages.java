@@ -18,6 +18,7 @@ public class Messages {
         public static final String NO_PRODUCT_FOUND = "noProductFound";
         public static final String INVALID_PRODUCT_TYPE = "Invalid configuration type for product type: %s";
         public static final String SPECS_IS_NOT_JSON = "specsIsNotJson";
+        public static final String ACCOUNT_HAS_ACTIVE_PRODUCTS = "accountHasActiveProducts";
     }
 
     public static class ValidationErrors {
