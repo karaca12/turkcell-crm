@@ -60,7 +60,7 @@ public class IndividualCustomerBusinessRules {
 
     public String getAccountNumberFromOrderNumber(String orderNumber) {
         if (orderNumber != null) {
-            return orderServiceClient.getCustomerIdByOrderId(orderNumber);
+            return orderServiceClient.getAccountNumberByOrderId(orderNumber);
         } else return null;
     }
 

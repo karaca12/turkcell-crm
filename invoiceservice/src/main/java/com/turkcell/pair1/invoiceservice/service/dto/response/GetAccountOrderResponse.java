@@ -1,6 +1,5 @@
 package com.turkcell.pair1.invoiceservice.service.dto.response;
 
-import com.turkcell.pair1.invoiceservice.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -86,7 +86,7 @@ public class AddressServiceImpl implements AddressService {
     @Transactional
     public void setPrimaryAddressById(Integer addressId, Customer customer) {
         businessRules.customerMustContainAddress(customer, addressId);
-        Address address = businessRules.getAddressFromOptional(addressRepository.findById(addressId));
+        Address address = businessRules.getAddressFromOptional(addressRepository.findByIdAndIsDeletedFalse(addressId));
         businessRules.checkIfAddressIsAlreadyAPrimaryAddress(address);
 
         for (Address searchedAddress : customer.getAddresses()) {

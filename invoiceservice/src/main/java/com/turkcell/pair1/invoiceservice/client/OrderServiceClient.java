@@ -4,7 +4,6 @@ import com.turkcell.pair1.configuration.feign.FeignClientConfiguration;
 import com.turkcell.pair1.invoiceservice.service.dto.response.AccountHasActiveProductsResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountOrderResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 

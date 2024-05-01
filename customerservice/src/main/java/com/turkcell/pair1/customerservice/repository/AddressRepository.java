@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -24,4 +25,5 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
             "where a.id = :#{#updatedId}")
     void updateAddressById(@Param("address") Address address,Integer updatedId);
 
+    Optional<Address> findByIdAndIsDeletedFalse(Integer id);
 }

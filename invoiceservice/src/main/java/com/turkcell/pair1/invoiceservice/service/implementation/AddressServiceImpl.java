@@ -58,7 +58,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<GetAddressResponse> getAddressesFromBillingAccountByBillingAccountId(BillingAccount billingAccount, Pageable pageable) {
-        return AddressMapper.INSTANCE.getAddressResponsesFromAddresses(addressRepository.findByIsDeletedFalseAndAccounts(billingAccount.getAccount(), pageable));
+        return AddressMapper.INSTANCE.getAddressResponsesFromAddresses(addressRepository.findByAccounts(billingAccount.getAccount(), pageable));
 
     }
 

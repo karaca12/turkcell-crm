@@ -6,8 +6,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @FeignClient(name = "invoiceservice", configuration = FeignClientConfiguration.class)
 public interface InvoiceServiceClient {
     @GetMapping("/api/invoice/accounts/checkIfAccountExistsAndGetAddress/{accountNumber}/{addressId}")
     AddOrderAddressResponse checkIfAccountExistsAndGetAddress(@PathVariable String accountNumber, @PathVariable Integer addressId);
+
+    @GetMapping("/api/invoice/accounts/getAccountNumbersByCustomerId/{customerId}")
+    List<String> getAccountNumbersByCustomerId(@PathVariable String customerId);
 }

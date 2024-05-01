@@ -1,19 +1,17 @@
 package com.turkcell.pair1.orderservice.service.implementation;
 
 
-import com.turkcell.common.message.Messages;
-import com.turkcell.pair1.configuration.exception.types.BusinessException;
+import com.turkcell.pair1.orderservice.client.InvoiceServiceClient;
 import com.turkcell.pair1.orderservice.client.ProductServiceClient;
 import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.entity.OrderItem;
 import com.turkcell.pair1.orderservice.entity.ProductSpec;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
-import com.turkcell.pair1.orderservice.service.dto.response.*;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
+import com.turkcell.pair1.orderservice.service.dto.response.*;
 import com.turkcell.pair1.orderservice.service.mapper.OrderMapper;
 import com.turkcell.pair1.orderservice.service.rules.OrderBusinessRules;
-import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ProductServiceClient productServiceClient;
     private final OrderBusinessRules businessRules;
+    private final InvoiceServiceClient invoiceServiceClient;
 
     @Override
     public String getAccountNumberByOrderId(String orderId) {
@@ -37,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void placeOrder(PlaceOrderRequest request) {
-        AddOrderAddressResponse addressResponse= businessRules.checkIfAccountExistsAndGetAddress(request.getAccountNumber(),request.getAccountAddressId());
+        AddOrderAddressResponse addressResponse = businessRules.checkIfAccountExistsAndGetAddress(request.getAccountNumber(), request.getAccountAddressId());
         Order order = OrderMapper.INSTANCE.getOrderFromAddRequest(request);
         order.setServiceAddress(OrderMapper.INSTANCE.getAddressFromAddressResponse(addressResponse));
 
@@ -60,9 +59,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<GetOrderByIdResponse> findOrdersByAccountNumber(String accountNumber) {
-        List<Order> orders=orderRepository.findByAccountNumber(accountNumber);
-        List<GetOrderByIdResponse> orderByAccountNumberResponses=new ArrayList<>();
-        for(Order order : orders){
+        List<Order> orders = orderRepository.findByAccountNumber(accountNumber);
+        List<GetOrderByIdResponse> orderByAccountNumberResponses = new ArrayList<>();
+        for (Order order : orders) {
             GetOrderByIdResponse getOrderByIdResponse = OrderMapper.INSTANCE.getOrderByIdResponseFromOrder(order);
             List<GetOrderItemResponse> getOrderItemResponses = OrderMapper.INSTANCE.getOrderItemListResponseFromOrderItem(order.getItems());
             getOrderByIdResponse.setOrderItems(getOrderItemResponses);
@@ -74,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public GetOrderByIdResponse getOrderById(String orderId) {
-        Order order =  businessRules.getOrderFromOptional(orderRepository.findById(orderId));
+        Order order = businessRules.getOrderFromOptional(orderRepository.findById(orderId));
         GetOrderByIdResponse getOrderByIdResponse = OrderMapper.INSTANCE.getOrderByIdResponseFromOrder(order);
         List<GetOrderItemResponse> getOrderItemResponses = OrderMapper.INSTANCE.getOrderItemListResponseFromOrderItem(order.getItems());
         getOrderByIdResponse.setOrderItems(getOrderItemResponses);
@@ -83,17 +82,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public CustomerHasActiveProductsResponse customerHasActiveProducts(String customerId) {
-        List<Order> orders = orderRepository.findByCustomerId(customerId);
-        return new CustomerHasActiveProductsResponse(orders.stream()
-                .flatMap(order -> order.getItems().stream())
-                .anyMatch(OrderItem::isActive));
+        List<String> accountNumbers = invoiceServiceClient.getAccountNumbersByCustomerId(customerId);
+        boolean isActive = false;
+        int i = 0;
+        while (!isActive && i < accountNumbers.size()) {
+            isActive = businessRules.doesCustomerHasActiveProduct(accountNumbers.get(i));
+            i++;
+        }
+        return new CustomerHasActiveProductsResponse(isActive);
     }
 
     @Override
     public AccountHasActiveProductsResponse accountHasActiveProducts(String accountNo) {
-        List<Order> orders = orderRepository.findByAccountNumber(accountNo);
-        return new AccountHasActiveProductsResponse(orders.stream()
-                .flatMap(order -> order.getItems().stream())
-                .anyMatch(OrderItem::isActive));
+        return businessRules.accountHasActiveProducts(accountNo);
     }
 }

@@ -4,14 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
-import com.turkcell.pair1.orderservice.client.CustomerServiceClient;
 import com.turkcell.pair1.orderservice.client.InvoiceServiceClient;
 import com.turkcell.pair1.orderservice.entity.Order;
+import com.turkcell.pair1.orderservice.entity.OrderItem;
+import com.turkcell.pair1.orderservice.repository.OrderRepository;
+import com.turkcell.pair1.orderservice.service.dto.response.AccountHasActiveProductsResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.AddOrderAddressResponse;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -19,7 +22,7 @@ import java.util.Optional;
 public class OrderBusinessRules {
     private final MessageService messageService;
     private final InvoiceServiceClient invoiceServiceClient;
-    private final CustomerServiceClient customerServiceClient;
+    private final OrderRepository orderRepository;
 
     public boolean checkIfSpecsIsJson(String specs) {
         try {
@@ -39,5 +42,16 @@ public class OrderBusinessRules {
     public Order getOrderFromOptional(Optional<Order> optionalOrder) {
         return optionalOrder.orElseThrow(() ->
                 new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ORDER_FOUND)));
+    }
+
+    public boolean doesCustomerHasActiveProduct(String accountNumber) {
+        return accountHasActiveProducts(accountNumber).isHasActiveProducts();
+    }
+
+    public AccountHasActiveProductsResponse accountHasActiveProducts(String accountNo) {
+        List<Order> orders = orderRepository.findByAccountNumber(accountNo);
+        return new AccountHasActiveProductsResponse(orders.stream()
+                .flatMap(order -> order.getItems().stream())
+                .anyMatch(OrderItem::isActive));
     }
 }

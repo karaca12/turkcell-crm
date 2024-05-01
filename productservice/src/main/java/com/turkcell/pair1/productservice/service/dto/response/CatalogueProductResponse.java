@@ -9,9 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProductDtoResponse {
+public class CatalogueProductResponse {
     private Integer id;
-    private String productName;
     private String productOfferName;
     private String productOfferId;
 }

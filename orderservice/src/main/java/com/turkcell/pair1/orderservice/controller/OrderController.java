@@ -16,7 +16,7 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-    @GetMapping("getCustomerIdByOrderId")
+    @GetMapping("getAccountNumberByOrderId")
     public String getAccountNumberByOrderId(@RequestParam String orderId) {
         return orderService.getAccountNumberByOrderId(orderId);
     }

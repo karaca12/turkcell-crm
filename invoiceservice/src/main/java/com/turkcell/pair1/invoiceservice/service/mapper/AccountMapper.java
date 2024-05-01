@@ -16,7 +16,7 @@ public interface AccountMapper {
 
     GetAccountDtoByAccountNumberResponse accountToAccountDto(Account account);
 
-    @Mapping(source = "accountNumber", target = "accountNumber")
+    @Mapping(source = "billingAccount.name", target = "name")
     @Mapping(target = "type", ignore = true)
     GetCustomerAccountsResponse getCustomerAccountResponseFromAccount(Account account);
 

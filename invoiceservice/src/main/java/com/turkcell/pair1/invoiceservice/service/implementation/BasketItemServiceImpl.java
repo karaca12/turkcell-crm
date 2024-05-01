@@ -1,7 +1,6 @@
 package com.turkcell.pair1.invoiceservice.service.implementation;
 
 import com.turkcell.pair1.invoiceservice.entity.Basket;
-import com.turkcell.pair1.invoiceservice.entity.BasketItem;
 import com.turkcell.pair1.invoiceservice.repository.BasketItemRepository;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketItemService;
 import lombok.RequiredArgsConstructor;

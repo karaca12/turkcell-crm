@@ -4,7 +4,6 @@ import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.GetAccountDtoByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
-import com.turkcell.pair1.invoiceservice.service.dto.request.ClearBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrderResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
@@ -36,10 +35,10 @@ public class AccountController {
         accountService.addItemToBasket(request);
     }
 
-    @PostMapping("/clearBasket")
+    @DeleteMapping("/clearBasket/{accountNumber}")
     @ResponseStatus(HttpStatus.OK)
-    public void clearBasket(@RequestBody ClearBasketRequest request) {
-        accountService.clearBasket(request.getAccountNumber());
+    public void clearBasket(@PathVariable String accountNumber) {
+        accountService.clearBasket(accountNumber);
     }
 
     @GetMapping("getCustomerAccountsByCustomerId/{customerId}")
@@ -68,6 +67,11 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     public CheckAccountForOrderResponse checkIfAccountExistsAndGetAddress(@PathVariable String accountNumber, @PathVariable Integer addressId) {
         return accountService.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
+    }
+
+    @GetMapping("getAccountNumbersByCustomerId/{customerId}")
+    List<String> getAccountNumbersByCustomerId(@PathVariable String customerId){
+        return accountService.getAccountNumbersByCustomerId(customerId);
     }
 
 }

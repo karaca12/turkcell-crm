@@ -5,7 +5,7 @@ import com.turkcell.pair1.productservice.entity.Product;
 import com.turkcell.pair1.productservice.repository.CatalogueRepository;
 import com.turkcell.pair1.productservice.service.abstraction.CatalogueService;
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
-import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
+import com.turkcell.pair1.productservice.service.dto.response.CatalogueProductResponse;
 import com.turkcell.pair1.productservice.service.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,14 +21,14 @@ public class CatalogueServiceImpl implements CatalogueService {
 
 
     @Override
-    public List<ProductDtoResponse> getCatalogueProducts(Integer catalogueId) {
+    public List<CatalogueProductResponse> getCatalogueProducts(Integer catalogueId) {
         Catalogue catalogue = catalogueRepository.findById(catalogueId).orElseThrow();
         List<Product> products = catalogue.getProducts();
-        List<ProductDtoResponse> productDtoResponses = new ArrayList<>();
+        List<CatalogueProductResponse> catalogueProductResponse = new ArrayList<>();
         for (Product product : products) {
-            productDtoResponses.add(ProductMapper.INSTANCE.productDtoResponseFromProduct(product));
+            catalogueProductResponse.add(ProductMapper.INSTANCE.productDtoResponseFromProduct(product));
         }
-        return productDtoResponses;
+        return catalogueProductResponse;
     }
 }
 

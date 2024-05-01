@@ -42,6 +42,7 @@ public class CreateIndividualCustomerRequest {
     @Email(message = Messages.ValidationErrors.EMAIL)
     String email;
     String homePhone;
+    //TODO
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     String mobilePhone;
     String fax;

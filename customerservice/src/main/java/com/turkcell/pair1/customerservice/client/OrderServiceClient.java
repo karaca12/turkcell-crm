@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "orderservice", configuration = FeignClientConfiguration.class)
 public interface OrderServiceClient {
-    @GetMapping("/api/orders/getCustomerIdByOrderId")
-    String getCustomerIdByOrderId(@RequestParam("orderId") String orderId);
+    @GetMapping("/api/orders/getAccountNumberByOrderId")
+    String getAccountNumberByOrderId(@RequestParam("orderId") String orderId);
 
     @GetMapping("/api/orders/customer/{customerId}/hasActiveProducts")
     CustomerHasActiveProductsResponse customerHasActiveProducts(@PathVariable String customerId);

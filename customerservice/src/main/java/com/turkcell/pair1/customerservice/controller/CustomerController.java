@@ -48,7 +48,6 @@ public class CustomerController {
         customerService.deleteAddressByCustomerIdAndAddressId(customerId, addressId);
     }
 
-
     @PutMapping("setPrimaryAddressByCustomerIdAndAddressId/{customerId}/{addressId}")
     public void setPrimaryAddressByCustomerIdAndAddressId(@PathVariable String customerId, @PathVariable Integer addressId) {
         customerService.setPrimaryAddressByCustomerIdAndAddressId(customerId, addressId);

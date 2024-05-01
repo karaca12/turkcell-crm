@@ -1,8 +1,10 @@
 package com.turkcell.pair1.productservice.entity;
 
 import com.turkcell.pair1.productservice.core.entity.BaseEntity;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 

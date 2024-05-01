@@ -1,7 +1,10 @@
 package com.turkcell.pair1.authservice.entity;
 
 import com.turkcell.pair1.authservice.core.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
