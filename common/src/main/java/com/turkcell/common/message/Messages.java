@@ -18,7 +18,7 @@ public class Messages {
         public static final String NO_PRODUCT_FOUND = "noProductFound";
         public static final String SPECS_IS_NOT_JSON = "specsIsNotJson";
         public static final String CUSTOMER_HAS_ACTIVE_PRODUCT = "customerHasActiveProduct";
-        public static final String ACCOUNT_HAS_ACTIVE_PRODUCTS = "accountHasActiveProducts";
+        public static final String ACCOUNT_HAS_ACTIVE_PRODUCT = "accountHasActiveProduct";
     }
 
     public static class ValidationErrors {

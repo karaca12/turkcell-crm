@@ -24,8 +24,8 @@ public class BillingAccountBusinessRules {
 
     public void ensureBillingAccountHasNoActiveProducts(BillingAccount billingAccount) {
         if (orderServiceClient.accountHasActiveProducts(billingAccount.getAccount().getAccountNumber()).isHasActiveProducts()) {
-            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.ACCOUNT_HAS_ACTIVE_PRODUCTS));
-        };
+            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.ACCOUNT_HAS_ACTIVE_PRODUCT));
+        }
     }
 
     public void checkIfCustomerExists(String customerId) {
