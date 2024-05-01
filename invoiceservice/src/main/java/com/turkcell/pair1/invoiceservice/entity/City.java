@@ -13,10 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "cities")
 public class City extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
 
     @NotNull
     @Column(name = "name", nullable = false)

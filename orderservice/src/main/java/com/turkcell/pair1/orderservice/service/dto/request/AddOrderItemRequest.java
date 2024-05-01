@@ -10,5 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddOrderItemRequest {
-    private int productId;
+    private String productOfferId;
+    private AddProductSpecRequest productSpec;
 }

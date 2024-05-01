@@ -20,5 +20,4 @@ public class StreetBusinessRules {
                 new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_STREET_AND_CITY_FOUND_ERROR)));
     }
 
-
 }

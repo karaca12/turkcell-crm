@@ -2,21 +2,21 @@ package com.turkcell.pair1.productservice.service.implementation;
 
 import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
+import com.turkcell.pair1.productservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.productservice.entity.Product;
-import com.turkcell.pair1.productservice.entity.ProductAttribute;
-import com.turkcell.pair1.productservice.entity.product.InternetService;
-import com.turkcell.pair1.productservice.entity.product.Modem;
 import com.turkcell.pair1.productservice.repository.ProductRepository;
-import com.turkcell.pair1.productservice.service.abstraction.ProductAttributeService;
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
-import com.turkcell.pair1.productservice.service.dto.ProductAttributeDto;
 import com.turkcell.pair1.productservice.service.dto.request.*;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
+import com.turkcell.pair1.productservice.service.dto.response.SearchProductResponse;
 import com.turkcell.pair1.productservice.service.mapper.ProductMapper;
+import com.turkcell.pair1.productservice.service.rules.ProductBusinessRules;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,108 +26,36 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
-    private final ProductAttributeService productAttributeService;
     private final MessageService messageService;
+    private final ProductBusinessRules businessRules;
 
     @Override
-    public boolean hasActiveProducts(String customerId) {
-        return false; // No Active Products -> Safe to Delete Customer
+    public GetAccountProductResponse getAccountProductByOfferId(String productOfferId) {
+        return ProductMapper.INSTANCE.accountProductDtoFromProduct(businessRules.findByIsDeletedFalseAndProductOfferId(productOfferId));
     }
 
     @Override
-    public Product getProductById(Integer productId) {
-        return productRepository.findByIsDeletedFalseAndId(productId).orElseThrow(
-                () -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_PRODUCT_FOUND))
-        );
+    public List<SearchProductResponse> searchProducts(SearchProductRequest request, PageInfo pageInfo) {
+        Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
+        List<SearchProductResponse> response = productRepository.search(request, pageable);
+        businessRules.checkIfSearchIsEmpty(response);
+        return response;
+    }
+
+
+    @Override
+    public double getProductPriceByOfferId(String productOfferId) {
+        return businessRules.getProductFromOptional(productRepository.findByIsDeletedFalseAndProductOfferId(productOfferId)).getProductPrice();
+    }
+
+
+    @Override
+    public GetDetailedAccountProductResponse getDetailedProduct(String productOfferId) {
+        return ProductMapper.INSTANCE.getDetailedProductFromProduct(productRepository.findByIsDeletedFalseAndProductOfferId(productOfferId).orElseThrow());
     }
 
     @Override
-    public List<ProductDtoResponse> getProductsByCatalogueId(Integer catalogueId) {
-        List<Product> products = productRepository.findByCatalogueId(catalogueId);
-        List<ProductDtoResponse> productDtoResponses = new ArrayList<>();
-        for (Product product : products) {
-            ProductDtoResponse productDtoResponse = ProductMapper.INSTANCE.productDtoResponseFromProduct(product);
-            productDtoResponses.add(productDtoResponse);
-        }
-        return productDtoResponses;
-    }
-
-    @Override
-    public void add(AddProductRequest productAddDto) {
-        Product product= ProductMapper.INSTANCE.productFromAddDto(productAddDto);
-        productRepository.save(product);
-
-    }
-
-    @Override
-    public GetAccountProductResponse getAccountProductById(int id) {
-        return ProductMapper.INSTANCE.accountProductDtoFromProduct(getProductById(id));
-    }
-
-    @Override
-    public List<ProductDtoResponse> searchProducts(Long productOfferId, String productOfferName) {
-        List<Product> products;
-        if (productOfferId != null && productOfferName != null) {
-            products = productRepository.findByProductOfferIdAndProductOfferNameContaining(productOfferId, productOfferName);
-        } else if (productOfferId != null) {
-            products = productRepository.findByProductOfferId(productOfferId);
-        } else if (productOfferName != null && !productOfferName.isEmpty()) {
-            products = productRepository.findByProductOfferNameContaining(productOfferName);
-        } else {
-            products = productRepository.findAll();
-        }
-        List<ProductDtoResponse> responses = new ArrayList<>();
-        for (Product product : products) {
-            responses.add(ProductMapper.INSTANCE.productDtoResponseFromProduct(product));
-        }
-        return responses;
-}
-
-    @Override
-    public void submitConfigurations() {
-        //TODO ????
-    }
-
-    @Override
-    public double getProductPriceById(int productId) {
-        return productRepository.getProductById(productId).getProductPrice();
-    }
-
-    @Override
-    public void configureProduct(List<ProductConfigurationRequest<ProductConfiguration>> productConfigurationRequests) {
-        for (ProductConfigurationRequest<ProductConfiguration> config : productConfigurationRequests) {
-            Product product = getProductById(config.getProductId());
-            if (config.getProductType().equalsIgnoreCase("modem") && config.getConfiguration() instanceof ModemConfiguration) {
-                configureModem((Modem) product, (ModemConfiguration) config.getConfiguration());
-            } else if (config.getProductType().equalsIgnoreCase("internetservice") && config.getConfiguration() instanceof InternetServiceConfiguration) {
-                configureInternetService((InternetService) product, (InternetServiceConfiguration) config.getConfiguration());
-            } else {
-                throw new BusinessException(String.format(messageService.getMessage(Messages.BusinessErrors.INVALID_PRODUCT_TYPE), config.getProductType()));
-            }
-            productRepository.save(product);
-            for (ProductAttributeDto attribute : config.getAttributes()) {
-                ProductAttribute productAttribute = ProductMapper.INSTANCE.productAttributeFromProductAttributeDto(attribute);
-                productAttribute.setProduct(product);
-                productAttributeService.save(productAttribute);
-            }
-        }
-    }
-
-    @Override
-    public GetDetailedAccountProductResponse getDetailedProduct(int id) {
-        return ProductMapper.INSTANCE.getDetailedProductFromProduct(productRepository.getProductById(id));
-    }
-    private void configureModem(Modem modem, ModemConfiguration config) {
-        modem.setBrand(config.getBrand());
-        modem.setSerialNumber(config.getSerialNumber());
-        modem.setModel(config.getModel());
-    }
-
-    private void configureInternetService(InternetService service, InternetServiceConfiguration config) {
-        service.setPstnNo(config.getPstnNo());
-        service.setXdslUsername(config.getXdslUsername());
-        service.setBandwidth(config.getBandwidth());
-        service.setXdslNo(config.getXdslNo());
-        service.setXdslPassword(config.getXdslPassword());
+    public boolean checkByProductOfferIdIfProductExists(String productOfferId) {
+        return productRepository.existsByProductOfferId(productOfferId);
     }
 }

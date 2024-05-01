@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetAccountProductResponse {
-    private int productId;
+    private String productOfferId;
     private String productName;
     private int campaignId;
     private String campaignName;

@@ -15,11 +15,6 @@ import java.util.Set;
 @Getter
 @Setter
 public class User extends BaseEntity implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-
     @Column(name = "password")
     private String password;
 

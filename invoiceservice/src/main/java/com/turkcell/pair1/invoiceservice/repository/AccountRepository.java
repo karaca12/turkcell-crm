@@ -18,7 +18,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query("UPDATE Account ac SET ac.updatedAt = current timestamp WHERE ac.id=:id and ac.isDeleted= false")
     void updateAccountById(@Param("id") Integer id);
 
-    Optional<Account> findByIsDeletedFalseAndId(Integer id);
+    Optional<Account> findByIsDeletedFalseAndAccountNumber(String accountNumber);
 
     List<Account> findByCustomerId(String id, Pageable pageable);
 

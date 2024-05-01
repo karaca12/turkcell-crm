@@ -16,31 +16,14 @@ import java.util.List;
 @Table(name = "products")
 public class Product extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-
-    @NotNull
-    @Column(name = "product_name")
-    private String productName;
-
+    @Column(name = "product_offer_id")
+    private String productOfferId;
 
     @Column(name = "product_offer_name")
     private String productOfferName;
 
-    @Column(name = "product_offer_id")
-    private Long productOfferId;
-
-    @Column(name = "product_spec_id")
-    private Long productSpecId;
-
     @Column(name = "product_price")
     private double productPrice;
-
-    @OneToMany(mappedBy = "product")
-    List<ProductAttribute> productAttributes = new ArrayList<>();
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "campaign_id")
@@ -49,4 +32,7 @@ public class Product extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "catalogue_id")
     private Catalogue catalogue;
+
+
+
 }

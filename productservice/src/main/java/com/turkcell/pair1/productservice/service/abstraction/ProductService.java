@@ -1,28 +1,23 @@
 package com.turkcell.pair1.productservice.service.abstraction;
 
+import com.turkcell.pair1.productservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.productservice.entity.Product;
-import com.turkcell.pair1.productservice.service.dto.request.AddProductRequest;
-import com.turkcell.pair1.productservice.service.dto.request.ProductConfiguration;
-import com.turkcell.pair1.productservice.service.dto.request.ProductConfigurationRequest;
+import com.turkcell.pair1.productservice.service.dto.request.SearchProductRequest;
 import com.turkcell.pair1.productservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.GetDetailedAccountProductResponse;
 import com.turkcell.pair1.productservice.service.dto.response.ProductDtoResponse;
+import com.turkcell.pair1.productservice.service.dto.response.SearchProductResponse;
 
 import java.util.List;
 
 public interface ProductService {
-    boolean hasActiveProducts(String customerId); //CustomerNo or Id?
-    void add(AddProductRequest productAddDto);
-    GetAccountProductResponse getAccountProductById(int id);
+    GetAccountProductResponse getAccountProductByOfferId(String productOfferId);
 
-    Product getProductById(Integer productId);
-    List<ProductDtoResponse> getProductsByCatalogueId(Integer catalogueId);
+    List<SearchProductResponse> searchProducts(SearchProductRequest request, PageInfo pageInfo);
 
-    List<ProductDtoResponse> searchProducts(Long productOfferId, String productOfferName);
+    double getProductPriceByOfferId(String productOfferId);
 
-    void submitConfigurations();
-    double getProductPriceById(int productId);
+    GetDetailedAccountProductResponse getDetailedProduct(String productOfferId);
 
-    void configureProduct(List<ProductConfigurationRequest<ProductConfiguration>> productConfigurationRequests);
-    GetDetailedAccountProductResponse getDetailedProduct(int id);
+    boolean checkByProductOfferIdIfProductExists(String productOfferId);
 }

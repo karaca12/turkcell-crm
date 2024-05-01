@@ -4,6 +4,7 @@ import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.BillingAccount;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrderResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CreateAddressToBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import org.springframework.data.domain.Pageable;
@@ -24,4 +25,6 @@ public interface AddressService {
     GetAddressResponse setPrimaryAddressById(Integer addressId, BillingAccount billingAccount);
 
     void deletedAddressesWhenDeletingBillingAccounts(BillingAccount billingAccount);
+
+    CheckAccountForOrderResponse getAddressFromId(Account account, Integer addressId);
 }

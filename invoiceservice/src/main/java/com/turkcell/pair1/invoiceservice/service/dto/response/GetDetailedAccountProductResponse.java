@@ -17,15 +17,11 @@ public class GetDetailedAccountProductResponse {
 
     private String productOfferName;
 
+    private String productOfferId;
 
-    private Long productOfferId;
-
-
-    private Long productSpecId;
+    private String productSpecId;
 
     private GetServiceAddressResponse serviceAddress;
     private LocalDate serviceStartDate;
 
-
-    private String prodChars;
 }

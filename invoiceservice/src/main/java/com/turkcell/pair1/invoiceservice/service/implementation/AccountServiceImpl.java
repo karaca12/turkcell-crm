@@ -8,8 +8,9 @@ import com.turkcell.pair1.invoiceservice.entity.Basket;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
 import com.turkcell.pair1.invoiceservice.repository.AccountRepository;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
+import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
-import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
+import com.turkcell.pair1.invoiceservice.service.dto.GetAccountDtoByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.*;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
@@ -33,21 +34,22 @@ public class AccountServiceImpl implements AccountService {
     private final ProductServiceClient productServiceClient;
     private final OrderServiceClient orderServiceClient;
     private final AccountBusinessRules businessRules;
+    private final AddressService addressService;
 
     @Override
-    public Optional<Account> getAccountById(Integer id) {
-        return accountRepository.findByIsDeletedFalseAndId(id);
+    public Optional<Account> getAccountByAccountNumber(String accountNumber) {
+        return accountRepository.findByIsDeletedFalseAndAccountNumber(accountNumber);
     }
 
     @Override
-    public AccountDto getAccountDtoById(Integer accountId) {
-        Account account = accountRepository.findByIsDeletedFalseAndId(accountId).orElseThrow(/*TODO*/);
+    public GetAccountDtoByAccountNumberResponse getAccountDtoByAccountNumber(String accountNumber) {
+        Account account = accountRepository.findByIsDeletedFalseAndAccountNumber(accountNumber).orElseThrow(/*TODO*/);
         return AccountMapper.INSTANCE.accountToAccountDto(account);
     }
 
     @Override
-    public boolean isActive(Integer accountId) {
-        Optional<Account> account = getAccountById(accountId);
+    public boolean isActive(String accountNumber) {
+        Optional<Account> account = getAccountByAccountNumber(accountNumber);
         return (account.isPresent() && !account.get().isDeleted());
     }
 
@@ -60,15 +62,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<GetAccountProductResponse> getProductsForAccount(Integer accountId) {
-        List<GetAccountOrderResponse> orders = orderServiceClient.findOrdersByAccountId(accountId);
-        Set<Integer> productIds = orders.stream()
+    public List<GetAccountProductResponse> getProductsForAccount(String accountNumber) {
+        List<GetAccountOrderResponse> orders = orderServiceClient.findOrdersByAccountNumber(accountNumber);
+        Set<String> productOfferIds = orders.stream()
                 .flatMap(order -> order.getOrderItems().stream())
-                .map(GetOrderItemResponse::getProductId)
+                .map(GetOrderItemResponse::getProductOfferId)
                 .collect(Collectors.toSet());
 
-        return productIds.stream()
-                .map(productServiceClient::getProductById)
+        return productOfferIds.stream()
+                .map(productServiceClient::getAccountProductByOfferId)
                 .collect(Collectors.toList());
     }
 
@@ -85,26 +87,28 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public BasketItem addItemToBasket(AddItemToBasketRequest request) {
-        Account account = getAccountById(request.getAccountId()).orElseThrow(() -> new IllegalStateException("Account not found."));
+        Account account = getAccountByAccountNumber(request.getAccountNumber()).orElseThrow(() -> new IllegalStateException("Account not found."));
         Basket basket = account.getBasket();
-
-        return basketService.addBasketItem(basket, request.getProductId(), request.getQuantity());
+        return basketService.addBasketItem(basket, request.getProductOfferId(), request.getQuantity());
     }
 
     @Override
-    public void clearBasket(Integer accountId) { // TODO: business rules??
-        Account account = getAccountById(accountId).orElseThrow();
+    public void clearBasket(String accountNumber) { // TODO: business rules??
+        Account account = getAccountByAccountNumber(accountNumber).orElseThrow();
         basketService.clearBasket(account);
     }
 
     @Override
-    public GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId) {
-        GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productId);
+    public GetDetailedAccountProductResponse getDetailedAccountProduct(String productOfferId, String orderId) {
+        GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productOfferId);
         GetAccountOrderResponse order = orderServiceClient.getOrderById(orderId);
-        productDetail.setServiceAddress(order.getAddress()); //TODO:find the primary address//order is gonna have one address no need to find the primary one
+        productDetail.setServiceAddress(order.getAddress());
+        //TODO:find the primary address
         productDetail.setServiceStartDate(order.getServiceStartDate());
 
-        return productDetail;//TODO:result is gonna be cleared version from now
+        productDetail.setProductSpecId(determineProductSpecId(order.getOrderItems(), productOfferId));
+
+        return productDetail;//TODO:prodchar gelicek nasil olucak allah bilir
     }
 
     @Override
@@ -112,9 +116,26 @@ public class AccountServiceImpl implements AccountService {
         Account account = businessRules.getAccountFromOptional(accountRepository.findByAccountNumber(accountNumber));
         return account.getCustomerId();
     }
-
     @Override
     public String generateAccountNumber() {
         return businessRules.generateAccountNumber();
+    }
+
+    @Override
+    public CheckAccountForOrderResponse checkIfAccountExistsAndGetAddress(String accountNumber, Integer addressId) {
+
+        return businessRules.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
+
+    }
+
+
+    private String determineProductSpecId(List<GetOrderItemResponse> orderItems, String productOfferId) {
+        for (GetOrderItemResponse orderItem : orderItems) {
+            if (orderItem.getProductOfferId().equals(productOfferId) ) {
+                return orderItem.getSpecId();
+            }
+        }
+        return null;
+
     }
 }

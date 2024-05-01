@@ -10,16 +10,13 @@ import lombok.Setter;
 @Entity
 @Table(name = "basket_items")
 public class BasketItem extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
-    @Column(name = "product_id", nullable = false)
-    private Integer productId;
+    @Column(name = "product_offer_id", nullable = false)
+    private String productOfferId;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;

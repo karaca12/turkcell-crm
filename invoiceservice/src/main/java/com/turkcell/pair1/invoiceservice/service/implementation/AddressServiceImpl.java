@@ -8,6 +8,7 @@ import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.StreetService;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
+import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrderResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CreateAddressToBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.invoiceservice.service.mapper.AddressMapper;
@@ -48,7 +49,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional
     public void updateAddressForBillingAccount(BillingAccount billingAccount, UpdateAddressRequest updatedAddress) {
-        businessRules.billingAccountMustContainAddress(billingAccount.getAccount(), updatedAddress.getUpdatedId());
+        businessRules.accountMustContainAddress(billingAccount.getAccount(), updatedAddress.getUpdatedId());
         Address address = AddressMapper.INSTANCE.updateAddressRequestToAddress(updatedAddress);
         address.setStreet(streetService.findStreetByNameAndCityAndIsDeletedFalse(updatedAddress.getStreetName(), updatedAddress.getCity()));
         address.setAccounts(billingAccount.getAccount());
@@ -72,7 +73,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void deleteAddressById(Integer addressId, BillingAccount billingAccount) {
-        businessRules.billingAccountMustContainAddress(billingAccount.getAccount(), addressId);
+        businessRules.accountMustContainAddress(billingAccount.getAccount(), addressId);
         businessRules.accountShouldNotHaveOneAddressForDelete(billingAccount.getAccount());
         Address address = businessRules.getAddressFromOptional(addressRepository.findById(addressId));
         businessRules.deletedAddressCannotBePrimary(address);
@@ -83,7 +84,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public GetAddressResponse setPrimaryAddressById(Integer addressId, BillingAccount billingAccount) {
-        businessRules.billingAccountMustContainAddress(billingAccount.getAccount(), addressId);
+        businessRules.accountMustContainAddress(billingAccount.getAccount(), addressId);
         Address address = businessRules.getAddressFromOptional(addressRepository.findById(addressId));
         businessRules.checkIfAddressIsAlreadyAPrimaryAddress(address);
 
@@ -104,5 +105,11 @@ public class AddressServiceImpl implements AddressService {
             address.setDeletedAt(LocalDateTime.now());
             addressRepository.save(address);
         }
+    }
+
+    @Override
+    public CheckAccountForOrderResponse getAddressFromId(Account account, Integer addressId) {
+        businessRules.accountMustContainAddress(account, addressId);
+        return AddressMapper.INSTANCE.getAddressResponseForOrderFromAddress(businessRules.getAddressFromOptional(addressRepository.findById(addressId)));
     }
 }

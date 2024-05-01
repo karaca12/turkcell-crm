@@ -13,10 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "baskets")
 public class Basket extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
 
     @OneToOne(mappedBy = "basket")
     private Account account;

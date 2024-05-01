@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.util.List;
+import org.springframework.data.annotation.Id;
 
 
 @Getter
@@ -14,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItem {
-    private int productId;
+    private String productOfferId;
     private double price;
+    private ProductSpec productSpec;
+    private boolean isActive;
 }

@@ -1,16 +1,22 @@
 package com.turkcell.pair1.orderservice.service.abstraction;
 
-import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
+import com.turkcell.pair1.orderservice.service.dto.response.AccountHasActiveProductsResponse;
+import com.turkcell.pair1.orderservice.service.dto.response.CustomerHasActiveProductsResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderService {
-    String getCustomerIdByOrderId(String orderId);
+    String getAccountNumberByOrderId(String orderId);
 
     void placeOrder(PlaceOrderRequest request);
-    List<GetOrderByIdResponse> findOrdersByAccountId(int id);
+
+    List<GetOrderByIdResponse> findOrdersByAccountNumber(String accountNumber);
+
     GetOrderByIdResponse getOrderById(String orderId);
+
+    CustomerHasActiveProductsResponse customerHasActiveProducts(String customerId);
+
+    AccountHasActiveProductsResponse accountHasActiveProducts(String accountNo);
 }

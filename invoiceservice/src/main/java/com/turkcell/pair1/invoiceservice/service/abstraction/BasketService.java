@@ -5,7 +5,7 @@ import com.turkcell.pair1.invoiceservice.entity.Basket;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
 
 public interface BasketService {
-    BasketItem addBasketItem(Basket basket, Integer productId, int quantity);
+    BasketItem addBasketItem(Basket basket, String productOfferId, int quantity);
 
     void clearBasket(Account account);
 
