@@ -15,7 +15,7 @@ public class BasketItem extends BaseEntity {
     @JoinColumn(name = "basket_id")
     private Basket basket;
 
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "product_offer_id", nullable = false)
     private String productOfferId;
 
     @Column(name = "quantity", nullable = false)

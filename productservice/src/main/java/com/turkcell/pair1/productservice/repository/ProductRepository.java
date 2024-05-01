@@ -25,4 +25,6 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
             "and (:#{#request.productOfferName} is null or p.productOfferName like %:#{#request.productOfferName}%)" +
             "and p.isDeleted=false ")
     List<SearchProductResponse> search(@Param("request") SearchProductRequest request, Pageable pageable);
+
+    boolean existsByProductOfferId(String productOfferId);
 }

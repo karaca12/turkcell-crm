@@ -20,4 +20,6 @@ public interface ProductService {
     double getProductPriceByOfferId(String productOfferId);
 
     GetDetailedAccountProductResponse getDetailedProduct(String productOfferId);
+
+    boolean checkByProductOfferIdIfProductExists(String productOfferId);
 }

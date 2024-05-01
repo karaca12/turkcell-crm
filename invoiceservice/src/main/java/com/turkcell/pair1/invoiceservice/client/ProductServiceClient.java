@@ -14,4 +14,6 @@ public interface ProductServiceClient {
 
     @GetMapping("/api/products/productDetails/{productOfferId}")
     GetDetailedAccountProductResponse getProductDetailById(@PathVariable String productOfferId);
+    @GetMapping("/api/products/checkByProductOfferIdIfProductExists/{productOfferId}")
+    boolean checkByProductOfferIdIfProductExists(@PathVariable String productOfferId);
 }

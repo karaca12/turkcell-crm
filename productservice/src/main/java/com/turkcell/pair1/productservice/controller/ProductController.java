@@ -36,6 +36,10 @@ public class ProductController {
     @GetMapping("/productDetails/{productOfferId}")
     public GetDetailedAccountProductResponse getProductDetailById(@PathVariable String productOfferId) {
         return productService.getDetailedProduct(productOfferId);
+    }
 
+    @GetMapping("checkByProductOfferIdIfProductExists/{productOfferId}")
+    boolean checkByProductOfferIdIfProductExists(@PathVariable String productOfferId){
+        return productService.checkByProductOfferIdIfProductExists(productOfferId);
     }
 }

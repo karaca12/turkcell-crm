@@ -61,4 +61,9 @@ public class ProductServiceImpl implements ProductService {
     public GetDetailedAccountProductResponse getDetailedProduct(String productOfferId) {
         return ProductMapper.INSTANCE.getDetailedProductFromProduct(productRepository.findByIsDeletedFalseAndProductOfferId(productOfferId).orElseThrow());
     }
+
+    @Override
+    public boolean checkByProductOfferIdIfProductExists(String productOfferId) {
+        return productRepository.existsByProductOfferId(productOfferId);
+    }
 }
