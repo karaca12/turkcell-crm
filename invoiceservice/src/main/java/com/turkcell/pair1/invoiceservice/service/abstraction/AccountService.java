@@ -39,5 +39,4 @@ public interface AccountService {
     String generateAccountNumber();
 
     CheckAccountForOrderResponse checkIfAccountExistsAndGetAddress(String accountNumber, Integer addressId);
-
 }

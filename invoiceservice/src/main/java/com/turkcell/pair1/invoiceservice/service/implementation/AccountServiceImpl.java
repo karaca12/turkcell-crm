@@ -116,8 +116,6 @@ public class AccountServiceImpl implements AccountService {
         Account account = businessRules.getAccountFromOptional(accountRepository.findByAccountNumber(accountNumber));
         return account.getCustomerId();
     }
-
-
     @Override
     public String generateAccountNumber() {
         return businessRules.generateAccountNumber();

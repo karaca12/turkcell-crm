@@ -21,7 +21,6 @@ public class AccountBusinessRules {
     private final MessageService messageService;
     private final AccountRepository accountRepository;
     private final AddressService addressService;
-
     private static final Random random = new Random();
 
     public Account getAccountFromOptional(Optional<Account> optionalAccount) {
