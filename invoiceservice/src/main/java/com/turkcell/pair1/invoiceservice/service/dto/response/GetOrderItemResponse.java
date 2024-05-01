@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetOrderItemResponse {
-    private int productId;
+    private String productOfferId;
     private double price;
     private String specId;
 }

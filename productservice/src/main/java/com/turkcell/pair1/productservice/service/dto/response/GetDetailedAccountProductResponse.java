@@ -15,6 +15,4 @@ public class GetDetailedAccountProductResponse {
     private String productOfferName;
 
     private String productOfferId;
-
-    private String prodChars;
 }

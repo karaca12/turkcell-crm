@@ -13,5 +13,5 @@ public class ProductDtoResponse {
     private Integer id;
     private String productName;
     private String productOfferName;
-    private Long productOfferId;
+    private String productOfferId;
 }

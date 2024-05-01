@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "productservice",configuration = FeignClientConfiguration.class)
 public interface ProductServiceClient {
-    @GetMapping("/api/products/{productId}")
-    GetAccountProductResponse getProductById(@PathVariable("productId") int productId);
+    @GetMapping("/api/products/{productOfferId}")
+    GetAccountProductResponse getAccountProductByOfferId(@PathVariable String productOfferId);
 
-    @GetMapping("/api/products/productDetails/{productId}")
-    GetDetailedAccountProductResponse getProductDetailById(@PathVariable("productId") int productId);
+    @GetMapping("/api/products/productDetails/{productOfferId}")
+    GetDetailedAccountProductResponse getProductDetailById(@PathVariable String productOfferId);
 }

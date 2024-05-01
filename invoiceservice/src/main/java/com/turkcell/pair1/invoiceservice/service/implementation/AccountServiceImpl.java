@@ -64,13 +64,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<GetAccountProductResponse> getProductsForAccount(String accountNumber) {
         List<GetAccountOrderResponse> orders = orderServiceClient.findOrdersByAccountNumber(accountNumber);
-        Set<Integer> productIds = orders.stream()
+        Set<String> productOfferIds = orders.stream()
                 .flatMap(order -> order.getOrderItems().stream())
-                .map(GetOrderItemResponse::getProductId)
+                .map(GetOrderItemResponse::getProductOfferId)
                 .collect(Collectors.toSet());
 
-        return productIds.stream()
-                .map(productServiceClient::getProductById)
+        return productOfferIds.stream()
+                .map(productServiceClient::getAccountProductByOfferId)
                 .collect(Collectors.toList());
     }
 
@@ -89,7 +89,7 @@ public class AccountServiceImpl implements AccountService {
     public BasketItem addItemToBasket(AddItemToBasketRequest request) {
         Account account = getAccountByAccountNumber(request.getAccountNumber()).orElseThrow(() -> new IllegalStateException("Account not found."));
         Basket basket = account.getBasket();
-        return basketService.addBasketItem(basket, request.getProductId(), request.getQuantity());
+        return basketService.addBasketItem(basket, request.getProductOfferId(), request.getQuantity());
     }
 
     @Override
@@ -99,14 +99,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId) {
-        GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productId);
+    public GetDetailedAccountProductResponse getDetailedAccountProduct(String productOfferId, String orderId) {
+        GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productOfferId);
         GetAccountOrderResponse order = orderServiceClient.getOrderById(orderId);
         productDetail.setServiceAddress(order.getAddress());
         //TODO:find the primary address
         productDetail.setServiceStartDate(order.getServiceStartDate());
 
-        productDetail.setProductSpecId(determineProductSpecId(order.getOrderItems(), productId));
+        productDetail.setProductSpecId(determineProductSpecId(order.getOrderItems(), productOfferId));
 
         return productDetail;//TODO:prodchar gelicek nasil olucak allah bilir
     }
@@ -131,9 +131,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    private String determineProductSpecId(List<GetOrderItemResponse> orderItems, int productId) {
+    private String determineProductSpecId(List<GetOrderItemResponse> orderItems, String productOfferId) {
         for (GetOrderItemResponse orderItem : orderItems) {
-            if (orderItem.getProductId() == productId) {
+            if (orderItem.getProductOfferId().equals(productOfferId) ) {
                 return orderItem.getSpecId();
             }
         }

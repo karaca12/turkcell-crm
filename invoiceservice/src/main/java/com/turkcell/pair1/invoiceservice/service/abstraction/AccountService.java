@@ -32,7 +32,7 @@ public interface AccountService {
 
     List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(String customerId, PageInfo pageInfo);
 
-    GetDetailedAccountProductResponse getDetailedAccountProduct(int productId, String orderId);
+    GetDetailedAccountProductResponse getDetailedAccountProduct(String productOfferId, String orderId);
 
     String getCustomerIdByAccountNumber(String accountNumber);
 

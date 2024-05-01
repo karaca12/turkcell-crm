@@ -11,7 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetAccountProductResponse {
     private int productId;
-    private String productName;
+    private String productOfferId;
+    private String productOfferName;
     private int campaignId;
     private String campaignName;
 }

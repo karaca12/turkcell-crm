@@ -16,7 +16,7 @@ public class BasketItem extends BaseEntity {
     private Basket basket;
 
     @Column(name = "product_id", nullable = false)
-    private Integer productId;
+    private String productOfferId;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;

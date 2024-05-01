@@ -29,32 +29,17 @@ public class ProductServiceImpl implements ProductService {
     private final MessageService messageService;
     private final ProductBusinessRules businessRules;
 
-    @Override
-    public boolean hasActiveProducts(String customerId) {
-        return false; // No Active Products -> Safe to Delete Customer
-    }
 
     @Override
-    public Product getProductById(Integer productId) {
-        return productRepository.findByIsDeletedFalseAndId(productId).orElseThrow(
+    public Product getProductByOfferId(String productOfferId) {
+        return productRepository.findByIsDeletedFalseAndProductOfferId(productOfferId).orElseThrow(
                 () -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_PRODUCT_FOUND))
         );
     }
 
     @Override
-    public List<ProductDtoResponse> getProductsByCatalogueId(Integer catalogueId) {
-        List<Product> products = productRepository.findByCatalogueId(catalogueId);
-        List<ProductDtoResponse> productDtoResponses = new ArrayList<>();
-        for (Product product : products) {
-            ProductDtoResponse productDtoResponse = ProductMapper.INSTANCE.productDtoResponseFromProduct(product);
-            productDtoResponses.add(productDtoResponse);
-        }
-        return productDtoResponses;
-    }
-
-    @Override
-    public GetAccountProductResponse getAccountProductById(int id) {
-        return ProductMapper.INSTANCE.accountProductDtoFromProduct(getProductById(id));
+    public GetAccountProductResponse getAccountProductByOfferId(String productOfferId) {
+        return ProductMapper.INSTANCE.accountProductDtoFromProduct(getProductByOfferId(productOfferId));
     }
 
     @Override
@@ -68,12 +53,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public double getProductPriceByOfferId(String productOfferId) {
-        return businessRules.getProductFromOptional(productRepository.findByProductOfferId(productOfferId)).getProductPrice();
+        return businessRules.getProductFromOptional(productRepository.findByIsDeletedFalseAndProductOfferId(productOfferId)).getProductPrice();
     }
 
 
     @Override
-    public GetDetailedAccountProductResponse getDetailedProduct(int id) {
-        return ProductMapper.INSTANCE.getDetailedProductFromProduct(productRepository.getProductById(id));
+    public GetDetailedAccountProductResponse getDetailedProduct(String productOfferId) {
+        return ProductMapper.INSTANCE.getDetailedProductFromProduct(productRepository.findByIsDeletedFalseAndProductOfferId(productOfferId).orElseThrow());
     }
 }

@@ -59,9 +59,9 @@ public class AccountController {
         return accountService.getProductsForAccount(accountNumber);
     }
 
-    @GetMapping("/getDetailedProduct/{productId}/{orderId}")
-    public GetDetailedAccountProductResponse getDetailedAccountProduct(@PathVariable int productId, @PathVariable String orderId) {
-        return accountService.getDetailedAccountProduct(productId, orderId);
+    @GetMapping("/getDetailedProduct/{productOfferId}/{orderId}")
+    public GetDetailedAccountProductResponse getDetailedAccountProduct(@PathVariable String productOfferId, @PathVariable String orderId) {
+        return accountService.getDetailedAccountProduct(productOfferId, orderId);
     }
 
     @GetMapping("checkIfAccountExistsAndGetAddress/{accountNumber}/{addressId}")

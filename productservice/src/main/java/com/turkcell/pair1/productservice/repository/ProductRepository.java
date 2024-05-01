@@ -15,14 +15,8 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Integer> {
-    Optional<Product> findByIsDeletedFalseAndId(Integer productId);
 
-    List<Product> findByCatalogueId(Integer catalogueId);
-    Product getProductById(int id);
-    List<Product> findByProductOfferIdAndProductOfferNameContaining(String productOfferId, String productOfferName);
-    Optional<Product> findByProductOfferId(String productOfferId);
-    List<Product> findByProductOfferNameContaining(String productOfferName);
-
+    Optional<Product> findByIsDeletedFalseAndProductOfferId(String productOfferId);
 
     @Query("select new com.turkcell.pair1.productservice.service.dto.response." +
             "SearchProductResponse(p.id,p.productOfferId,p.productOfferName) " +

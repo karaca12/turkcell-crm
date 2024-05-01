@@ -11,8 +11,8 @@ import java.util.List;
 @FeignClient(name = "orderservice", configuration = FeignClientConfiguration.class)
 public interface OrderServiceClient {
     @GetMapping("/api/orders/account/{accountNumber}")
-    List<GetAccountOrderResponse> findOrdersByAccountNumber(@PathVariable("accountNumber") String accountNumber);
+    List<GetAccountOrderResponse> findOrdersByAccountNumber(@PathVariable String accountNumber);
 
     @GetMapping("/api/orders/{orderId}")
-    GetAccountOrderResponse getOrderById(@PathVariable("orderId") String orderId);
+    GetAccountOrderResponse getOrderById(@PathVariable String orderId);
 }

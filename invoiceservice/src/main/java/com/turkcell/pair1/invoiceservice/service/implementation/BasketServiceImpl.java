@@ -15,9 +15,9 @@ public class BasketServiceImpl implements BasketService {
     private final BasketRepository basketRepository;
 
     @Transactional
-    public BasketItem addBasketItem(Basket basket, Integer productId, int quantity) {
+    public BasketItem addBasketItem(Basket basket, String productOfferId, int quantity) {
         BasketItem item = new BasketItem();
-        item.setProductId(productId);
+        item.setProductOfferId(productOfferId);
         item.setQuantity(quantity);
         item.setBasket(basket);
         basket.getBasketItems().add(item);
