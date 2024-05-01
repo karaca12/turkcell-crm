@@ -13,8 +13,6 @@ import java.util.List;
 public interface ProductService {
     GetAccountProductResponse getAccountProductByOfferId(String productOfferId);
 
-    Product getProductByOfferId(String productOfferId);
-
     List<SearchProductResponse> searchProducts(SearchProductRequest request, PageInfo pageInfo);
 
     double getProductPriceByOfferId(String productOfferId);

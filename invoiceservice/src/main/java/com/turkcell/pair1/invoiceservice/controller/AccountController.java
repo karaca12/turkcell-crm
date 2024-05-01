@@ -2,7 +2,7 @@ package com.turkcell.pair1.invoiceservice.controller;
 
 import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
-import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
+import com.turkcell.pair1.invoiceservice.service.dto.GetAccountDtoByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.ClearBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrderResponse;
@@ -21,8 +21,8 @@ import java.util.List;
 public class AccountController {
     private final AccountService accountService;
 
-    @GetMapping("/{accountNumber}") // TODO: change this with DTO
-    public AccountDto getAccountDtoByAccountNumber(@PathVariable("accountNumber") String accountNumber) {
+    @GetMapping("/{accountNumber}")
+    public GetAccountDtoByAccountNumberResponse getAccountDtoByAccountNumber(@PathVariable("accountNumber") String accountNumber) {
         return accountService.getAccountDtoByAccountNumber(accountNumber);
     }
 

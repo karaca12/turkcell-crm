@@ -29,17 +29,9 @@ public class ProductServiceImpl implements ProductService {
     private final MessageService messageService;
     private final ProductBusinessRules businessRules;
 
-
-    @Override
-    public Product getProductByOfferId(String productOfferId) {
-        return productRepository.findByIsDeletedFalseAndProductOfferId(productOfferId).orElseThrow(
-                () -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_PRODUCT_FOUND))
-        );
-    }
-
     @Override
     public GetAccountProductResponse getAccountProductByOfferId(String productOfferId) {
-        return ProductMapper.INSTANCE.accountProductDtoFromProduct(getProductByOfferId(productOfferId));
+        return ProductMapper.INSTANCE.accountProductDtoFromProduct(businessRules.findByIsDeletedFalseAndProductOfferId(productOfferId));
     }
 
     @Override

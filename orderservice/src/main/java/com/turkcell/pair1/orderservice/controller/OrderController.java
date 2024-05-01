@@ -2,6 +2,7 @@ package com.turkcell.pair1.orderservice.controller;
 
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
+import com.turkcell.pair1.orderservice.service.dto.response.CustomerHasActiveProductsResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,10 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public GetOrderByIdResponse getOrderById(@PathVariable String orderId) {
         return orderService.getOrderById(orderId);
+    }
+
+    @GetMapping("/customer/{customerId}/hasActiveProducts")
+    public CustomerHasActiveProductsResponse customerHasActiveProducts(@PathVariable String customerId) {
+        return orderService.customerHasActiveProducts(customerId);
     }
 }

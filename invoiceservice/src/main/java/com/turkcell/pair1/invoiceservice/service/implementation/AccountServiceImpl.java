@@ -10,7 +10,7 @@ import com.turkcell.pair1.invoiceservice.repository.AccountRepository;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
-import com.turkcell.pair1.invoiceservice.service.dto.AccountDto;
+import com.turkcell.pair1.invoiceservice.service.dto.GetAccountDtoByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.*;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
@@ -42,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDto getAccountDtoByAccountNumber(String accountNumber) {
+    public GetAccountDtoByAccountNumberResponse getAccountDtoByAccountNumber(String accountNumber) {
         Account account = accountRepository.findByIsDeletedFalseAndAccountNumber(accountNumber).orElseThrow(/*TODO*/);
         return AccountMapper.INSTANCE.accountToAccountDto(account);
     }

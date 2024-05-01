@@ -13,7 +13,6 @@ import org.mapstruct.factory.Mappers;
 public interface ProductMapper {
     ProductMapper INSTANCE= Mappers.getMapper(ProductMapper.class);
     ProductDtoResponse productDtoResponseFromProduct(Product product);
-    @Mapping(source = "id",target = "productId")
     @Mapping(source = "campaign.offerId",target = "campaignId")
     @Mapping(source = "campaign.offerName",target = "campaignName")
     GetAccountProductResponse accountProductDtoFromProduct(Product product);

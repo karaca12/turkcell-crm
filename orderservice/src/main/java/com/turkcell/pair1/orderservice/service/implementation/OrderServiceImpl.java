@@ -9,10 +9,8 @@ import com.turkcell.pair1.orderservice.entity.OrderItem;
 import com.turkcell.pair1.orderservice.entity.ProductSpec;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
-import com.turkcell.pair1.orderservice.service.dto.response.AddOrderAddressResponse;
+import com.turkcell.pair1.orderservice.service.dto.response.*;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
-import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse;
-import com.turkcell.pair1.orderservice.service.dto.response.GetOrderItemResponse;
 import com.turkcell.pair1.orderservice.service.mapper.OrderMapper;
 import com.turkcell.pair1.orderservice.service.rules.OrderBusinessRules;
 import com.turkcell.pair1.service.abstraction.MessageService;
@@ -51,8 +49,9 @@ public class OrderServiceImpl implements OrderService {
             OrderItem orderItem = OrderMapper.INSTANCE.getOrderItemFromAddRequest(item);
             double price = productServiceClient.getProductPriceByOfferId(item.getProductOfferId());
             orderItem.setPrice(price);
+            orderItem.setActive(true);
             ProductSpec spec = OrderMapper.INSTANCE.productSpecFromAddRequest(item.getProductSpec());
-            /*businessRules.checkIfSpecsIsJson(spec.getSpecs());*/
+            businessRules.checkIfSpecsIsJson(spec.getSpecs());
             spec.setSpecId(UUID.randomUUID().toString());
             orderItem.setProductSpec(spec);
             return orderItem;
@@ -84,5 +83,13 @@ public class OrderServiceImpl implements OrderService {
         List<GetOrderItemResponse> getOrderItemResponses = OrderMapper.INSTANCE.getOrderItemListResponseFromOrderItem(order.getItems());
         getOrderByIdResponse.setOrderItems(getOrderItemResponses);
         return getOrderByIdResponse;
+    }
+
+    @Override
+    public CustomerHasActiveProductsResponse customerHasActiveProducts(String customerId) {
+        List<Order> orders = orderRepository.findByCustomerId(customerId); // Assuming such a method exists
+        return new CustomerHasActiveProductsResponse(orders.stream()
+                .flatMap(order -> order.getItems().stream())
+                .anyMatch(OrderItem::isActive));
     }
 }

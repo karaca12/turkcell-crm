@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
 
 @Getter
@@ -14,4 +15,5 @@ public class OrderItem {
     private String productOfferId;
     private double price;
     private ProductSpec productSpec;
+    private boolean isActive;
 }
