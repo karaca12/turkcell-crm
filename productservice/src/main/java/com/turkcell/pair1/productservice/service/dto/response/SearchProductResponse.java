@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SearchProductResponse {
-    private Integer id;
     private String productOfferId;
     private String productOfferName;
+    private double productPrice;
 }

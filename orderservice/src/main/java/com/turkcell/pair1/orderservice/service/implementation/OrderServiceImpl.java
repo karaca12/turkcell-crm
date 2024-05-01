@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
             double price = productServiceClient.getProductPriceByOfferId(item.getProductOfferId());
             orderItem.setPrice(price);
             ProductSpec spec = OrderMapper.INSTANCE.productSpecFromAddRequest(item.getProductSpec());
-            businessRules.checkIfSpecsIsJson(spec.getSpecs());
+            /*businessRules.checkIfSpecsIsJson(spec.getSpecs());*/
             spec.setSpecId(UUID.randomUUID().toString());
             orderItem.setProductSpec(spec);
             return orderItem;

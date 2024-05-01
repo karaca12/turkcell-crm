@@ -19,7 +19,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     Optional<Product> findByIsDeletedFalseAndProductOfferId(String productOfferId);
 
     @Query("select new com.turkcell.pair1.productservice.service.dto.response." +
-            "SearchProductResponse(p.id,p.productOfferId,p.productOfferName) " +
+            "SearchProductResponse(p.productOfferId,p.productOfferName,p.productPrice) " +
             "from Product p " +
             "where (:#{#request.productOfferId} is null or p.productOfferId like %:#{#request.productOfferId}%) " +
             "and (:#{#request.productOfferName} is null or p.productOfferName like %:#{#request.productOfferName}%)" +
