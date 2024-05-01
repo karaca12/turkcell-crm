@@ -4,7 +4,6 @@ import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.customerservice.client.InvoiceServiceClient;
 import com.turkcell.pair1.customerservice.client.OrderServiceClient;
-import com.turkcell.pair1.customerservice.client.ProductServiceClient;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.IndividualCustomerRepository;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateIndividualCustomerInfoRequest;
@@ -41,7 +40,8 @@ public class IndividualCustomerBusinessRules {
     }
 
     public String getCustomerIdFromOrderNumberOrAccountNumber(String orderNumber, String accountNumber) {
-        String customerIdFromOrder = getCustomerIdFromOrderNumber(orderNumber);
+        String accountNumberFromOrder = getAccountNumberFromOrderNumber(orderNumber);
+        String customerIdFromOrder = getCustomerIdFromAccountNumber(accountNumberFromOrder);
         String customerIdFromAccount = getCustomerIdFromAccountNumber(accountNumber);
         if (customerIdFromOrder == null && customerIdFromAccount == null) {
             return null;
@@ -58,7 +58,7 @@ public class IndividualCustomerBusinessRules {
         }
     }
 
-    public String getCustomerIdFromOrderNumber(String orderNumber) {
+    public String getAccountNumberFromOrderNumber(String orderNumber) {
         if (orderNumber != null) {
             return orderServiceClient.getCustomerIdByOrderId(orderNumber);
         } else return null;

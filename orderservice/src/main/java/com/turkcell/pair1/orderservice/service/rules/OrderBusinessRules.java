@@ -6,10 +6,13 @@ import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.orderservice.client.CustomerServiceClient;
 import com.turkcell.pair1.orderservice.client.InvoiceServiceClient;
+import com.turkcell.pair1.orderservice.entity.Order;
 import com.turkcell.pair1.orderservice.service.dto.response.AddOrderAddressResponse;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -33,9 +36,8 @@ public class OrderBusinessRules {
         return invoiceServiceClient.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
     }
 
-    public void checkIfCustomerExistsByCustomerId(String customerId) {
-        if (!customerServiceClient.checkByCustomerIdIfCustomerExists(customerId)) {
-            throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CUSTOMER_FOUND));
-        }
+    public Order getOrderFromOptional(Optional<Order> optionalOrder) {
+        return optionalOrder.orElseThrow(() ->
+                new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ORDER_FOUND)));
     }
 }

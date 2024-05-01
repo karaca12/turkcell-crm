@@ -8,7 +8,7 @@ import com.turkcell.pair1.orderservice.service.dto.response.GetOrderByIdResponse
 import java.util.List;
 
 public interface OrderService {
-    String getCustomerIdByOrderId(String orderId);
+    String getAccountNumberByOrderId(String orderId);
 
     void placeOrder(PlaceOrderRequest request);
 

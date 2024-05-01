@@ -17,8 +17,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("getCustomerIdByOrderId")
-    public String getCustomerIdByOrderId(@RequestParam String orderId) {
-        return orderService.getCustomerIdByOrderId(orderId);
+    public String getAccountNumberByOrderId(@RequestParam String orderId) {
+        return orderService.getAccountNumberByOrderId(orderId);
     }
 
     @PostMapping("/placeOrder")

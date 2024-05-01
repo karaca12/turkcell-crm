@@ -15,8 +15,6 @@ import java.util.List;
 public class PlaceOrderRequest {
     private String accountNumber;
     private List<AddOrderItemRequest> orderItems;
-    //TODO:customerId account id ile account tarafindan cekilecek.
-    private String customerId;
     private LocalDate serviceStartDate;
     private Integer accountAddressId;
 }

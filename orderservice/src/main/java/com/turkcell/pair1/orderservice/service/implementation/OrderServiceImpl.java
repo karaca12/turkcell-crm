@@ -26,21 +26,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
-    private final MessageService messageService;
     private final ProductServiceClient productServiceClient;
     private final OrderBusinessRules businessRules;
 
     @Override
-    public String getCustomerIdByOrderId(String orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(() ->
-                new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ORDER_FOUND)));
-
-        return order.getCustomerId();
+    public String getAccountNumberByOrderId(String orderId) {
+        Order order = businessRules.getOrderFromOptional(orderRepository.findById(orderId));
+        return order.getAccountNumber();
     }
 
     @Override
     public void placeOrder(PlaceOrderRequest request) {
-        businessRules.checkIfCustomerExistsByCustomerId(request.getCustomerId());
         AddOrderAddressResponse addressResponse= businessRules.checkIfAccountExistsAndGetAddress(request.getAccountNumber(),request.getAccountAddressId());
         Order order = OrderMapper.INSTANCE.getOrderFromAddRequest(request);
         order.setServiceAddress(OrderMapper.INSTANCE.getAddressFromAddressResponse(addressResponse));
@@ -78,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public GetOrderByIdResponse getOrderById(String orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("No order Found"));
+        Order order =  businessRules.getOrderFromOptional(orderRepository.findById(orderId));
         GetOrderByIdResponse getOrderByIdResponse = OrderMapper.INSTANCE.getOrderByIdResponseFromOrder(order);
         List<GetOrderItemResponse> getOrderItemResponses = OrderMapper.INSTANCE.getOrderItemListResponseFromOrderItem(order.getItems());
         getOrderByIdResponse.setOrderItems(getOrderItemResponses);
@@ -87,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public CustomerHasActiveProductsResponse customerHasActiveProducts(String customerId) {
-        List<Order> orders = orderRepository.findByCustomerId(customerId); // Assuming such a method exists
+        List<Order> orders = orderRepository.findByCustomerId(customerId);
         return new CustomerHasActiveProductsResponse(orders.stream()
                 .flatMap(order -> order.getItems().stream())
                 .anyMatch(OrderItem::isActive));
@@ -95,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public AccountHasActiveProductsResponse accountHasActiveProducts(String accountNo) {
-        List<Order> orders = orderRepository.findByAccountNumber(accountNo); // Assuming such a method exists
+        List<Order> orders = orderRepository.findByAccountNumber(accountNo);
         return new AccountHasActiveProductsResponse(orders.stream()
                 .flatMap(order -> order.getItems().stream())
                 .anyMatch(OrderItem::isActive));
