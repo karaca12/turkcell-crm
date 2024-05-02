@@ -21,4 +21,4 @@ jobs:
       - name: Publish package
         run: mvn deploy -f common/pom.xml
         env:
-          GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN_SPRING }}
+          GITHUB_TOKEN: ${{ secrets.COMMON_SECRET }}
