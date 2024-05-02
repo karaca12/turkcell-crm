@@ -112,7 +112,7 @@
             <url>https://maven.pkg.github.com/karaca12/turkcell-crm-core</url>
         </repository>
         <repository>
-            <id>github</id>
+            <id>github-common</id>
             <name>Github Packages Common</name>
             <url>https://maven.pkg.github.com/karaca12/turkcell-crm</url>
         </repository>
