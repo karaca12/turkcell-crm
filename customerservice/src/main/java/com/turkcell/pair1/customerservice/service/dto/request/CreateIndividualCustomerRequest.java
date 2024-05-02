@@ -1,6 +1,8 @@
 package com.turkcell.pair1.customerservice.service.dto.request;
 
 import com.turkcell.common.message.Messages;
+import com.turkcell.pair1.customerservice.service.validation.annotation.CreateMobilePhone;
+import com.turkcell.pair1.customerservice.service.validation.annotation.Gender;
 import com.turkcell.pair1.customerservice.service.validation.annotation.NationalityId;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -32,6 +34,7 @@ public class CreateIndividualCustomerRequest {
     @NotNull(message = Messages.ValidationErrors.NOT_NULL)
     LocalDate birthDate;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
+    @Gender
     String gender;
     String fatherName;
     String motherName;
@@ -42,7 +45,7 @@ public class CreateIndividualCustomerRequest {
     @Email(message = Messages.ValidationErrors.EMAIL)
     String email;
     String homePhone;
-    //TODO
+    @CreateMobilePhone(message = Messages.ValidationErrors.INVALID_MOBILE_PHONE)
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     String mobilePhone;
     String fax;
