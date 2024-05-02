@@ -2,7 +2,7 @@ package com.turkcell.pair1.invoiceservice.controller;
 
 import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
-import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountDtoByAccountNumberResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrderResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
@@ -21,8 +21,8 @@ public class AccountController {
     private final AccountService accountService;
 
     @GetMapping("/{accountNumber}")
-    public GetAccountDtoByAccountNumberResponse getAccountDtoByAccountNumber(@PathVariable("accountNumber") String accountNumber) {
-        return accountService.getAccountDtoByAccountNumber(accountNumber);
+    public GetAccountByAccountNumberResponse getAccountByAccountNumberResponse(@PathVariable("accountNumber") String accountNumber) {
+        return accountService.getAccountByAccountNumberResponse(accountNumber);
     }
 
     @GetMapping("/isActive")
@@ -73,5 +73,4 @@ public class AccountController {
     List<String> getAccountNumbersByCustomerId(@PathVariable String customerId){
         return accountService.getAccountNumbersByCustomerId(customerId);
     }
-
 }

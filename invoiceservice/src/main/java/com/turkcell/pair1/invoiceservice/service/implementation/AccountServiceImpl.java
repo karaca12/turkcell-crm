@@ -8,9 +8,8 @@ import com.turkcell.pair1.invoiceservice.entity.Basket;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
 import com.turkcell.pair1.invoiceservice.repository.AccountRepository;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
-import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
-import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountDtoByAccountNumberResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.*;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
@@ -35,7 +34,6 @@ public class AccountServiceImpl implements AccountService {
     private final ProductServiceClient productServiceClient;
     private final OrderServiceClient orderServiceClient;
     private final AccountBusinessRules businessRules;
-    private final AddressService addressService;
 
     @Override
     public Optional<Account> getAccountByAccountNumber(String accountNumber) {
@@ -43,9 +41,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public GetAccountDtoByAccountNumberResponse getAccountDtoByAccountNumber(String accountNumber) {
-        Account account = accountRepository.findByIsDeletedFalseAndAccountNumber(accountNumber).orElseThrow(/*TODO*/);
-        return AccountMapper.INSTANCE.accountToAccountDto(account);
+    public GetAccountByAccountNumberResponse getAccountByAccountNumberResponse(String accountNumber) {
+        Account account = businessRules.getAccountFromOptional(accountRepository.findByIsDeletedFalseAndAccountNumber(accountNumber));
+        return AccountMapper.INSTANCE.GetAccountByAccountNumberResponseFromAccount(account);
     }
 
     @Override
@@ -88,14 +86,14 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public BasketItem addItemToBasket(AddItemToBasketRequest request) {
-        Account account = getAccountByAccountNumber(request.getAccountNumber()).orElseThrow(() -> new IllegalStateException("Account not found."));
+        Account account = businessRules.getAccountFromOptional(getAccountByAccountNumber(request.getAccountNumber()));
         Basket basket = account.getBasket();
         return basketService.addBasketItem(basket, request.getProductOfferId(), request.getQuantity());
     }
 
     @Override
-    public void clearBasket(String accountNumber) { // TODO: business rules??
-        Account account = getAccountByAccountNumber(accountNumber).orElseThrow();
+    public void clearBasket(String accountNumber) {
+        Account account = businessRules.getAccountFromOptional(getAccountByAccountNumber(accountNumber));
         basketService.clearBasket(account);
     }
 
@@ -117,6 +115,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = businessRules.getAccountFromOptional(accountRepository.findByAccountNumber(accountNumber));
         return account.getCustomerId();
     }
+
     @Override
     public String generateAccountNumber() {
         return businessRules.generateAccountNumber();
@@ -124,9 +123,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public CheckAccountForOrderResponse checkIfAccountExistsAndGetAddress(String accountNumber, Integer addressId) {
-
         return businessRules.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
-
     }
 
     @Override
@@ -148,6 +145,7 @@ public class AccountServiceImpl implements AccountService {
                 return orderItem.getSpecId();
             }
         }
+
         return null;
 
     }

@@ -17,5 +17,4 @@ public class GetAccountOrderResponse {
     private List<GetOrderItemResponse> OrderItems;
     private GetServiceAddressResponse address;
     private LocalDate serviceStartDate;
-
 }

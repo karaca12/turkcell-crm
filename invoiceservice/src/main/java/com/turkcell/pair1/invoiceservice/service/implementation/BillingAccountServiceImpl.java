@@ -76,14 +76,12 @@ public class BillingAccountServiceImpl implements BillingAccountService {
     public List<GetAddressResponse> getBillingAccountAddressesByAccountNumber(String accountNumber, PageInfo pageInfo) {
         Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
         return addressService.getAddressesFromBillingAccountByBillingAccountId(businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumber(accountNumber)), pageable);
-
     }
 
     @Override
     public CreateAddressToBillingAccountResponse createAddressToBillingAccountByAccountNumber(String accountNumber, AddAddressToAccountRequest request) {
         BillingAccount billingAccount = businessRules.getBillingAccountFromOptional(billingAccountRepository.findByAccount_AccountNumberAndAccount_IsDeletedFalse(accountNumber));
         return addressService.addAddressForAccount(request, billingAccount);
-
     }
 
     @Override

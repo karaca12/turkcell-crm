@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAccountDtoByAccountNumberResponse {
+public class GetAccountByAccountNumberResponse {
     private String accountNumber;
     private boolean isDeleted;
 }
