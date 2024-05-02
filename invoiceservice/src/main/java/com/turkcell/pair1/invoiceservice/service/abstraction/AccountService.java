@@ -3,7 +3,7 @@ package com.turkcell.pair1.invoiceservice.service.abstraction;
 import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
-import com.turkcell.pair1.invoiceservice.service.dto.GetAccountDtoByAccountNumberResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountDtoByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrderResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;

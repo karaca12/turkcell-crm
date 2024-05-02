@@ -1,4 +1,4 @@
-package com.turkcell.pair1.invoiceservice.service.dto;
+package com.turkcell.pair1.invoiceservice.service.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

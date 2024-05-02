@@ -10,7 +10,7 @@ import com.turkcell.pair1.invoiceservice.repository.AccountRepository;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BasketService;
-import com.turkcell.pair1.invoiceservice.service.dto.GetAccountDtoByAccountNumberResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountDtoByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.*;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;

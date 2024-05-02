@@ -1,7 +1,7 @@
 package com.turkcell.pair1.invoiceservice.service.mapper;
 
 import com.turkcell.pair1.invoiceservice.entity.Account;
-import com.turkcell.pair1.invoiceservice.service.dto.GetAccountDtoByAccountNumberResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountDtoByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.CreateBillingAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import org.mapstruct.Mapper;
