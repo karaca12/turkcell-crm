@@ -14,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AddressBusinessRules {
     private final MessageService messageService;
+
     public void accountMustContainAddress(Account account, Integer id) {
         boolean contains = false;
         for (Address address : account.getAddresses()) {
@@ -40,14 +41,12 @@ public class AddressBusinessRules {
     public void deletedAddressCannotBePrimary(Address address) {
         if (address.isPrimary()) {
             throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.CANNOT_DELETE_PRIMARY_ADDRESS));
-
         }
     }
 
     public void checkIfAddressIsAlreadyAPrimaryAddress(Address address) {
         if (address.isPrimary()) {
             throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.ADDRESS_ALREADY_IS_PRIMARY));
-
         }
     }
 }

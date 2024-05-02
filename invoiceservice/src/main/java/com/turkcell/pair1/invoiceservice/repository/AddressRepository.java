@@ -14,10 +14,7 @@ import java.util.List;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
-    List<Address> findByIsDeletedFalseAndAccounts(Account account, Pageable pageable);
-
     List<Address> findByAccounts(Account account, Pageable pageable);
-
 
     @Modifying
     @Query("update Address a set a.street = :#{#address.street}, a.flatNumber = :#{#address.flatNumber}," +
@@ -25,5 +22,4 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
             " a.updatedAt=current timestamp " +
             "where a.id = :#{#updatedId}")
     void updateAddressById(@Param("address") Address address,Integer updatedId);
-
 }

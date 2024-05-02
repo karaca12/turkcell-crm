@@ -1,7 +1,7 @@
 package com.turkcell.pair1.invoiceservice.service.mapper;
 
 import com.turkcell.pair1.invoiceservice.entity.Account;
-import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountDtoByAccountNumberResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.CreateBillingAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import org.mapstruct.Mapper;
@@ -14,11 +14,7 @@ import java.util.List;
 public interface AccountMapper {
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
-    GetAccountDtoByAccountNumberResponse accountToAccountDto(Account account);
-
-    @Mapping(source = "billingAccount.name", target = "name")
-    @Mapping(target = "type", ignore = true)
-    GetCustomerAccountsResponse getCustomerAccountResponseFromAccount(Account account);
+    GetAccountByAccountNumberResponse GetAccountByAccountNumberResponseFromAccount(Account account);
 
     @Mapping(source = "addressList", target = "addresses")
     Account getAccountFromCreateRequest(CreateBillingAccountRequest request);

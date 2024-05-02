@@ -9,12 +9,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-
 public interface BillingAccountRepository extends JpaRepository<BillingAccount, Integer> {
     Optional<BillingAccount> findByAccount_AccountNumberAndAccount_IsDeletedFalse(String accountNumber);
 
     Optional<BillingAccount> findByAccount_AccountNumber(String accountNumber);
-
 
     @Modifying
     @Query("update BillingAccount ba set ba.name= :#{#request.name}," +
