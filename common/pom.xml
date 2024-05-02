@@ -24,12 +24,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <distributionManagement>
-    <repository>
-      <id>github-common</id>
-      <name>Common Package Github</name>
-      <url>https://maven.pkg.github.com/karaca12/turkcell-crm</url>
-    </repository>
-  </distributionManagement>
 </project>
