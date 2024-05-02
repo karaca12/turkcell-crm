@@ -4,7 +4,7 @@
 
   <groupId>com.turkcell.pair1</groupId>
   <artifactId>common</artifactId>
-  <version>1.3.3</version>
+  <version>1.3.5</version>
   <packaging>jar</packaging>
 
   <name>common</name>
@@ -27,8 +27,8 @@
 
   <distributionManagement>
     <repository>
-      <id>github</id>
-      <name>Github Packages Common</name>
+      <id>github-common</id>
+      <name>Common Package Github</name>
       <url>https://maven.pkg.github.com/karaca12/turkcell-crm</url>
     </repository>
   </distributionManagement>

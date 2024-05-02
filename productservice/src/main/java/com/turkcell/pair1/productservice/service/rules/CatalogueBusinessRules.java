@@ -16,6 +16,6 @@ public class CatalogueBusinessRules {
 
     public Catalogue findByIsDeletedFalseAndCatalogueId(Integer catalogueId) {
         return catalogueRepository.findByIsDeletedFalseAndId(catalogueId).orElseThrow(
-                () -> new BusinessException("NO_CATALOGUE_FOUND")); //TODO: add message to common
+                () -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_CATALOGUE_FOUND)));
     }
 }
