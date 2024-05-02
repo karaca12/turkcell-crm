@@ -22,40 +22,40 @@ jobs:
 
       - name: Build and push config-server image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-configserver ./configserver
+          docker build --build-arg GITHUB_USERNAME=${{ secrets.USER_NAME }} --build-arg GITHUB_TOKEN=${{ secrets.CORE_SECRET_PW }} -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-configserver ./configserver
           docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-configserver
 
       - name: Build and push discovery-server image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-discoveryserver ./discoveryserver
+          docker build --build-arg GITHUB_USERNAME=${{ secrets.USER_NAME }} --build-arg GITHUB_TOKEN=${{ secrets.CORE_SECRET_PW }} -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-discoveryserver ./discoveryserver
           docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-discoveryserver          
 
       - name: Build and push gateway-server image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-gatewayserver ./gatewayserver
+          docker build --build-arg GITHUB_USERNAME=${{ secrets.USER_NAME }} --build-arg GITHUB_TOKEN=${{ secrets.CORE_SECRET_PW }} -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-gatewayserver ./gatewayserver
           docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-gatewayserver
 
       - name: Build and push customer-service image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-customerservice ./customerservice
+          docker build --build-arg GITHUB_USERNAME=${{ secrets.USER_NAME }} --build-arg GITHUB_TOKEN=${{ secrets.CORE_SECRET_PW }} -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-customerservice ./customerservice
           docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-customerservice
 
       - name: Build and push invoice-service image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-invoiceservice ./invoiceservice
+          docker build --build-arg GITHUB_USERNAME=${{ secrets.USER_NAME }} --build-arg GITHUB_TOKEN=${{ secrets.CORE_SECRET_PW }} -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-invoiceservice ./invoiceservice
           docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-invoiceservice
 
       - name: Build and push order-service image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-orderservice ./orderservice
+          docker build --build-arg GITHUB_USERNAME=${{ secrets.USER_NAME }} --build-arg GITHUB_TOKEN=${{ secrets.CORE_SECRET_PW }} -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-orderservice ./orderservice
           docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-orderservice
 
       - name: Build and push product-service image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-productservice ./productservice
+          docker build --build-arg GITHUB_USERNAME=${{ secrets.USER_NAME }} --build-arg GITHUB_TOKEN=${{ secrets.CORE_SECRET_PW }} -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-productservice ./productservice
           docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-productservice
 
       - name: Build and push auth-service image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-authservice ./authservice
+          docker build --build-arg GITHUB_USERNAME=${{ secrets.USER_NAME }} --build-arg GITHUB_TOKEN=${{ secrets.CORE_SECRET_PW }} -t ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-authservice ./authservice
           docker push ${{ secrets.DOCKER_USERNAME }}/turkcell-pair1-authservice
