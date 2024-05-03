@@ -27,6 +27,18 @@ public class AccountController {
         return accountService.getCustomerAccountsByCustomerId(customerId, pageInfo);
     }
 
+
+
+    @GetMapping("getCustomerIdByAccountNumber/{accountNumber}")
+    public String getCustomerIdByAccountNumber(@PathVariable String accountNumber) {
+        return accountService.getCustomerIdByAccountNumber(accountNumber);
+    }
+
+    @GetMapping("getAccountNumbersByCustomerId/{customerId}")
+    List<String> getAccountNumbersByCustomerId(@PathVariable String customerId){
+        return accountService.getAccountNumbersByCustomerId(customerId);
+    }
+
     @GetMapping("/{accountNumber}")
     public GetAccountByAccountNumberResponse getAccountByAccountNumberResponse(@PathVariable("accountNumber") String accountNumber) {
         return accountService.getAccountByAccountNumberResponse(accountNumber);
@@ -49,11 +61,6 @@ public class AccountController {
     }
 
 
-    @GetMapping("getCustomerIdByAccountNumber/{accountNumber}")
-    public String getCustomerIdByAccountNumber(@PathVariable String accountNumber) {
-        return accountService.getCustomerIdByAccountNumber(accountNumber);
-    }
-
     @GetMapping("/getProducts/{accountNumber}")
     public List<GetAccountProductResponse> getAccountProducts(@PathVariable String accountNumber) {
         return accountService.getProductsForAccount(accountNumber);
@@ -70,8 +77,4 @@ public class AccountController {
         return accountService.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
     }
 
-    @GetMapping("getAccountNumbersByCustomerId/{customerId}")
-    List<String> getAccountNumbersByCustomerId(@PathVariable String customerId){
-        return accountService.getAccountNumbersByCustomerId(customerId);
-    }
 }

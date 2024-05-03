@@ -50,8 +50,6 @@ public class BillingAccountController {
         billingAccountService.setPrimaryAddressByAccountNumberAndAddressId(accountNumber, addressId);
     }
 
-
-
     @GetMapping("getBillingAccountInfoByAccountNumber/{accountNumber}")
     @ResponseStatus(HttpStatus.OK)
     public GetBillingAccountInfoResponse getBillingAccountInfoByAccountNumber(@PathVariable String accountNumber) {
@@ -65,18 +63,14 @@ public class BillingAccountController {
         return billingAccountService.getBillingAccountAddressesByAccountNumber(accountNumber, pageInfo);
     }
 
-
-    @DeleteMapping("deleteBillingAccountByAccountNumber/{accountNumber}")
-    public void deleteBillingAccountByAccountNumber(@PathVariable String accountNumber) {
-        billingAccountService.deleteBillingAccountByAccountNumber(accountNumber);
-    }
-
     @DeleteMapping("deleteAddressByAccountNumberAndAddressId/{accountNumber}/{addressId}")
     public void deleteAddressByAccountNumberAndAddressId(@PathVariable String accountNumber, @PathVariable Integer addressId) {
         billingAccountService.deleteAddressByAccountNumberAndAddressId(accountNumber, addressId);
     }
 
-
-
+    @DeleteMapping("deleteBillingAccountByAccountNumber/{accountNumber}")
+    public void deleteBillingAccountByAccountNumber(@PathVariable String accountNumber) {
+        billingAccountService.deleteBillingAccountByAccountNumber(accountNumber);
+    }
 
 }
