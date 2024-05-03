@@ -20,6 +20,13 @@ import java.util.List;
 public class AccountController {
     private final AccountService accountService;
 
+    @GetMapping("getCustomerAccountsByCustomerId/{customerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId, @RequestParam int page, @RequestParam int size) {
+        PageInfo pageInfo = new PageInfo(page, size);
+        return accountService.getCustomerAccountsByCustomerId(customerId, pageInfo);
+    }
+
     @GetMapping("/{accountNumber}")
     public GetAccountByAccountNumberResponse getAccountByAccountNumberResponse(@PathVariable("accountNumber") String accountNumber) {
         return accountService.getAccountByAccountNumberResponse(accountNumber);
@@ -41,12 +48,6 @@ public class AccountController {
         accountService.clearBasket(accountNumber);
     }
 
-    @GetMapping("getCustomerAccountsByCustomerId/{customerId}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId, @RequestParam int page, @RequestParam int size) {
-        PageInfo pageInfo = new PageInfo(page, size);
-        return accountService.getCustomerAccountsByCustomerId(customerId, pageInfo);
-    }
 
     @GetMapping("getCustomerIdByAccountNumber/{accountNumber}")
     public String getCustomerIdByAccountNumber(@PathVariable String accountNumber) {
