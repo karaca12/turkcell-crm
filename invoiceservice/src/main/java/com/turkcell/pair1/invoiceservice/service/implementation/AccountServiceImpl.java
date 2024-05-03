@@ -102,12 +102,11 @@ public class AccountServiceImpl implements AccountService {
         GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productOfferId);
         GetAccountOrderResponse order = orderServiceClient.getOrderById(orderId);
         productDetail.setServiceAddress(order.getAddress());
-        //TODO:find the primary address
         productDetail.setServiceStartDate(order.getServiceStartDate());
 
         productDetail.setProductSpecId(determineProductSpecId(order.getOrderItems(), productOfferId));
 
-        return productDetail;//TODO:prodchar gelicek nasil olucak allah bilir
+        return productDetail;
     }
 
     @Override

@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public GetDetailedAccountProductResponse getDetailedProduct(String productOfferId) {
-        return ProductMapper.INSTANCE.getDetailedProductFromProduct(productRepository.findByIsDeletedFalseAndProductOfferId(productOfferId).orElseThrow());
+        return ProductMapper.INSTANCE.getDetailedProductFromProduct(businessRules.getProductFromOptional(productRepository.findByIsDeletedFalseAndProductOfferId(productOfferId)));
     }
 
     @Override
