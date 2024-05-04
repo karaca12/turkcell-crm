@@ -1,6 +1,6 @@
 package com.turkcell.pair1.orderservice.repository;
 
-import com.turkcell.pair1.orderservice.entity.Order;
+import com.turkcell.pair1.orderservice.model.Order;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

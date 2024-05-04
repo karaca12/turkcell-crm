@@ -1,6 +1,6 @@
 package com.turkcell.pair1.productservice.entity;
 
-import com.turkcell.pair1.productservice.core.entity.BaseEntity;
+import com.turkcell.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
