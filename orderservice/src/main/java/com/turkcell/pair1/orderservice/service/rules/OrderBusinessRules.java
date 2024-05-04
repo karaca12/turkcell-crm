@@ -36,7 +36,7 @@ public class OrderBusinessRules {
     }
 
     public AddOrderAddressResponse checkIfAccountExistsAndGetAddress(String accountNumber, Integer addressId) {
-        return invoiceServiceClient.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
+        return invoiceServiceClient.checkIfAccountExistsAndGetAddress(accountNumber, addressId);
     }
 
     public Order getOrderFromOptional(Optional<Order> optionalOrder) {
@@ -44,7 +44,7 @@ public class OrderBusinessRules {
                 new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ORDER_FOUND)));
     }
 
-    public boolean doesCustomerHasActiveProduct(String accountNumber) {
+    public boolean doesAccountHasActiveProduct(String accountNumber) {
         return accountHasActiveProducts(accountNumber).isHasActiveProducts();
     }
 
@@ -53,5 +53,15 @@ public class OrderBusinessRules {
         return new AccountHasActiveProductsResponse(orders.stream()
                 .flatMap(order -> order.getItems().stream())
                 .anyMatch(OrderItem::isActive));
+    }
+
+    public boolean checkWithAccountNumbersIfCustomerHasActiveProduct(List<String> accountNumbers) {
+        boolean isActive = false;
+        int i = 0;
+        while (!isActive && i < accountNumbers.size()) {
+            isActive = doesAccountHasActiveProduct(accountNumbers.get(i));
+            i++;
+        }
+        return isActive;
     }
 }

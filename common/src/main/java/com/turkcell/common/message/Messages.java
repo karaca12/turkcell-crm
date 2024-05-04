@@ -20,6 +20,7 @@ public class Messages {
         public static final String CUSTOMER_HAS_ACTIVE_PRODUCT = "customerHasActiveProduct";
         public static final String ACCOUNT_HAS_ACTIVE_PRODUCT = "accountHasActiveProduct";
         public static final String NO_CATALOGUE_FOUND = "noCatalogueFound";
+        public static final String NO_USER_FOUND = "noUserFound";
     }
 
     public static class ValidationErrors {

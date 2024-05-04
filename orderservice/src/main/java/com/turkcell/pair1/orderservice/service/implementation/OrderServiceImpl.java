@@ -83,13 +83,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public CustomerHasActiveProductsResponse customerHasActiveProducts(String customerId) {
         List<String> accountNumbers = invoiceServiceClient.getAccountNumbersByCustomerId(customerId);
-        boolean isActive = false;
-        int i = 0;
-        while (!isActive && i < accountNumbers.size()) {
-            isActive = businessRules.doesCustomerHasActiveProduct(accountNumbers.get(i));
-            i++;
-        }
-        return new CustomerHasActiveProductsResponse(isActive);
+        return new CustomerHasActiveProductsResponse(businessRules.checkWithAccountNumbersIfCustomerHasActiveProduct(accountNumbers));
     }
 
     @Override
