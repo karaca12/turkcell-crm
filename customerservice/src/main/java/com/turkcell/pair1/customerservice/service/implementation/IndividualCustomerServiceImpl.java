@@ -1,6 +1,5 @@
 package com.turkcell.pair1.customerservice.service.implementation;
 
-import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.entity.IndividualCustomer;
 import com.turkcell.pair1.customerservice.repository.IndividualCustomerRepository;
@@ -18,6 +17,7 @@ import com.turkcell.pair1.customerservice.service.dto.response.SearchIndividualC
 import com.turkcell.pair1.customerservice.service.mapper.CustomerMapper;
 import com.turkcell.pair1.customerservice.service.mapper.IndividualCustomerMapper;
 import com.turkcell.pair1.customerservice.service.rules.IndividualCustomerBusinessRules;
+import com.turkcell.pair1.paging.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

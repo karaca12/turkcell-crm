@@ -1,6 +1,6 @@
 package com.turkcell.pair1.productservice.service.implementation;
 
-import com.turkcell.pair1.productservice.core.business.paging.PageInfo;
+import com.turkcell.pair1.paging.PageInfo;
 import com.turkcell.pair1.productservice.repository.ProductRepository;
 import com.turkcell.pair1.productservice.service.abstraction.ProductService;
 import com.turkcell.pair1.productservice.service.dto.request.SearchProductRequest;

@@ -1,6 +1,5 @@
 package com.turkcell.pair1.customerservice.service.abstraction;
 
-import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.customerservice.service.dto.request.CreateIndividualCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.SearchIndividualCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateContactMediumRequest;
@@ -9,6 +8,7 @@ import com.turkcell.pair1.customerservice.service.dto.response.CreateIndividualC
 import com.turkcell.pair1.customerservice.service.dto.response.GetIndividualCustomerContactInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.GetIndividualCustomerInfoResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.SearchIndividualCustomerResponse;
+import com.turkcell.pair1.paging.PageInfo;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
 package com.turkcell.pair1.customerservice.service.abstraction;
 
-import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateAddressRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateContactMediumRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.CreateAddressToCustomerResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.GetAddressResponse;
+import com.turkcell.pair1.paging.PageInfo;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,5 @@
 package com.turkcell.pair1.invoiceservice.controller;
 
-import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
@@ -8,6 +7,7 @@ import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrd
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetDetailedAccountProductResponse;
+import com.turkcell.pair1.paging.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
