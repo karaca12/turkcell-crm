@@ -31,7 +31,7 @@ public interface OrderMapper {
     @Mapping(source = "street", target = "street.streetName")
     Address getAddressFromAddressResponse(AddOrderAddressResponse addressRequest);
 
-    @Mapping(source = "productSpec.specId", target = "specId")
+    @Mapping(source = "productSpec", target = "productSpec")
     GetOrderItemResponse getOrderItemResponseFromOrderItem(OrderItem orderItem);
 
     List<GetOrderItemResponse> getOrderItemListResponseFromOrderItem(List<OrderItem> orderItems);

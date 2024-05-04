@@ -20,10 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -103,8 +100,7 @@ public class AccountServiceImpl implements AccountService {
         GetAccountOrderResponse order = orderServiceClient.getOrderById(orderId);
         productDetail.setServiceAddress(order.getAddress());
         productDetail.setServiceStartDate(order.getServiceStartDate());
-
-        productDetail.setProductSpecId(determineProductSpecId(order.getOrderItems(), productOfferId));
+        productDetail.setProductSpecs(businessRules.determineProductSpecs(order.getOrderItems(), productOfferId));
 
         return productDetail;
     }
@@ -138,14 +134,5 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    private String determineProductSpecId(List<GetOrderItemResponse> orderItems, String productOfferId) {
-        for (GetOrderItemResponse orderItem : orderItems) {
-            if (orderItem.getProductOfferId().equals(productOfferId) ) {
-                return orderItem.getSpecId();
-            }
-        }
 
-        return null;
-
-    }
 }

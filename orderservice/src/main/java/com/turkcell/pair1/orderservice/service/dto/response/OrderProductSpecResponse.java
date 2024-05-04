@@ -7,10 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class GetOrderItemResponse {
-    private String productOfferId;
-    private double price;
-    private OrderProductSpecResponse productSpec;
+@NoArgsConstructor
+public class OrderProductSpecResponse {
+    private String specId;
+    private String specs;
 }
