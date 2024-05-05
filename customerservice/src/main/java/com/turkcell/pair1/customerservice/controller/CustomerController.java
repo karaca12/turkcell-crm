@@ -33,14 +33,14 @@ public class CustomerController {
         return customerService.getCustomerAddressesByCustomerId(customerId, pageInfo);
     }
 
-    @PutMapping("updateCustomerAddressByCustomerId/{customerId}")
-    public void updateCustomerAddressByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateAddressRequest request) {
-        customerService.updateCustomerAddressByCustomerId(customerId, request);
-    }
-
     @PostMapping("createAddressToCustomerByCustomerId/{customerId}")
     public CreateAddressToCustomerResponse createAddressToCustomerByCustomerId(@PathVariable String customerId, @Valid @RequestBody AddAddressToCustomerRequest request) {
         return customerService.createAddressToCustomerByCustomerId(customerId, request);
+    }
+
+    @PutMapping("updateCustomerAddressByCustomerId/{customerId}")
+    public void updateCustomerAddressByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateAddressRequest request) {
+        customerService.updateCustomerAddressByCustomerId(customerId, request);
     }
 
     @DeleteMapping("deleteAddressByCustomerIdAndAddressId/{customerId}/{addressId}")

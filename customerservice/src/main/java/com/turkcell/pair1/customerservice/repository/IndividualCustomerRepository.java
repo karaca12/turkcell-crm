@@ -15,7 +15,6 @@ import java.util.List;
 
 public interface IndividualCustomerRepository extends JpaRepository<IndividualCustomer, Integer> {
 
-
     @Query("select new com.turkcell.pair1.customerservice.service.dto.response." +
             "SearchIndividualCustomerResponse(c.customerId,c.individualCustomer.firstName,c.individualCustomer.middleName,c.individualCustomer.lastName,c.individualCustomer.nationalityId) " +
             "from Customer c " +

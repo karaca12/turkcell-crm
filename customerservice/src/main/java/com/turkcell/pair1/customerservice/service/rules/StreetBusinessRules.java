@@ -15,7 +15,7 @@ public class StreetBusinessRules {
     private final MessageService messageService;
 
     public Street getStreetByNameAndCity(String street, String city) {
-        return streetRepository.findByNameAndCity_Name(street,city).orElseThrow(()->
+        return streetRepository.findByNameAndCity_Name(street, city).orElseThrow(() ->
                 new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_STREET_AND_CITY_FOUND_ERROR)));
     }
 }

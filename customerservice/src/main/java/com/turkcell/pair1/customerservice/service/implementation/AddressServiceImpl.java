@@ -27,7 +27,6 @@ public class AddressServiceImpl implements AddressService {
     private final StreetService streetService;
     private final AddressBusinessRules businessRules;
 
-
     @Override
     @Transactional
     public List<GetAddressResponse> addAddressesForCustomer(List<AddAddressToCustomerRequest> addressRequests, Customer customer) {
@@ -84,17 +83,11 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional
-    public void setPrimaryAddressById(Integer addressId, Customer customer) {
+        public void setPrimaryAddressById(Integer addressId, Customer customer) {
         businessRules.customerMustContainAddress(customer, addressId);
         Address address = businessRules.getAddressFromOptional(addressRepository.findByIdAndIsDeletedFalse(addressId));
         businessRules.checkIfAddressIsAlreadyAPrimaryAddress(address);
-
-        for (Address searchedAddress : customer.getAddresses()) {
-            if (searchedAddress.isPrimary()) {
-                searchedAddress.setPrimary(false);
-                addressRepository.save(searchedAddress);
-            }
-        }
+        businessRules.setAddressAsNotPrimary(customer);
         address.setPrimary(true);
         addressRepository.save(address);
     }

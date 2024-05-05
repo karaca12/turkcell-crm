@@ -71,7 +71,7 @@ public class IndividualCustomerBusinessRules {
     }
 
     public void ensureCustomerHasNoActiveProducts(Customer customer) {
-        if (orderServiceClient.customerHasActiveProducts(customer.getCustomerId()).isHasActiveProducts()){
+        if (orderServiceClient.customerHasActiveProducts(customer.getCustomerId()).isHasActiveProducts()) {
             throw new BusinessException(messageService.getMessage(Messages.BusinessErrors.CUSTOMER_HAS_ACTIVE_PRODUCT));
         }
     }

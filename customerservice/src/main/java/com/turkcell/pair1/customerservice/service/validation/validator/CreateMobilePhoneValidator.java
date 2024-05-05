@@ -18,7 +18,7 @@ public class CreateMobilePhoneValidator implements ConstraintValidator<CreateMob
     @Override
     public boolean isValid(String mobilePhone, ConstraintValidatorContext constraintValidatorContext) {
 
-        if (mobilePhone.isEmpty()||!mobilePhone.matches("\\d+")) {
+        if (mobilePhone.isEmpty() || !mobilePhone.matches("\\d+")) {
             return false;
         }
 

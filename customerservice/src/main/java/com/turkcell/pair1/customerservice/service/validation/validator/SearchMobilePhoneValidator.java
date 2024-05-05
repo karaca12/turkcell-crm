@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class SearchMobilePhoneValidator implements ConstraintValidator<SearchMobilePhone, String> {
     private static final String TURKISH_GSM_REGEX = "^905[0-9]{9}$";
+
     @Override
     public void initialize(SearchMobilePhone constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
@@ -16,7 +17,7 @@ public class SearchMobilePhoneValidator implements ConstraintValidator<SearchMob
 
     @Override
     public boolean isValid(String mobilePhone, ConstraintValidatorContext constraintValidatorContext) {
-        if (mobilePhone==null){
+        if (mobilePhone == null) {
             return true;
         }
 

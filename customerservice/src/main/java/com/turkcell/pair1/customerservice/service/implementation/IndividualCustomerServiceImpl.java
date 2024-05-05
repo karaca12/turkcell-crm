@@ -35,16 +35,6 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
     private final IndividualCustomerBusinessRules businessRules;
     private final CustomerService customerService;
 
-
-    @Override
-    public List<SearchIndividualCustomerResponse> search(SearchIndividualCustomerRequest request, PageInfo pageInfo) {
-        Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
-
-        List<SearchIndividualCustomerResponse> response = individualCustomerRepository.search(request, businessRules.getCustomerIdFromOrderNumberOrAccountNumber(request.getOrderNumber(), request.getAccountNumber()), pageable);
-        businessRules.checkIfSearchIsEmpty(response);
-        return businessRules.sortSearchResponse(response);
-    }
-
     @Override
     @Transactional
     public CreateIndividualCustomerResponse create(CreateIndividualCustomerRequest request) {
@@ -58,6 +48,14 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         CreateIndividualCustomerResponse response = IndividualCustomerMapper.INSTANCE.getCreateIndividualCustomerResponseFromIndividualCustomer(savedIndividualCustomer);
         response.setAddressList(addressService.addAddressesForCustomer(request.getAddressList(), savedCustomer));
         return response;
+    }
+
+    @Override
+    public List<SearchIndividualCustomerResponse> search(SearchIndividualCustomerRequest request, PageInfo pageInfo) {
+        Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
+        List<SearchIndividualCustomerResponse> response = individualCustomerRepository.search(request, businessRules.getCustomerIdFromOrderNumberOrAccountNumber(request.getOrderNumber(), request.getAccountNumber()), pageable);
+        businessRules.checkIfSearchIsEmpty(response);
+        return businessRules.sortSearchResponse(response);
     }
 
     @Override

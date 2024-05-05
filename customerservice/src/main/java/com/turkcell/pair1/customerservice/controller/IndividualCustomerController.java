@@ -61,13 +61,13 @@ public class IndividualCustomerController {
         return individualCustomerService.getIndividualCustomerContactInfoByCustomerId(customerId);
     }
 
-    @DeleteMapping("deleteIndividualCustomerByCustomerId/{customerId}")
-    public void deleteIndividualCustomerByCustomerId(@PathVariable String customerId) {
-        individualCustomerService.deleteIndividualCustomerByCustomerId(customerId);
-    }
-
     @PutMapping("updateIndividualCustomerContactMediumByCustomerId/{customerId}")
     public void updateIndividualCustomerContactMediumByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateContactMediumRequest request) {
         individualCustomerService.updateIndividualCustomerContactMediumByCustomerId(customerId, request);
+    }
+
+    @DeleteMapping("deleteIndividualCustomerByCustomerId/{customerId}")
+    public void deleteIndividualCustomerByCustomerId(@PathVariable String customerId) {
+        individualCustomerService.deleteIndividualCustomerByCustomerId(customerId);
     }
 }

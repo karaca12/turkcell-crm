@@ -13,23 +13,20 @@ import java.util.List;
 
 @Mapper
 public interface AddressMapper {
-    AddressMapper INSTANCE= Mappers.getMapper(AddressMapper.class);
-
+    AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
 
     Address addAddressToCustomerRequestToAddress(AddAddressToCustomerRequest request);
 
     Address updateAddressRequestToAddress(UpdateAddressRequest request);
 
-    @Mapping(source = "street.name",target = "street")
-    @Mapping(source = "street.city.name",target = "city")
+    @Mapping(source = "street.name", target = "street")
+    @Mapping(source = "street.city.name", target = "city")
     CreateAddressToCustomerResponse getCreateAddressResponseFromAddress(Address address);
 
-    @Mapping(source = "street.name",target = "street")
-    @Mapping(source = "street.city.name",target = "city")
-    @Mapping(source = "primary",target = "primary")
+    @Mapping(source = "street.name", target = "street")
+    @Mapping(source = "street.city.name", target = "city")
+    @Mapping(source = "primary", target = "primary")
     GetAddressResponse getAddressResponseFromAddress(Address address);
 
     List<GetAddressResponse> getAddressResponsesFromAddresses(List<Address> addresses);
-
-
 }
