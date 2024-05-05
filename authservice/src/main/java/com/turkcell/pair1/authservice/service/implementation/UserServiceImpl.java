@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(RegisterRequest request) {
+        userBusinessRules.checkIfUserAlreadyExists(request.getUsername());
         User user = new User();
         user.setUsername(request.getUsername());
         user.setFirstName(request.getFirstName());
