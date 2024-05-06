@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateBillingAccountResponse {
-    private Integer id;
+    private String accountNumber;
     private String customerId;
     private String name;
     private String description;

@@ -18,5 +18,6 @@ public interface BillingAccountMapper {
 
     @Mapping(target = "addressList", ignore = true)
     @Mapping(source = "account.customerId", target = "customerId")
+    @Mapping(source = "account.accountNumber", target = "accountNumber")
     CreateBillingAccountResponse getCreateBillingAccountResponseFromBillingAccount(BillingAccount savedBillingAccount);
 }

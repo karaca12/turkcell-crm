@@ -38,6 +38,7 @@ public class BillingAccountServiceImpl implements BillingAccountService {
     private final BasketService basketService;
     private final AccountService accountService;
 
+    @Transactional
     @Override
     public CreateBillingAccountResponse create(CreateBillingAccountRequest request) {
         businessRules.checkIfCustomerExists(request.getCustomerId());
