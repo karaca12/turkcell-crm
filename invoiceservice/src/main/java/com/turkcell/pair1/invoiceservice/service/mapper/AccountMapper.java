@@ -14,7 +14,11 @@ import java.util.List;
 public interface AccountMapper {
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
+
     GetAccountByAccountNumberResponse GetAccountByAccountNumberResponseFromAccount(Account account);
+
+    @Mapping(source = "billingAccount.name", target = "name")
+    GetCustomerAccountsResponse getCustomerAccountResponseFromAccount(Account account);
 
     @Mapping(source = "addressList", target = "addresses")
     Account getAccountFromCreateRequest(CreateBillingAccountRequest request);

@@ -1,6 +1,5 @@
 package com.turkcell.pair1.invoiceservice.controller;
 
-import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountByAccountNumberResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequest;
@@ -8,6 +7,7 @@ import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrd
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAccountProductResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetDetailedAccountProductResponse;
+import com.turkcell.pair1.paging.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +19,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+
+    @GetMapping("getCustomerAccountsByCustomerId/{customerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId, @RequestParam int page, @RequestParam int size) {
+        PageInfo pageInfo = new PageInfo(page, size);
+        return accountService.getCustomerAccountsByCustomerId(customerId, pageInfo);
+    }
+
+
+
+    @GetMapping("getCustomerIdByAccountNumber/{accountNumber}")
+    public String getCustomerIdByAccountNumber(@PathVariable String accountNumber) {
+        return accountService.getCustomerIdByAccountNumber(accountNumber);
+    }
+
+    @GetMapping("getAccountNumbersByCustomerId/{customerId}")
+    List<String> getAccountNumbersByCustomerId(@PathVariable String customerId){
+        return accountService.getAccountNumbersByCustomerId(customerId);
+    }
 
     @GetMapping("/{accountNumber}")
     public GetAccountByAccountNumberResponse getAccountByAccountNumberResponse(@PathVariable("accountNumber") String accountNumber) {
@@ -41,17 +60,6 @@ public class AccountController {
         accountService.clearBasket(accountNumber);
     }
 
-    @GetMapping("getCustomerAccountsByCustomerId/{customerId}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<GetCustomerAccountsResponse> getCustomerAccountsByCustomerId(@PathVariable String customerId, @RequestParam int page, @RequestParam int size) {
-        PageInfo pageInfo = new PageInfo(page, size);
-        return accountService.getCustomerAccountsByCustomerId(customerId, pageInfo);
-    }
-
-    @GetMapping("getCustomerIdByAccountNumber/{accountNumber}")
-    public String getCustomerIdByAccountNumber(@PathVariable String accountNumber) {
-        return accountService.getCustomerIdByAccountNumber(accountNumber);
-    }
 
     @GetMapping("/getProducts/{accountNumber}")
     public List<GetAccountProductResponse> getAccountProducts(@PathVariable String accountNumber) {
@@ -69,8 +77,4 @@ public class AccountController {
         return accountService.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
     }
 
-    @GetMapping("getAccountNumbersByCustomerId/{customerId}")
-    List<String> getAccountNumbersByCustomerId(@PathVariable String customerId){
-        return accountService.getAccountNumbersByCustomerId(customerId);
-    }
 }

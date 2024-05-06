@@ -18,9 +18,9 @@ public class AddAddressToCustomerRequest {
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     private String city;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
-    private String  streetName;
+    private String streetName;
     @NotNull(message = Messages.ValidationErrors.NOT_NULL)
-    @Min(value = 0,message = Messages.ValidationErrors.MIN)
+    @Min(value = 0, message = Messages.ValidationErrors.MIN)
     private Integer flatNumber;
     @NotBlank(message = Messages.ValidationErrors.NOT_BLANK)
     private String description;

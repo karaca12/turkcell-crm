@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SearchIndividualCustomerResponse {
-
     private String customerId;
     private String firstName;
     private String middleName;

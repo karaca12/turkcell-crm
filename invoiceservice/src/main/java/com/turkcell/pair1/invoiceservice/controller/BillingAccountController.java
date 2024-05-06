@@ -1,6 +1,5 @@
 package com.turkcell.pair1.invoiceservice.controller;
 
-import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.abstraction.BillingAccountService;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.CreateBillingAccountRequest;
@@ -10,6 +9,7 @@ import com.turkcell.pair1.invoiceservice.service.dto.response.CreateAddressToBil
 import com.turkcell.pair1.invoiceservice.service.dto.response.CreateBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetBillingAccountInfoResponse;
+import com.turkcell.pair1.paging.PageInfo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,15 +29,31 @@ public class BillingAccountController {
         return billingAccountService.create(request);
     }
 
+    @PostMapping("createAddressToBillingAccountByAccountNumber/{accountNumber}")
+    public CreateAddressToBillingAccountResponse createAddressToBillingAccountByAccountNumber(@PathVariable String accountNumber, @Valid @RequestBody AddAddressToAccountRequest request) {
+        return billingAccountService.createAddressToBillingAccountByAccountNumber(accountNumber, request);
+    }
+
     @PutMapping("updateBillingAccountByAccountNumber/{accountNumber}")
     @ResponseStatus(HttpStatus.OK)
     public void updateBillingAccountInfoByAccountNumber(@PathVariable String accountNumber, @RequestBody @Valid UpdateBillingAccountInfoRequest request) {
         billingAccountService.updateBillingAccountInfoByAccountNumber(accountNumber, request);
     }
 
-    @DeleteMapping("deleteBillingAccountByAccountNumber/{accountNumber}")
-    public void deleteBillingAccountByAccountNumber(@PathVariable String accountNumber) {
-        billingAccountService.deleteBillingAccountByAccountNumber(accountNumber);
+    @PutMapping("updateBillingAccountAddressByAccountNumber/{accountNumber}")
+    public void updateBillingAccountAddressByAccountNumber(@PathVariable String accountNumber, @Valid @RequestBody UpdateAddressRequest request) {
+        billingAccountService.updateBillingAccountAddressByAccountNumber(accountNumber, request);
+    }
+
+    @PutMapping("setPrimaryAddressByAccountNumberAndAddressId/{accountNumber}/{addressId}")
+    public void setPrimaryAddressByAccountNumberAndAddressId(@PathVariable String accountNumber, @PathVariable Integer addressId) {
+        billingAccountService.setPrimaryAddressByAccountNumberAndAddressId(accountNumber, addressId);
+    }
+
+    @GetMapping("getBillingAccountInfoByAccountNumber/{accountNumber}")
+    @ResponseStatus(HttpStatus.OK)
+    public GetBillingAccountInfoResponse getBillingAccountInfoByAccountNumber(@PathVariable String accountNumber) {
+        return billingAccountService.getBillingAccountInfoByAccountNumber(accountNumber);
     }
 
     @GetMapping("getBillingAccountAddressesByAccountNumber/{accountNumber}")
@@ -47,29 +63,14 @@ public class BillingAccountController {
         return billingAccountService.getBillingAccountAddressesByAccountNumber(accountNumber, pageInfo);
     }
 
-    @PostMapping("createAddressToBillingAccountByAccountNumber/{accountNumber}")
-    public CreateAddressToBillingAccountResponse createAddressToBillingAccountByAccountNumber(@PathVariable String accountNumber, @Valid @RequestBody AddAddressToAccountRequest request) {
-        return billingAccountService.createAddressToBillingAccountByAccountNumber(accountNumber, request);
-    }
-
     @DeleteMapping("deleteAddressByAccountNumberAndAddressId/{accountNumber}/{addressId}")
     public void deleteAddressByAccountNumberAndAddressId(@PathVariable String accountNumber, @PathVariable Integer addressId) {
         billingAccountService.deleteAddressByAccountNumberAndAddressId(accountNumber, addressId);
     }
 
-    @PutMapping("setPrimaryAddressByAccountNumberAndAddressId/{accountNumber}/{addressId}")
-    public void setPrimaryAddressByAccountNumberAndAddressId(@PathVariable String accountNumber, @PathVariable Integer addressId) {
-        billingAccountService.setPrimaryAddressByAccountNumberAndAddressId(accountNumber, addressId);
+    @DeleteMapping("deleteBillingAccountByAccountNumber/{accountNumber}")
+    public void deleteBillingAccountByAccountNumber(@PathVariable String accountNumber) {
+        billingAccountService.deleteBillingAccountByAccountNumber(accountNumber);
     }
 
-    @PutMapping("updateBillingAccountAddressByAccountNumber/{accountNumber}")
-    public void updateBillingAccountAddressByAccountNumber(@PathVariable String accountNumber, @Valid @RequestBody UpdateAddressRequest request) {
-        billingAccountService.updateBillingAccountAddressByAccountNumber(accountNumber, request);
-    }
-
-    @GetMapping("getBillingAccountInfoByAccountNumber/{accountNumber}")
-    @ResponseStatus(HttpStatus.OK)
-    public GetBillingAccountInfoResponse getBillingAccountInfoByAccountNumber(@PathVariable String accountNumber) {
-        return billingAccountService.getBillingAccountInfoByAccountNumber(accountNumber);
-    }
 }

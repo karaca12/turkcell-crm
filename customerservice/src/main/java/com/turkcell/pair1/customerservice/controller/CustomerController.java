@@ -1,11 +1,11 @@
 package com.turkcell.pair1.customerservice.controller;
 
-import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.customerservice.service.abstraction.CustomerService;
 import com.turkcell.pair1.customerservice.service.dto.request.AddAddressToCustomerRequest;
 import com.turkcell.pair1.customerservice.service.dto.request.UpdateAddressRequest;
 import com.turkcell.pair1.customerservice.service.dto.response.CreateAddressToCustomerResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.GetAddressResponse;
+import com.turkcell.pair1.paging.PageInfo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,14 +33,14 @@ public class CustomerController {
         return customerService.getCustomerAddressesByCustomerId(customerId, pageInfo);
     }
 
-    @PutMapping("updateCustomerAddressByCustomerId/{customerId}")
-    public void updateCustomerAddressByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateAddressRequest request) {
-        customerService.updateCustomerAddressByCustomerId(customerId, request);
-    }
-
     @PostMapping("createAddressToCustomerByCustomerId/{customerId}")
     public CreateAddressToCustomerResponse createAddressToCustomerByCustomerId(@PathVariable String customerId, @Valid @RequestBody AddAddressToCustomerRequest request) {
         return customerService.createAddressToCustomerByCustomerId(customerId, request);
+    }
+
+    @PutMapping("updateCustomerAddressByCustomerId/{customerId}")
+    public void updateCustomerAddressByCustomerId(@PathVariable String customerId, @Valid @RequestBody UpdateAddressRequest request) {
+        customerService.updateCustomerAddressByCustomerId(customerId, request);
     }
 
     @DeleteMapping("deleteAddressByCustomerIdAndAddressId/{customerId}/{addressId}")

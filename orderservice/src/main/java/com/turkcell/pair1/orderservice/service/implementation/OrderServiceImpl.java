@@ -3,9 +3,9 @@ package com.turkcell.pair1.orderservice.service.implementation;
 
 import com.turkcell.pair1.orderservice.client.InvoiceServiceClient;
 import com.turkcell.pair1.orderservice.client.ProductServiceClient;
-import com.turkcell.pair1.orderservice.entity.Order;
-import com.turkcell.pair1.orderservice.entity.OrderItem;
-import com.turkcell.pair1.orderservice.entity.ProductSpec;
+import com.turkcell.pair1.orderservice.model.Order;
+import com.turkcell.pair1.orderservice.model.OrderItem;
+import com.turkcell.pair1.orderservice.model.ProductSpec;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.abstraction.OrderService;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
@@ -83,13 +83,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public CustomerHasActiveProductsResponse customerHasActiveProducts(String customerId) {
         List<String> accountNumbers = invoiceServiceClient.getAccountNumbersByCustomerId(customerId);
-        boolean isActive = false;
-        int i = 0;
-        while (!isActive && i < accountNumbers.size()) {
-            isActive = businessRules.doesCustomerHasActiveProduct(accountNumbers.get(i));
-            i++;
-        }
-        return new CustomerHasActiveProductsResponse(isActive);
+        return new CustomerHasActiveProductsResponse(businessRules.checkWithAccountNumbersIfCustomerHasActiveProduct(accountNumbers));
     }
 
     @Override

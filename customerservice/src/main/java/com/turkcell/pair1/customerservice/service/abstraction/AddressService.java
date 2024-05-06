@@ -15,7 +15,6 @@ public interface AddressService {
 
     List<GetAddressResponse> getAddressesFromCustomerByCustomerId(Customer customer, Pageable pageable);
 
-
     void updateAddressForCustomer(UpdateAddressRequest updatedAddresses, Customer customer);
 
     CreateAddressToCustomerResponse addAddressForCustomer(AddAddressToCustomerRequest request, Customer customer);

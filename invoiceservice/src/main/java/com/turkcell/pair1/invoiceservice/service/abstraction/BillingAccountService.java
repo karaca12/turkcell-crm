@@ -1,6 +1,5 @@
 package com.turkcell.pair1.invoiceservice.service.abstraction;
 
-import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.service.dto.request.AddAddressToAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.CreateBillingAccountRequest;
 import com.turkcell.pair1.invoiceservice.service.dto.request.UpdateAddressRequest;
@@ -9,6 +8,7 @@ import com.turkcell.pair1.invoiceservice.service.dto.response.CreateAddressToBil
 import com.turkcell.pair1.invoiceservice.service.dto.response.CreateBillingAccountResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetBillingAccountInfoResponse;
+import com.turkcell.pair1.paging.PageInfo;
 
 import java.util.List;
 

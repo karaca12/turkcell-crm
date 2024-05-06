@@ -7,6 +7,8 @@ import com.turkcell.pair1.invoiceservice.repository.AccountRepository;
 import com.turkcell.pair1.invoiceservice.service.abstraction.AddressService;
 import com.turkcell.pair1.invoiceservice.service.dto.response.CheckAccountForOrderResponse;
 import com.turkcell.pair1.invoiceservice.service.dto.response.GetCustomerAccountsResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.GetOrderItemResponse;
+import com.turkcell.pair1.invoiceservice.service.dto.response.OrderProductSpecResponse;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -64,5 +66,14 @@ public class AccountBusinessRules {
     public CheckAccountForOrderResponse checkIfAccountExistsAndGetAddress(String accountNumber, Integer addressId) {
             Account account = getAccountFromOptional(accountRepository.findByAccountNumber(accountNumber));
             return addressService.getAddressFromId(account,addressId);
+    }
+    public OrderProductSpecResponse determineProductSpecs(List<GetOrderItemResponse> orderItems, String productOfferId) {
+        for (GetOrderItemResponse orderItem : orderItems) {
+            if (orderItem.getProductOfferId().equals(productOfferId) ) {
+                return orderItem.getProductSpec();
+            }
+        }
+        return null;
+
     }
 }

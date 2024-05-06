@@ -1,6 +1,6 @@
 package com.turkcell.pair1.authservice.entity;
 
-import com.turkcell.pair1.authservice.core.entity.BaseEntity;
+import com.turkcell.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

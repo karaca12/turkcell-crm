@@ -1,6 +1,5 @@
 package com.turkcell.pair1.customerservice.service.implementation;
 
-import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.repository.CustomerRepository;
 import com.turkcell.pair1.customerservice.service.abstraction.AddressService;
@@ -11,6 +10,7 @@ import com.turkcell.pair1.customerservice.service.dto.request.UpdateContactMediu
 import com.turkcell.pair1.customerservice.service.dto.response.CreateAddressToCustomerResponse;
 import com.turkcell.pair1.customerservice.service.dto.response.GetAddressResponse;
 import com.turkcell.pair1.customerservice.service.rules.CustomerBusinessRules;
+import com.turkcell.pair1.paging.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

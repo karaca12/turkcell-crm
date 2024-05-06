@@ -1,6 +1,5 @@
 package com.turkcell.pair1.customerservice.service.implementation;
 
-import com.turkcell.pair1.customerservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.customerservice.entity.Customer;
 import com.turkcell.pair1.customerservice.entity.IndividualCustomer;
 import com.turkcell.pair1.customerservice.repository.IndividualCustomerRepository;
@@ -18,6 +17,7 @@ import com.turkcell.pair1.customerservice.service.dto.response.SearchIndividualC
 import com.turkcell.pair1.customerservice.service.mapper.CustomerMapper;
 import com.turkcell.pair1.customerservice.service.mapper.IndividualCustomerMapper;
 import com.turkcell.pair1.customerservice.service.rules.IndividualCustomerBusinessRules;
+import com.turkcell.pair1.paging.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,16 +35,6 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
     private final IndividualCustomerBusinessRules businessRules;
     private final CustomerService customerService;
 
-
-    @Override
-    public List<SearchIndividualCustomerResponse> search(SearchIndividualCustomerRequest request, PageInfo pageInfo) {
-        Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
-
-        List<SearchIndividualCustomerResponse> response = individualCustomerRepository.search(request, businessRules.getCustomerIdFromOrderNumberOrAccountNumber(request.getOrderNumber(), request.getAccountNumber()), pageable);
-        businessRules.checkIfSearchIsEmpty(response);
-        return businessRules.sortSearchResponse(response);
-    }
-
     @Override
     @Transactional
     public CreateIndividualCustomerResponse create(CreateIndividualCustomerRequest request) {
@@ -58,6 +48,14 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         CreateIndividualCustomerResponse response = IndividualCustomerMapper.INSTANCE.getCreateIndividualCustomerResponseFromIndividualCustomer(savedIndividualCustomer);
         response.setAddressList(addressService.addAddressesForCustomer(request.getAddressList(), savedCustomer));
         return response;
+    }
+
+    @Override
+    public List<SearchIndividualCustomerResponse> search(SearchIndividualCustomerRequest request, PageInfo pageInfo) {
+        Pageable pageable = PageRequest.of(pageInfo.getPage(), pageInfo.getSize());
+        List<SearchIndividualCustomerResponse> response = individualCustomerRepository.search(request, businessRules.getCustomerIdFromOrderNumberOrAccountNumber(request.getOrderNumber(), request.getAccountNumber()), pageable);
+        businessRules.checkIfSearchIsEmpty(response);
+        return businessRules.sortSearchResponse(response);
     }
 
     @Override

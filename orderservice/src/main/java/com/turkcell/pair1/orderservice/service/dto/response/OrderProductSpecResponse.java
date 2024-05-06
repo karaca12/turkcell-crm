@@ -1,4 +1,4 @@
-package com.turkcell.pair1.orderservice.entity;
+package com.turkcell.pair1.orderservice.service.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Street {
-
-    private City city;
-    private String streetName;
+public class OrderProductSpecResponse {
+    private String specId;
+    private String specs;
 }

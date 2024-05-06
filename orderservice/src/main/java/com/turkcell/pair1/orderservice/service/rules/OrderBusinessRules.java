@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.turkcell.common.message.Messages;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.orderservice.client.InvoiceServiceClient;
-import com.turkcell.pair1.orderservice.entity.Order;
-import com.turkcell.pair1.orderservice.entity.OrderItem;
+import com.turkcell.pair1.orderservice.model.Order;
+import com.turkcell.pair1.orderservice.model.OrderItem;
 import com.turkcell.pair1.orderservice.repository.OrderRepository;
 import com.turkcell.pair1.orderservice.service.dto.response.AccountHasActiveProductsResponse;
 import com.turkcell.pair1.orderservice.service.dto.response.AddOrderAddressResponse;
@@ -36,7 +36,7 @@ public class OrderBusinessRules {
     }
 
     public AddOrderAddressResponse checkIfAccountExistsAndGetAddress(String accountNumber, Integer addressId) {
-        return invoiceServiceClient.checkIfAccountExistsAndGetAddress(accountNumber,addressId);
+        return invoiceServiceClient.checkIfAccountExistsAndGetAddress(accountNumber, addressId);
     }
 
     public Order getOrderFromOptional(Optional<Order> optionalOrder) {
@@ -44,7 +44,7 @@ public class OrderBusinessRules {
                 new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_ORDER_FOUND)));
     }
 
-    public boolean doesCustomerHasActiveProduct(String accountNumber) {
+    public boolean doesAccountHasActiveProduct(String accountNumber) {
         return accountHasActiveProducts(accountNumber).isHasActiveProducts();
     }
 
@@ -53,5 +53,15 @@ public class OrderBusinessRules {
         return new AccountHasActiveProductsResponse(orders.stream()
                 .flatMap(order -> order.getItems().stream())
                 .anyMatch(OrderItem::isActive));
+    }
+
+    public boolean checkWithAccountNumbersIfCustomerHasActiveProduct(List<String> accountNumbers) {
+        boolean isActive = false;
+        int i = 0;
+        while (!isActive && i < accountNumbers.size()) {
+            isActive = doesAccountHasActiveProduct(accountNumbers.get(i));
+            i++;
+        }
+        return isActive;
     }
 }

@@ -1,4 +1,4 @@
-package com.turkcell.pair1.productservice.core.business.paging;
+package com.turkcell.pair1.invoiceservice.service.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageInfo {
-    private int page;
-    private int size;
+public class OrderProductSpecResponse {
+    private String specId;
+    private String specs;
 }

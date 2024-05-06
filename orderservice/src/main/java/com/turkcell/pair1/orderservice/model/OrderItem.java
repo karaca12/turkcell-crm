@@ -1,4 +1,4 @@
-package com.turkcell.pair1.orderservice.entity;
+package com.turkcell.pair1.orderservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

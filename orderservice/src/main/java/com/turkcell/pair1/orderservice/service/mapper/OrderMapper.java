@@ -1,9 +1,9 @@
 package com.turkcell.pair1.orderservice.service.mapper;
 
-import com.turkcell.pair1.orderservice.entity.Address;
-import com.turkcell.pair1.orderservice.entity.Order;
-import com.turkcell.pair1.orderservice.entity.OrderItem;
-import com.turkcell.pair1.orderservice.entity.ProductSpec;
+import com.turkcell.pair1.orderservice.model.Address;
+import com.turkcell.pair1.orderservice.model.Order;
+import com.turkcell.pair1.orderservice.model.OrderItem;
+import com.turkcell.pair1.orderservice.model.ProductSpec;
 import com.turkcell.pair1.orderservice.service.dto.request.AddOrderItemRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.AddProductSpecRequest;
 import com.turkcell.pair1.orderservice.service.dto.request.PlaceOrderRequest;
@@ -31,7 +31,7 @@ public interface OrderMapper {
     @Mapping(source = "street", target = "street.streetName")
     Address getAddressFromAddressResponse(AddOrderAddressResponse addressRequest);
 
-    @Mapping(source = "productSpec.specId", target = "specId")
+    @Mapping(source = "productSpec", target = "productSpec")
     GetOrderItemResponse getOrderItemResponseFromOrderItem(OrderItem orderItem);
 
     List<GetOrderItemResponse> getOrderItemListResponseFromOrderItem(List<OrderItem> orderItems);

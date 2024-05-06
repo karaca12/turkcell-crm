@@ -2,7 +2,6 @@ package com.turkcell.pair1.invoiceservice.service.implementation;
 
 import com.turkcell.pair1.invoiceservice.client.OrderServiceClient;
 import com.turkcell.pair1.invoiceservice.client.ProductServiceClient;
-import com.turkcell.pair1.invoiceservice.core.business.paging.PageInfo;
 import com.turkcell.pair1.invoiceservice.entity.Account;
 import com.turkcell.pair1.invoiceservice.entity.Basket;
 import com.turkcell.pair1.invoiceservice.entity.BasketItem;
@@ -14,16 +13,14 @@ import com.turkcell.pair1.invoiceservice.service.dto.request.AddItemToBasketRequ
 import com.turkcell.pair1.invoiceservice.service.dto.response.*;
 import com.turkcell.pair1.invoiceservice.service.mapper.AccountMapper;
 import com.turkcell.pair1.invoiceservice.service.rules.AccountBusinessRules;
+import com.turkcell.pair1.paging.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -102,12 +99,10 @@ public class AccountServiceImpl implements AccountService {
         GetDetailedAccountProductResponse productDetail = productServiceClient.getProductDetailById(productOfferId);
         GetAccountOrderResponse order = orderServiceClient.getOrderById(orderId);
         productDetail.setServiceAddress(order.getAddress());
-        //TODO:find the primary address
         productDetail.setServiceStartDate(order.getServiceStartDate());
+        productDetail.setProductSpecs(businessRules.determineProductSpecs(order.getOrderItems(), productOfferId));
 
-        productDetail.setProductSpecId(determineProductSpecId(order.getOrderItems(), productOfferId));
-
-        return productDetail;//TODO:prodchar gelicek nasil olucak allah bilir
+        return productDetail;
     }
 
     @Override
@@ -139,14 +134,5 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    private String determineProductSpecId(List<GetOrderItemResponse> orderItems, String productOfferId) {
-        for (GetOrderItemResponse orderItem : orderItems) {
-            if (orderItem.getProductOfferId().equals(productOfferId) ) {
-                return orderItem.getSpecId();
-            }
-        }
 
-        return null;
-
-    }
 }
