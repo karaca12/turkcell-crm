@@ -6,7 +6,6 @@ import com.turkcell.pair1.authservice.repository.UserRepository;
 import com.turkcell.pair1.configuration.exception.types.BusinessException;
 import com.turkcell.pair1.service.abstraction.MessageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -18,7 +17,7 @@ public class UserBusinessRules {
     private final UserRepository userRepository;
 
     public User getUserFromOptional(Optional<User> optionalUser) {
-        return optionalUser.orElseThrow(() -> new UsernameNotFoundException(messageService.getMessage(Messages.BusinessErrors.NO_USER_FOUND)));
+        return optionalUser.orElseThrow(() -> new BusinessException(messageService.getMessage(Messages.BusinessErrors.NO_USER_FOUND)));
     }
 
     public void checkIfUserAlreadyExists(String username) {
